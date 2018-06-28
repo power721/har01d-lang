@@ -1,0 +1,9 @@
+class Test {
+    fun main(args: string[]) {
+        print sum(1, 2)
+    }
+
+    fun sum(x: int, y: int): int {
+        x + y
+    }
+}
