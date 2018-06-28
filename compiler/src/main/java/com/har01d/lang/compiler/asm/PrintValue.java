@@ -6,7 +6,6 @@ import org.objectweb.asm.Opcodes;
 import com.har01d.lang.antlr.Har01dParser;
 import com.har01d.lang.compiler.domain.Value;
 
-
 public class PrintValue implements Instruction, Opcodes {
     private final Value value;
 

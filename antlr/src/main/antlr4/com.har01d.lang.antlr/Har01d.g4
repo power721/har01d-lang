@@ -1,6 +1,10 @@
 grammar Har01d;
 
-compilationUnit : ( variable | assign | print )* EOF ;
+compilationUnit : ( statement | classDeclaration )* EOF ;
+statement : variable | assign | print ;
+classDeclaration : 'class' className '{' classBody '}' ;
+className : ID ;
+classBody :  ( statement )* ;
 variable : VARIABLE ID EQUALS value ;
 assign : ID EQUALS value ;
 print : PRINT expression ;
