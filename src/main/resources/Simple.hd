@@ -9,3 +9,5 @@ print x
 
 s='Hi'
 print s
+
+print "YES"

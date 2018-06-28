@@ -18,13 +18,14 @@ public class AssignVariable implements Instruction, Opcodes {
     @Override
     public void apply(MethodVisitor mv) {
         int type = variable.getType();
+        int id = variable.getId();
         if (type == Har01dParser.NUMBER) {
             int val = Integer.valueOf(value);
             mv.visitIntInsn(BIPUSH, val);
-            mv.visitVarInsn(ISTORE, variable.getId());
+            mv.visitVarInsn(ISTORE, id);
         } else if (type == Har01dParser.STRING) {
             mv.visitLdcInsn(value);
-            mv.visitVarInsn(ASTORE, variable.getId());
+            mv.visitVarInsn(ASTORE, id);
         }
     }
 }

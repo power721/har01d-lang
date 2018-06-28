@@ -23,23 +23,24 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 public class Har01dParser extends Parser {
     public static final int VARIABLE = 1, PRINT = 2, EQUALS = 3, NUMBER = 4, STRING = 5, ID = 6, WS = 7;
     public static final int RULE_compilationUnit = 0, RULE_variable = 1, RULE_assign = 2, RULE_print = 3,
-                                    RULE_value = 4;
-    public static final String[] ruleNames = {"compilationUnit", "variable", "assign", "print", "value"};
+                                    RULE_value = 4, RULE_expression = 5;
+    public static final String[] ruleNames = {"compilationUnit", "variable", "assign", "print", "value", "expression"};
     /**
      * @deprecated Use {@link #VOCABULARY} instead.
      */
     @Deprecated
     public static final String[] tokenNames;
-    public static final String _serializedATN = "\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\t%\4\2\t\2\4\3\t"
-                                    + "\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\2\7\2\20\n\2\f\2\16\2\23\13\2\3\2"
-                                    + "\3\2\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\6\3\6\3\6\2\2\7"
-                                    + "\2\4\6\b\n\2\3\3\2\6\7\2\"\2\21\3\2\2\2\4\26\3\2\2\2\6\33\3\2\2\2\b\37"
-                                    + "\3\2\2\2\n\"\3\2\2\2\f\20\5\4\3\2\r\20\5\6\4\2\16\20\5\b\5\2\17\f\3\2"
-                                    + "\2\2\17\r\3\2\2\2\17\16\3\2\2\2\20\23\3\2\2\2\21\17\3\2\2\2\21\22\3\2"
-                                    + "\2\2\22\24\3\2\2\2\23\21\3\2\2\2\24\25\7\2\2\3\25\3\3\2\2\2\26\27\7\3"
-                                    + "\2\2\27\30\7\b\2\2\30\31\7\5\2\2\31\32\5\n\6\2\32\5\3\2\2\2\33\34\7\b"
-                                    + "\2\2\34\35\7\5\2\2\35\36\5\n\6\2\36\7\3\2\2\2\37 \7\4\2\2 !\7\b\2\2!\t"
-                                    + "\3\2\2\2\"#\t\2\2\2#\13\3\2\2\2\4\17\21";
+    public static final String _serializedATN = "\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\t+\4\2\t\2\4\3\t"
+                                    + "\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\3\2\7\2\22\n\2\f\2\16\2\25"
+                                    + "\13\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\6\3\6"
+                                    + "\3\7\3\7\5\7)\n\7\3\7\2\2\b\2\4\6\b\n\f\2\3\3\2\6\7\2(\2\23\3\2\2\2\4"
+                                    + "\30\3\2\2\2\6\35\3\2\2\2\b!\3\2\2\2\n$\3\2\2\2\f(\3\2\2\2\16\22\5\4\3"
+                                    + "\2\17\22\5\6\4\2\20\22\5\b\5\2\21\16\3\2\2\2\21\17\3\2\2\2\21\20\3\2\2"
+                                    + "\2\22\25\3\2\2\2\23\21\3\2\2\2\23\24\3\2\2\2\24\26\3\2\2\2\25\23\3\2\2"
+                                    + "\2\26\27\7\2\2\3\27\3\3\2\2\2\30\31\7\3\2\2\31\32\7\b\2\2\32\33\7\5\2"
+                                    + "\2\33\34\5\n\6\2\34\5\3\2\2\2\35\36\7\b\2\2\36\37\7\5\2\2\37 \5\n\6\2"
+                                    + " \7\3\2\2\2!\"\7\4\2\2\"#\5\f\7\2#\t\3\2\2\2$%\t\2\2\2%\13\3\2\2\2&)\7"
+                                    + "\b\2\2\')\5\n\6\2(&\3\2\2\2(\'\3\2\2\2)\r\3\2\2\2\5\21\23(";
     public static final ATN _ATN = new ATNDeserializer().deserialize(_serializedATN.toCharArray());
     protected static final DFA[] _decisionToDFA;
     protected static final PredictionContextCache _sharedContextCache = new PredictionContextCache();
@@ -117,26 +118,26 @@ public class Har01dParser extends Parser {
         try {
             enterOuterAlt(_localctx, 1);
             {
-                setState(15);
+                setState(17);
                 _errHandler.sync(this);
                 _la = _input.LA(1);
                 while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << VARIABLE) | (1L << PRINT) | (1L << ID))) != 0)) {
                     {
-                        setState(13);
+                        setState(15);
                         _errHandler.sync(this);
                         switch (_input.LA(1)) {
                             case VARIABLE: {
-                                setState(10);
+                                setState(12);
                                 variable();
                             }
                                 break;
                             case ID: {
-                                setState(11);
+                                setState(13);
                                 assign();
                             }
                                 break;
                             case PRINT: {
-                                setState(12);
+                                setState(14);
                                 print();
                             }
                                 break;
@@ -144,11 +145,11 @@ public class Har01dParser extends Parser {
                                 throw new NoViableAltException(this);
                         }
                     }
-                    setState(17);
+                    setState(19);
                     _errHandler.sync(this);
                     _la = _input.LA(1);
                 }
-                setState(18);
+                setState(20);
                 match(EOF);
             }
         } catch (RecognitionException re) {
@@ -167,13 +168,13 @@ public class Har01dParser extends Parser {
         try {
             enterOuterAlt(_localctx, 1);
             {
-                setState(20);
-                match(VARIABLE);
-                setState(21);
-                match(ID);
                 setState(22);
-                match(EQUALS);
+                match(VARIABLE);
                 setState(23);
+                match(ID);
+                setState(24);
+                match(EQUALS);
+                setState(25);
                 value();
             }
         } catch (RecognitionException re) {
@@ -192,11 +193,11 @@ public class Har01dParser extends Parser {
         try {
             enterOuterAlt(_localctx, 1);
             {
-                setState(25);
-                match(ID);
-                setState(26);
-                match(EQUALS);
                 setState(27);
+                match(ID);
+                setState(28);
+                match(EQUALS);
+                setState(29);
                 value();
             }
         } catch (RecognitionException re) {
@@ -215,10 +216,10 @@ public class Har01dParser extends Parser {
         try {
             enterOuterAlt(_localctx, 1);
             {
-                setState(29);
+                setState(31);
                 match(PRINT);
-                setState(30);
-                match(ID);
+                setState(32);
+                expression();
             }
         } catch (RecognitionException re) {
             _localctx.exception = re;
@@ -237,7 +238,7 @@ public class Har01dParser extends Parser {
         try {
             enterOuterAlt(_localctx, 1);
             {
-                setState(32);
+                setState(34);
                 _la = _input.LA(1);
                 if (!(_la == NUMBER || _la == STRING)) {
                     _errHandler.recoverInline(this);
@@ -258,105 +259,37 @@ public class Har01dParser extends Parser {
         return _localctx;
     }
 
-    public static class VariableContext extends ParserRuleContext {
-        public VariableContext(ParserRuleContext parent, int invokingState) {
-            super(parent, invokingState);
+    public final ExpressionContext expression() throws RecognitionException {
+        ExpressionContext _localctx = new ExpressionContext(_ctx, getState());
+        enterRule(_localctx, 10, RULE_expression);
+        try {
+            setState(38);
+            _errHandler.sync(this);
+            switch (_input.LA(1)) {
+                case ID:
+                    enterOuterAlt(_localctx, 1); {
+                    setState(36);
+                    match(ID);
+                }
+                    break;
+                case NUMBER:
+                case STRING:
+                    enterOuterAlt(_localctx, 2); {
+                    setState(37);
+                    value();
+                }
+                    break;
+                default:
+                    throw new NoViableAltException(this);
+            }
+        } catch (RecognitionException re) {
+            _localctx.exception = re;
+            _errHandler.reportError(this, re);
+            _errHandler.recover(this, re);
+        } finally {
+            exitRule();
         }
-
-        public TerminalNode VARIABLE() {
-            return getToken(Har01dParser.VARIABLE, 0);
-        }
-
-        public TerminalNode ID() {
-            return getToken(Har01dParser.ID, 0);
-        }
-
-        public TerminalNode EQUALS() {
-            return getToken(Har01dParser.EQUALS, 0);
-        }
-
-        public ValueContext value() {
-            return getRuleContext(ValueContext.class, 0);
-        }
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_variable;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof Har01dListener)
-                ((Har01dListener) listener).enterVariable(this);
-        }
-
-        @Override
-        public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof Har01dListener)
-                ((Har01dListener) listener).exitVariable(this);
-        }
-    }
-
-    public static class PrintContext extends ParserRuleContext {
-        public PrintContext(ParserRuleContext parent, int invokingState) {
-            super(parent, invokingState);
-        }
-
-        public TerminalNode PRINT() {
-            return getToken(Har01dParser.PRINT, 0);
-        }
-
-        public TerminalNode ID() {
-            return getToken(Har01dParser.ID, 0);
-        }
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_print;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof Har01dListener)
-                ((Har01dListener) listener).enterPrint(this);
-        }
-
-        @Override
-        public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof Har01dListener)
-                ((Har01dListener) listener).exitPrint(this);
-        }
-    }
-
-    public static class ValueContext extends ParserRuleContext {
-        public ValueContext(ParserRuleContext parent, int invokingState) {
-            super(parent, invokingState);
-        }
-
-        public TerminalNode NUMBER() {
-            return getToken(Har01dParser.NUMBER, 0);
-        }
-
-        public TerminalNode STRING() {
-            return getToken(Har01dParser.STRING, 0);
-        }
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_value;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof Har01dListener)
-                ((Har01dListener) listener).enterValue(this);
-        }
-
-        @Override
-        public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof Har01dListener)
-                ((Har01dListener) listener).exitValue(this);
-        }
+        return _localctx;
     }
 
     public static class CompilationUnitContext extends ParserRuleContext {
@@ -410,6 +343,45 @@ public class Har01dParser extends Parser {
         }
     }
 
+    public static class VariableContext extends ParserRuleContext {
+        public VariableContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public TerminalNode VARIABLE() {
+            return getToken(Har01dParser.VARIABLE, 0);
+        }
+
+        public TerminalNode ID() {
+            return getToken(Har01dParser.ID, 0);
+        }
+
+        public TerminalNode EQUALS() {
+            return getToken(Har01dParser.EQUALS, 0);
+        }
+
+        public ValueContext value() {
+            return getRuleContext(ValueContext.class, 0);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_variable;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof Har01dListener)
+                ((Har01dListener) listener).enterVariable(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof Har01dListener)
+                ((Har01dListener) listener).exitVariable(this);
+        }
+    }
+
     public static class AssignContext extends ParserRuleContext {
         public AssignContext(ParserRuleContext parent, int invokingState) {
             super(parent, invokingState);
@@ -442,6 +414,99 @@ public class Har01dParser extends Parser {
         public void exitRule(ParseTreeListener listener) {
             if (listener instanceof Har01dListener)
                 ((Har01dListener) listener).exitAssign(this);
+        }
+    }
+
+    public static class PrintContext extends ParserRuleContext {
+        public PrintContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public TerminalNode PRINT() {
+            return getToken(Har01dParser.PRINT, 0);
+        }
+
+        public ExpressionContext expression() {
+            return getRuleContext(ExpressionContext.class, 0);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_print;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof Har01dListener)
+                ((Har01dListener) listener).enterPrint(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof Har01dListener)
+                ((Har01dListener) listener).exitPrint(this);
+        }
+    }
+
+    public static class ValueContext extends ParserRuleContext {
+        public ValueContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public TerminalNode NUMBER() {
+            return getToken(Har01dParser.NUMBER, 0);
+        }
+
+        public TerminalNode STRING() {
+            return getToken(Har01dParser.STRING, 0);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_value;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof Har01dListener)
+                ((Har01dListener) listener).enterValue(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof Har01dListener)
+                ((Har01dListener) listener).exitValue(this);
+        }
+    }
+
+    public static class ExpressionContext extends ParserRuleContext {
+        public ExpressionContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public TerminalNode ID() {
+            return getToken(Har01dParser.ID, 0);
+        }
+
+        public ValueContext value() {
+            return getRuleContext(ValueContext.class, 0);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_expression;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof Har01dListener)
+                ((Har01dListener) listener).enterExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof Har01dListener)
+                ((Har01dListener) listener).exitExpression(this);
         }
     }
 }

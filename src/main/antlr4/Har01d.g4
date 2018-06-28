@@ -3,9 +3,9 @@ grammar Har01d;
 compilationUnit : ( variable | assign | print )* EOF ;
 variable : VARIABLE ID EQUALS value ;
 assign : ID EQUALS value ;
-print : PRINT ID ;
-value : NUMBER
-      | STRING ;
+print : PRINT expression ;
+expression : ID | value ;
+value : NUMBER | STRING ;
 
 VARIABLE : 'var' ;
 PRINT : 'print' ;

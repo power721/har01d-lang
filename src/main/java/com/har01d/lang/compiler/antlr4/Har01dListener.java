@@ -1,5 +1,4 @@
 package com.har01d.lang.compiler.antlr4;// Generated from Har01d.g4 by ANTLR 4.7.1
-
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -66,4 +65,16 @@ public interface Har01dListener extends ParseTreeListener {
      * @param ctx the parse tree
      */
     void exitValue(Har01dParser.ValueContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link Har01dParser#expression}.
+     * @param ctx the parse tree
+     */
+    void enterExpression(Har01dParser.ExpressionContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link Har01dParser#expression}.
+     * @param ctx the parse tree
+     */
+    void exitExpression(Har01dParser.ExpressionContext ctx);
 }

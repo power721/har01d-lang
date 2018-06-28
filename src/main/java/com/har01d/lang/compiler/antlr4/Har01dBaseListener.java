@@ -96,6 +96,22 @@ public class Har01dBaseListener implements Har01dListener {
      * <p>The default implementation does nothing.</p>
      */
     @Override
+    public void enterExpression(Har01dParser.ExpressionContext ctx) {}
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void exitExpression(Har01dParser.ExpressionContext ctx) {}
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
     public void enterEveryRule(ParserRuleContext ctx) {}
 
     /**
