@@ -55,18 +55,6 @@ public interface Har01dListener extends ParseTreeListener {
     void exitPrint(Har01dParser.PrintContext ctx);
 
     /**
-     * Enter a parse tree produced by {@link Har01dParser#value}.
-     * @param ctx the parse tree
-     */
-    void enterValue(Har01dParser.ValueContext ctx);
-
-    /**
-     * Exit a parse tree produced by {@link Har01dParser#value}.
-     * @param ctx the parse tree
-     */
-    void exitValue(Har01dParser.ValueContext ctx);
-
-    /**
      * Enter a parse tree produced by {@link Har01dParser#expression}.
      * @param ctx the parse tree
      */
@@ -77,4 +65,16 @@ public interface Har01dListener extends ParseTreeListener {
      * @param ctx the parse tree
      */
     void exitExpression(Har01dParser.ExpressionContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link Har01dParser#value}.
+     * @param ctx the parse tree
+     */
+    void enterValue(Har01dParser.ValueContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link Har01dParser#value}.
+     * @param ctx the parse tree
+     */
+    void exitValue(Har01dParser.ValueContext ctx);
 }

@@ -11,3 +11,7 @@ s='Hi'
 print s
 
 print "YES"
+
+var b = true
+print b
+print false

@@ -23,6 +23,10 @@ public class AssignVariable implements Instruction, Opcodes {
             int val = Integer.valueOf(value);
             mv.visitIntInsn(BIPUSH, val);
             mv.visitVarInsn(ISTORE, id);
+        } else if (type == Har01dParser.BOOL) {
+            boolean val = Boolean.valueOf(value);
+            mv.visitLdcInsn(val);
+            mv.visitVarInsn(ISTORE, id);
         } else if (type == Har01dParser.STRING) {
             mv.visitLdcInsn(value);
             mv.visitVarInsn(ASTORE, id);

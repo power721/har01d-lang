@@ -22,6 +22,10 @@ public class PrintValue implements Instruction, Opcodes {
             int val = Integer.valueOf(value.getValue());
             mv.visitIntInsn(BIPUSH, val);
             mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(I)V", false);
+        } else if (type == Har01dParser.BOOL) {
+            boolean val = Boolean.valueOf(value.getValue());
+            mv.visitLdcInsn(val);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Z)V", false);
         } else if (type == Har01dParser.STRING) {
             mv.visitLdcInsn(value.getValue());
             mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);

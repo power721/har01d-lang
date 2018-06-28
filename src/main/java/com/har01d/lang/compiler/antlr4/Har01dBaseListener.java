@@ -80,22 +80,6 @@ public class Har01dBaseListener implements Har01dListener {
      * <p>The default implementation does nothing.</p>
      */
     @Override
-    public void enterValue(Har01dParser.ValueContext ctx) {}
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    @Override
-    public void exitValue(Har01dParser.ValueContext ctx) {}
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>The default implementation does nothing.</p>
-     */
-    @Override
     public void enterExpression(Har01dParser.ExpressionContext ctx) {}
 
     /**
@@ -105,6 +89,22 @@ public class Har01dBaseListener implements Har01dListener {
      */
     @Override
     public void exitExpression(Har01dParser.ExpressionContext ctx) {}
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void enterValue(Har01dParser.ValueContext ctx) {}
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void exitValue(Har01dParser.ValueContext ctx) {}
 
     /**
      * {@inheritDoc}

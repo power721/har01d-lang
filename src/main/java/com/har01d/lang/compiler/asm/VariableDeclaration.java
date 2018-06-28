@@ -17,13 +17,18 @@ public class VariableDeclaration implements Instruction, Opcodes {
     @Override
     public void apply(MethodVisitor mv) {
         int type = variable.getType();
+        int id = variable.getId();
         if (type == Har01dParser.NUMBER) {
             int val = Integer.valueOf(variable.getValue());
             mv.visitIntInsn(BIPUSH, val);
-            mv.visitVarInsn(ISTORE, variable.getId());
+            mv.visitVarInsn(ISTORE, id);
+        } else if (type == Har01dParser.BOOL) {
+            boolean val = Boolean.valueOf(variable.getValue());
+            mv.visitLdcInsn(val);
+            mv.visitVarInsn(ISTORE, id);
         } else if (type == Har01dParser.STRING) {
             mv.visitLdcInsn(variable.getValue());
-            mv.visitVarInsn(ASTORE, variable.getId());
+            mv.visitVarInsn(ASTORE, id);
         }
     }
 }

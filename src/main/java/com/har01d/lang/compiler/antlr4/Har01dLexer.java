@@ -13,38 +13,40 @@ import org.antlr.v4.runtime.dfa.DFA;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class Har01dLexer extends Lexer {
-    public static final int VARIABLE = 1, PRINT = 2, EQUALS = 3, NUMBER = 4, STRING = 5, ID = 6, WS = 7;
-    public static final String[] ruleNames = {"VARIABLE", "PRINT", "EQUALS", "NUMBER", "STRING", "ID", "WS"};
+    public static final int VARIABLE = 1, PRINT = 2, EQUALS = 3, NUMBER = 4, BOOL = 5, STRING = 6, ID = 7, WS = 8;
+    public static final String[] ruleNames = {"VARIABLE", "PRINT", "EQUALS", "NUMBER", "BOOL", "STRING", "ID", "WS"};
     /**
      * @deprecated Use {@link #VOCABULARY} instead.
      */
     @Deprecated
     public static final String[] tokenNames;
-    public static final String _serializedATN = "\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\tB\b\1\4\2\t\2\4"
-                                    + "\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\3\2\3\2\3\2\3\2\3\3\3\3"
-                                    + "\3\3\3\3\3\3\3\3\3\4\3\4\3\5\6\5\37\n\5\r\5\16\5 \3\6\3\6\7\6%\n\6\f\6"
-                                    + "\16\6(\13\6\3\6\3\6\3\6\7\6-\n\6\f\6\16\6\60\13\6\3\6\5\6\63\n\6\3\7\3"
-                                    + "\7\7\7\67\n\7\f\7\16\7:\13\7\3\b\6\b=\n\b\r\b\16\b>\3\b\3\b\4&.\2\t\3"
-                                    + "\3\5\4\7\5\t\6\13\7\r\b\17\t\3\2\6\3\2\62;\5\2C\\aac|\6\2\62;C\\aac|\5"
-                                    + "\2\13\f\17\17\"\"\2G\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3\2\2\2\2"
-                                    + "\13\3\2\2\2\2\r\3\2\2\2\2\17\3\2\2\2\3\21\3\2\2\2\5\25\3\2\2\2\7\33\3"
-                                    + "\2\2\2\t\36\3\2\2\2\13\62\3\2\2\2\r\64\3\2\2\2\17<\3\2\2\2\21\22\7x\2"
-                                    + "\2\22\23\7c\2\2\23\24\7t\2\2\24\4\3\2\2\2\25\26\7r\2\2\26\27\7t\2\2\27"
-                                    + "\30\7k\2\2\30\31\7p\2\2\31\32\7v\2\2\32\6\3\2\2\2\33\34\7?\2\2\34\b\3"
-                                    + "\2\2\2\35\37\t\2\2\2\36\35\3\2\2\2\37 \3\2\2\2 \36\3\2\2\2 !\3\2\2\2!"
-                                    + "\n\3\2\2\2\"&\7$\2\2#%\13\2\2\2$#\3\2\2\2%(\3\2\2\2&\'\3\2\2\2&$\3\2\2"
-                                    + "\2\')\3\2\2\2(&\3\2\2\2)\63\7$\2\2*.\7)\2\2+-\13\2\2\2,+\3\2\2\2-\60\3"
-                                    + "\2\2\2./\3\2\2\2.,\3\2\2\2/\61\3\2\2\2\60.\3\2\2\2\61\63\7)\2\2\62\"\3"
-                                    + "\2\2\2\62*\3\2\2\2\63\f\3\2\2\2\648\t\3\2\2\65\67\t\4\2\2\66\65\3\2\2"
-                                    + "\2\67:\3\2\2\28\66\3\2\2\289\3\2\2\29\16\3\2\2\2:8\3\2\2\2;=\t\5\2\2<"
-                                    + ";\3\2\2\2=>\3\2\2\2><\3\2\2\2>?\3\2\2\2?@\3\2\2\2@A\b\b\2\2A\20\3\2\2"
-                                    + "\2\t\2 &.\628>\3\b\2\2";
+    public static final String _serializedATN = "\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\nO\b\1\4\2\t\2\4"
+                                    + "\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\3\2\3\2"
+                                    + "\3\3\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\5\6\5!\n\5\r\5\16\5\"\3\6\3\6\3\6\3"
+                                    + "\6\3\6\3\6\3\6\3\6\3\6\5\6.\n\6\3\7\3\7\7\7\62\n\7\f\7\16\7\65\13\7\3"
+                                    + "\7\3\7\3\7\7\7:\n\7\f\7\16\7=\13\7\3\7\5\7@\n\7\3\b\3\b\7\bD\n\b\f\b\16"
+                                    + "\bG\13\b\3\t\6\tJ\n\t\r\t\16\tK\3\t\3\t\4\63;\2\n\3\3\5\4\7\5\t\6\13\7"
+                                    + "\r\b\17\t\21\n\3\2\6\3\2\62;\5\2C\\aac|\6\2\62;C\\aac|\5\2\13\f\17\17"
+                                    + "\"\"\2U\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3\2\2\2\2\13\3\2\2\2\2"
+                                    + "\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\3\23\3\2\2\2\5\27\3\2\2\2\7\35\3"
+                                    + "\2\2\2\t \3\2\2\2\13-\3\2\2\2\r?\3\2\2\2\17A\3\2\2\2\21I\3\2\2\2\23\24"
+                                    + "\7x\2\2\24\25\7c\2\2\25\26\7t\2\2\26\4\3\2\2\2\27\30\7r\2\2\30\31\7t\2"
+                                    + "\2\31\32\7k\2\2\32\33\7p\2\2\33\34\7v\2\2\34\6\3\2\2\2\35\36\7?\2\2\36"
+                                    + "\b\3\2\2\2\37!\t\2\2\2 \37\3\2\2\2!\"\3\2\2\2\" \3\2\2\2\"#\3\2\2\2#\n"
+                                    + "\3\2\2\2$%\7v\2\2%&\7t\2\2&\'\7w\2\2\'.\7g\2\2()\7h\2\2)*\7c\2\2*+\7n"
+                                    + "\2\2+,\7u\2\2,.\7g\2\2-$\3\2\2\2-(\3\2\2\2.\f\3\2\2\2/\63\7$\2\2\60\62"
+                                    + "\13\2\2\2\61\60\3\2\2\2\62\65\3\2\2\2\63\64\3\2\2\2\63\61\3\2\2\2\64\66"
+                                    + "\3\2\2\2\65\63\3\2\2\2\66@\7$\2\2\67;\7)\2\28:\13\2\2\298\3\2\2\2:=\3"
+                                    + "\2\2\2;<\3\2\2\2;9\3\2\2\2<>\3\2\2\2=;\3\2\2\2>@\7)\2\2?/\3\2\2\2?\67"
+                                    + "\3\2\2\2@\16\3\2\2\2AE\t\3\2\2BD\t\4\2\2CB\3\2\2\2DG\3\2\2\2EC\3\2\2\2"
+                                    + "EF\3\2\2\2F\20\3\2\2\2GE\3\2\2\2HJ\t\5\2\2IH\3\2\2\2JK\3\2\2\2KI\3\2\2"
+                                    + "\2KL\3\2\2\2LM\3\2\2\2MN\b\t\2\2N\22\3\2\2\2\n\2\"-\63;?EK\3\b\2\2";
     public static final ATN _ATN = new ATNDeserializer().deserialize(_serializedATN.toCharArray());
     protected static final DFA[] _decisionToDFA;
     protected static final PredictionContextCache _sharedContextCache = new PredictionContextCache();
     private static final String[] _LITERAL_NAMES = {null, "'var'", "'print'", "'='"};
     private static final String[] _SYMBOLIC_NAMES =
-                                    {null, "VARIABLE", "PRINT", "EQUALS", "NUMBER", "STRING", "ID", "WS"};
+                                    {null, "VARIABLE", "PRINT", "EQUALS", "NUMBER", "BOOL", "STRING", "ID", "WS"};
     public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
     public static String[] channelNames = {"DEFAULT_TOKEN_CHANNEL", "HIDDEN"};
     public static String[] modeNames = {"DEFAULT_MODE"};
