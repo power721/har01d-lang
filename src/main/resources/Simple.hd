@@ -1,4 +1,11 @@
 var x = 5
 print x
+
 var s = "hello world!"
+print s
+
+x = 1
+print x
+
+s='Hi'
 print s

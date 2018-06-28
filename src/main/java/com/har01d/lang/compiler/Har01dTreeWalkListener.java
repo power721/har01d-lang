@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 
 import com.har01d.lang.compiler.antlr4.Har01dBaseListener;
 import com.har01d.lang.compiler.antlr4.Har01dParser;
+import com.har01d.lang.compiler.asm.AssignVariable;
 import com.har01d.lang.compiler.asm.Instruction;
 import com.har01d.lang.compiler.asm.PrintVariable;
 import com.har01d.lang.compiler.asm.VariableDeclaration;
@@ -33,6 +34,23 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
         Variable var = new Variable(varIndex, varType, varTextValue);
         variables.put(varName.getText(), var);
         instructions.add(new VariableDeclaration(var));
+    }
+
+    @Override
+    public void exitAssign(Har01dParser.AssignContext ctx) {
+        TerminalNode varName = ctx.ID();
+        Har01dParser.ValueContext varValue = ctx.value();
+        int varType = varValue.getStart().getType();
+        int varIndex = variables.size();
+        String varTextValue = varValue.getText();
+
+        if (!variables.containsKey(varName.getText())) {
+            System.err.printf("var '%s' has not been declared!", varName.getText());
+            return;
+        }
+
+        Variable var = variables.get(varName.getText());
+        instructions.add(new AssignVariable(var, varTextValue));
     }
 
     @Override
