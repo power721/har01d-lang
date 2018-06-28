@@ -1,12 +1,5 @@
 package com.har01d.lang.compiler;
 
-import java.util.ArrayDeque;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Queue;
-
-import org.antlr.v4.runtime.tree.TerminalNode;
-
 import com.har01d.lang.antlr.Har01dBaseListener;
 import com.har01d.lang.antlr.Har01dParser;
 import com.har01d.lang.compiler.asm.AssignVariable;
@@ -16,6 +9,11 @@ import com.har01d.lang.compiler.asm.PrintVariable;
 import com.har01d.lang.compiler.asm.VariableDeclaration;
 import com.har01d.lang.compiler.domain.Value;
 import com.har01d.lang.compiler.domain.Variable;
+import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Queue;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 public class Har01dTreeWalkListener extends Har01dBaseListener {
     private Queue<Instruction> instructions = new ArrayDeque<>();
@@ -27,7 +25,7 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
 
     @Override
     public void exitVariable(Har01dParser.VariableContext ctx) {
-        TerminalNode varName = ctx.ID();
+        TerminalNode varName = ctx.name().ID();
         Har01dParser.ValueContext varValue = ctx.value();
         int varType = varValue.getStart().getType();
         int varIndex = variables.size();
@@ -40,7 +38,7 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
 
     @Override
     public void exitAssign(Har01dParser.AssignContext ctx) {
-        TerminalNode varName = ctx.ID();
+        TerminalNode varName = ctx.name().ID();
         Har01dParser.ValueContext varValue = ctx.value();
         String varTextValue = varValue.getText();
 
