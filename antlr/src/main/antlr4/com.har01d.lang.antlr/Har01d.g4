@@ -5,7 +5,7 @@ statement : variable | value | assign | print ;
 classDeclaration : 'class' className '{' classBody '}' ;
 className : ID ;
 classBody : field* function* ;
-field : type name;
+field : type name ;
 variable : VARIABLE name EQUALS literal ;
 value : VALUE name EQUALS literal ;
 assign : name EQUALS literal ;
@@ -39,7 +39,7 @@ classType : qualifiedName ('[' ']')* ;
 
 block : '{' statement* '}' ;
 
-qualifiedName : ID ('.' ID)*;
+qualifiedName : ID ('.' ID)* ;
 name : ID ;
 
 VARIABLE : 'var' ;
