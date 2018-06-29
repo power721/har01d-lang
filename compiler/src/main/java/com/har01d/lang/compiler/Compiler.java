@@ -12,6 +12,11 @@ import com.har01d.lang.compiler.asm.Instruction;
 public class Compiler {
 
     public static void main(String[] args) throws Exception {
+        if (args.length != 1) {
+            System.err.println("Usage: java com.har01d.lang.compiler.Compiler <FILE_NAME>.hd");
+            System.exit(1);
+        }
+
         new Compiler().compile(args);
     }
 
