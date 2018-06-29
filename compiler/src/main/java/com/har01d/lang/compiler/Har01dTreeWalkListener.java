@@ -15,6 +15,7 @@ import com.har01d.lang.compiler.asm.PrintLiteral;
 import com.har01d.lang.compiler.asm.PrintVariable;
 import com.har01d.lang.compiler.asm.VariableDeclaration;
 import com.har01d.lang.compiler.domain.Literal;
+import com.har01d.lang.compiler.domain.Value;
 import com.har01d.lang.compiler.domain.Variable;
 
 public class Har01dTreeWalkListener extends Har01dBaseListener {
@@ -29,7 +30,7 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
     public void exitVariable(Har01dParser.VariableContext ctx) {
         TerminalNode varName = ctx.name().ID();
         if (variables.containsKey(varName.getText())) {
-            System.err.printf("var '%s' already declared!", varName.getText());
+            System.err.printf("variable '%s' already declared!", varName.getText());
             return;
         }
 
@@ -44,16 +45,39 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
     }
 
     @Override
+    public void exitValue(Har01dParser.ValueContext ctx) {
+        TerminalNode valName = ctx.name().ID();
+        if (variables.containsKey(valName.getText())) {
+            System.err.printf("variable '%s' already declared!", valName.getText());
+            return;
+        }
+
+        Har01dParser.LiteralContext valValue = ctx.literal();
+        int valType = valValue.getStart().getType();
+        int valIndex = variables.size();
+        String valTextValue = fixString(valType, valValue.getText());
+
+        Value val = new Value(valIndex, valType, valTextValue);
+        variables.put(valName.getText(), val);
+        instructions.add(new VariableDeclaration(val));
+    }
+
+    @Override
     public void exitAssign(Har01dParser.AssignContext ctx) {
         TerminalNode varName = ctx.name().ID();
         Har01dParser.LiteralContext varValue = ctx.literal();
 
         if (!variables.containsKey(varName.getText())) {
-            System.err.printf("var '%s' has not been declared!", varName.getText());
+            System.err.printf("variable '%s' has not been declared!", varName.getText());
             return;
         }
 
         Variable var = variables.get(varName.getText());
+        if (var instanceof Value) {
+            System.err.printf("variable '%s' cannot change value!", varName.getText());
+            return;
+        }
+
         String varTextValue = fixString(var.getType(), varValue.getText());
         instructions.add(new AssignVariable(var, varTextValue));
     }
@@ -73,7 +97,7 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
         }
 
         if (!variables.containsKey(varName.getText())) {
-            System.err.printf("var '%s' has not been declared!", varName.getText());
+            System.err.printf("variable '%s' has not been declared!", varName.getText());
             return;
         }
 

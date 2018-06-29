@@ -1,12 +1,13 @@
 grammar Har01d;
 
 compilationUnit : ( statement | function | classDeclaration )* EOF ;
-statement : variable | assign | print ;
+statement : variable | value | assign | print ;
 classDeclaration : 'class' className '{' classBody '}' ;
 className : ID ;
 classBody : field* function* ;
 field : type name;
 variable : VARIABLE name EQUALS literal ;
+value : VALUE name EQUALS literal ;
 assign : name EQUALS literal ;
 print : PRINT expression ;
 expression : ID | literal ;
@@ -42,6 +43,7 @@ qualifiedName : ID ('.' ID)*;
 name : ID ;
 
 VARIABLE : 'var' ;
+VALUE : 'val' ;
 PRINT : 'print' ;
 EQUALS : '=' ;
 NUMBER : [0-9]+ ;

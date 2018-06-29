@@ -13,7 +13,8 @@ print s
 
 print "#YES#"
 
-# boolean
-var b = true
+# boolean value
+val b = true
 print b
+
 print false
