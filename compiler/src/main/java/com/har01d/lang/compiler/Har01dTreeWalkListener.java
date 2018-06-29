@@ -31,7 +31,7 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
         TerminalNode varName = ctx.name().ID();
         if (variables.containsKey(varName.getText())) {
             System.err.printf("variable '%s' already declared!", varName.getText());
-            return;
+            System.exit(1);
         }
 
         Har01dParser.LiteralContext varValue = ctx.literal();
