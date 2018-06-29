@@ -28,6 +28,11 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
     @Override
     public void exitVariable(Har01dParser.VariableContext ctx) {
         TerminalNode varName = ctx.name().ID();
+        if (variables.containsKey(varName.getText())) {
+            System.err.printf("var '%s' already declared!", varName.getText());
+            return;
+        }
+
         Har01dParser.ValueContext varValue = ctx.value();
         int varType = varValue.getStart().getType();
         int varIndex = variables.size();
