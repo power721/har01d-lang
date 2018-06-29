@@ -11,10 +11,10 @@ import com.har01d.lang.antlr.Har01dBaseListener;
 import com.har01d.lang.antlr.Har01dParser;
 import com.har01d.lang.compiler.asm.AssignVariable;
 import com.har01d.lang.compiler.asm.Instruction;
-import com.har01d.lang.compiler.asm.PrintValue;
+import com.har01d.lang.compiler.asm.PrintLiteral;
 import com.har01d.lang.compiler.asm.PrintVariable;
 import com.har01d.lang.compiler.asm.VariableDeclaration;
-import com.har01d.lang.compiler.domain.Value;
+import com.har01d.lang.compiler.domain.Literal;
 import com.har01d.lang.compiler.domain.Variable;
 
 public class Har01dTreeWalkListener extends Har01dBaseListener {
@@ -33,7 +33,7 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
             return;
         }
 
-        Har01dParser.ValueContext varValue = ctx.value();
+        Har01dParser.LiteralContext varValue = ctx.literal();
         int varType = varValue.getStart().getType();
         int varIndex = variables.size();
         String varTextValue = fixString(varType, varValue.getText());
@@ -46,7 +46,7 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
     @Override
     public void exitAssign(Har01dParser.AssignContext ctx) {
         TerminalNode varName = ctx.name().ID();
-        Har01dParser.ValueContext varValue = ctx.value();
+        Har01dParser.LiteralContext varValue = ctx.literal();
 
         if (!variables.containsKey(varName.getText())) {
             System.err.printf("var '%s' has not been declared!", varName.getText());
@@ -64,11 +64,11 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
         TerminalNode varName = expressionContext.ID();
 
         if (varName == null) {
-            Har01dParser.ValueContext valueContext = expressionContext.value();
+            Har01dParser.LiteralContext valueContext = expressionContext.literal();
             int varType = valueContext.getStart().getType();
             String varTextValue = fixString(varType, valueContext.getText());
-            Value value = new Value(varType, varTextValue);
-            instructions.add(new PrintValue(value));
+            Literal literal = new Literal(varType, varTextValue);
+            instructions.add(new PrintLiteral(literal));
             return;
         }
 

@@ -1,10 +1,10 @@
 package com.har01d.lang.compiler.domain;
 
-public class Value {
+public class Literal {
     private final int type;
     private final String value;
 
-    public Value(int type, String value) {
+    public Literal(int type, String value) {
         this.type = type;
         this.value = value;
     }

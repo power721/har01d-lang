@@ -6,11 +6,11 @@ classDeclaration : 'class' className '{' classBody '}' ;
 className : ID ;
 classBody : field* function* ;
 field : type name;
-variable : VARIABLE name EQUALS value ;
-assign : name EQUALS value ;
+variable : VARIABLE name EQUALS literal ;
+assign : name EQUALS literal ;
 print : PRINT expression ;
-expression : ID | value ;
-value : NUMBER | BOOL | STRING ;
+expression : ID | literal ;
+literal : NUMBER | BOOL | STRING ;
 
 function : functionDeclaration block ;
 functionDeclaration : 'fun' functionName '(' parametersList? ')' (':' type)? ;
