@@ -4,14 +4,16 @@ print x
 var s = "hello world!"
 print s
 
+// reassign
 x = 1
 print x
 
-s='Hi'
+s='//Hi//'
 print s
 
-print "YES"
+print "#YES#"
 
+# boolean
 var b = true
 print b
 print false

@@ -49,3 +49,4 @@ BOOL : 'true' | 'false' ;
 STRING : '"'.*?'"' | '\''.*?'\'' ;
 ID: [_a-zA-Z][_a-zA-Z0-9]* ;
 WS: [ \t\n\r]+ -> skip ;
+COMMENT: ('//' | '#').*?[\r\n] -> skip ;
