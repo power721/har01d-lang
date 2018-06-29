@@ -93,7 +93,7 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
             String varTextValue = fixString(varType, valueContext.getText());
             Literal literal = new Literal(varType, varTextValue);
             instructions.add(new PrintLiteral(literal));
-            System.exit(1);
+            return;
         }
 
         if (!variables.containsKey(varName.getText())) {
