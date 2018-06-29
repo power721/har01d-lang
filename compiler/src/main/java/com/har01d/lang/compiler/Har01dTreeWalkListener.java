@@ -49,7 +49,7 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
         TerminalNode valName = ctx.name().ID();
         if (variables.containsKey(valName.getText())) {
             System.err.printf("variable '%s' already declared!", valName.getText());
-            return;
+            System.exit(1);
         }
 
         Har01dParser.LiteralContext valValue = ctx.literal();
@@ -69,13 +69,13 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
 
         if (!variables.containsKey(varName.getText())) {
             System.err.printf("variable '%s' has not been declared!", varName.getText());
-            return;
+            System.exit(1);
         }
 
         Variable var = variables.get(varName.getText());
         if (var instanceof Value) {
             System.err.printf("variable '%s' cannot change value!", varName.getText());
-            return;
+            System.exit(1);
         }
 
         String varTextValue = fixString(var.getType(), varValue.getText());
@@ -93,12 +93,12 @@ public class Har01dTreeWalkListener extends Har01dBaseListener {
             String varTextValue = fixString(varType, valueContext.getText());
             Literal literal = new Literal(varType, varTextValue);
             instructions.add(new PrintLiteral(literal));
-            return;
+            System.exit(1);
         }
 
         if (!variables.containsKey(varName.getText())) {
             System.err.printf("variable '%s' has not been declared!", varName.getText());
-            return;
+            System.exit(1);
         }
 
         Variable variable = variables.get(varName.getText());
