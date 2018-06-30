@@ -7,6 +7,7 @@ import com.har01d.lang.compiler.domain.function.FunctionParameter;
 import com.har01d.lang.compiler.domain.statement.expression.Addition;
 import com.har01d.lang.compiler.domain.statement.expression.Division;
 import com.har01d.lang.compiler.domain.statement.expression.Multiplication;
+import com.har01d.lang.compiler.domain.statement.expression.Remainder;
 import com.har01d.lang.compiler.domain.statement.expression.Subtraction;
 import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
 import org.objectweb.asm.MethodVisitor;
@@ -56,6 +57,10 @@ public class ExpressionGenerator {
     }
 
     public void generate(Division expression) {
+        arithmeticExpressionGenerator.generate(expression);
+    }
+
+    public void generate(Remainder expression) {
         arithmeticExpressionGenerator.generate(expression);
     }
 

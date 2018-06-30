@@ -96,6 +96,11 @@ public class ClassType implements Type {
     }
 
     @Override
+    public int getRemainderOpcode() {
+        throw new RuntimeException("Remainder operation not (yet ;) ) supported for custom objects");
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

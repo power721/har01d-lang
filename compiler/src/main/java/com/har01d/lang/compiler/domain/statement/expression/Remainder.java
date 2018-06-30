@@ -3,9 +3,9 @@ package com.har01d.lang.compiler.domain.statement.expression;
 import com.har01d.lang.compiler.generator.ExpressionGenerator;
 import com.har01d.lang.compiler.generator.StatementGenerator;
 
-public class Division extends ArithmeticExpression {
+public class Remainder extends ArithmeticExpression {
 
-    public Division(Expression leftExpression, Expression rightExpression) {
+    public Remainder(Expression leftExpression, Expression rightExpression) {
         super(leftExpression, rightExpression);
     }
 

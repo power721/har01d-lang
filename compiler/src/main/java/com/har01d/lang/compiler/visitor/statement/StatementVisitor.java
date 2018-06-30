@@ -4,13 +4,11 @@ import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser.AddContext;
 import com.har01d.lang.antlr.Har01dParser.AssignmentContext;
 import com.har01d.lang.antlr.Har01dParser.BlockContext;
-import com.har01d.lang.antlr.Har01dParser.DivideContext;
 import com.har01d.lang.antlr.Har01dParser.FunctionCallContext;
 import com.har01d.lang.antlr.Har01dParser.MultiplyContext;
 import com.har01d.lang.antlr.Har01dParser.PrintContext;
 import com.har01d.lang.antlr.Har01dParser.ReturnVoidContext;
 import com.har01d.lang.antlr.Har01dParser.ReturnWithValueContext;
-import com.har01d.lang.antlr.Har01dParser.SubstractContext;
 import com.har01d.lang.antlr.Har01dParser.ValueDeclarationContext;
 import com.har01d.lang.antlr.Har01dParser.VariableDeclarationContext;
 import com.har01d.lang.compiler.domain.Scope;
@@ -83,18 +81,8 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     }
 
     @Override
-    public Expression visitSubstract(SubstractContext ctx) {
-        return expressionVisitor.visitSubstract(ctx);
-    }
-
-    @Override
     public Expression visitMultiply(MultiplyContext ctx) {
         return expressionVisitor.visitMultiply(ctx);
-    }
-
-    @Override
-    public Expression visitDivide(DivideContext ctx) {
-        return expressionVisitor.visitDivide(ctx);
     }
 
 }

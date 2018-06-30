@@ -2,11 +2,9 @@ package com.har01d.lang.compiler.visitor.statement.expression;
 
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser.AddContext;
-import com.har01d.lang.antlr.Har01dParser.DivideContext;
 import com.har01d.lang.antlr.Har01dParser.FunctionCallContext;
 import com.har01d.lang.antlr.Har01dParser.LiteralContext;
 import com.har01d.lang.antlr.Har01dParser.MultiplyContext;
-import com.har01d.lang.antlr.Har01dParser.SubstractContext;
 import com.har01d.lang.antlr.Har01dParser.VariableReferenceContext;
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
@@ -48,18 +46,8 @@ public class ExpressionVisitor extends Har01dBaseVisitor<Expression> {
     }
 
     @Override
-    public Expression visitSubstract(SubstractContext ctx) {
-        return arithmeticExpressionVisitor.visitSubstract(ctx);
-    }
-
-    @Override
     public Expression visitMultiply(MultiplyContext ctx) {
         return arithmeticExpressionVisitor.visitMultiply(ctx);
-    }
-
-    @Override
-    public Expression visitDivide(DivideContext ctx) {
-        return arithmeticExpressionVisitor.visitDivide(ctx);
     }
 
 }

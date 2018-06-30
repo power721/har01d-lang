@@ -3,6 +3,7 @@ package com.har01d.lang.compiler.generator;
 import com.har01d.lang.compiler.domain.statement.expression.Addition;
 import com.har01d.lang.compiler.domain.statement.expression.Division;
 import com.har01d.lang.compiler.domain.statement.expression.Multiplication;
+import com.har01d.lang.compiler.domain.statement.expression.Remainder;
 import com.har01d.lang.compiler.domain.statement.expression.Subtraction;
 import com.har01d.lang.compiler.domain.type.Type;
 import org.objectweb.asm.MethodVisitor;
@@ -32,18 +33,25 @@ public class ArithmeticExpressionGenerator {
         methodVisitor.visitInsn(type.getSubstractOpcode());
     }
 
-    public void generate(Multiplication subtraction) {
-        subtraction.getLeftExpression().accept(expressionGenerator);
-        subtraction.getRightExpression().accept(expressionGenerator);
-        Type type = subtraction.getType();
+    public void generate(Multiplication multiplication) {
+        multiplication.getLeftExpression().accept(expressionGenerator);
+        multiplication.getRightExpression().accept(expressionGenerator);
+        Type type = multiplication.getType();
         methodVisitor.visitInsn(type.getMultiplyOpcode());
     }
 
-    public void generate(Division d) {
-        d.getLeftExpression().accept(expressionGenerator);
-        d.getRightExpression().accept(expressionGenerator);
-        Type type = d.getType();
+    public void generate(Division division) {
+        division.getLeftExpression().accept(expressionGenerator);
+        division.getRightExpression().accept(expressionGenerator);
+        Type type = division.getType();
         methodVisitor.visitInsn(type.getDividOpcode());
+    }
+
+    public void generate(Remainder remainder) {
+        remainder.getLeftExpression().accept(expressionGenerator);
+        remainder.getRightExpression().accept(expressionGenerator);
+        Type type = remainder.getType();
+        methodVisitor.visitInsn(type.getRemainderOpcode());
     }
 
 }

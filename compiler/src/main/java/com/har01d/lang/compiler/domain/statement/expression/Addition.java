@@ -18,4 +18,5 @@ public class Addition extends ArithmeticExpression {
     public void accept(StatementGenerator generator) {
         generator.generate(this);
     }
+
 }

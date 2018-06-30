@@ -24,4 +24,6 @@ public interface Type {
 
     int getDividOpcode();
 
+    int getRemainderOpcode();
+
 }
