@@ -3,7 +3,6 @@ package com.har01d.lang.compiler.visitor;
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser.CompilationUnitContext;
 import com.har01d.lang.compiler.domain.CompilationUnit;
-import com.har01d.lang.compiler.domain.LocalValue;
 import com.har01d.lang.compiler.domain.MetaData;
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.function.Function;
@@ -24,12 +23,11 @@ public class CompilationUnitVisitor extends Har01dBaseVisitor<CompilationUnit> {
     @Override
     public CompilationUnit visitCompilationUnit(CompilationUnitContext ctx) {
         Scope scope = new Scope(metaData);
-        scope.addLocalVariable(new LocalValue("this", scope.getClassType()));
         StatementVisitor statementVisitor = new StatementVisitor(scope);
         List<Statement> statements = ctx.statement().stream().map(e -> e.accept(statementVisitor))
             .collect(Collectors.toList());
 
-        FunctionVisitor functionVisitor = new FunctionVisitor(scope);
+        FunctionVisitor functionVisitor = new FunctionVisitor(new Scope(metaData));
         List<Function> functions = ctx.function().stream().map(e -> e.accept(functionVisitor))
             .collect(Collectors.toList());
         return new CompilationUnit(statements, functions, null, scope);

@@ -3,6 +3,7 @@ package com.har01d.lang.compiler.generator;
 import com.har01d.lang.compiler.domain.Literal;
 import com.har01d.lang.compiler.domain.LocalVariableReference;
 import com.har01d.lang.compiler.domain.Scope;
+import com.har01d.lang.compiler.domain.function.FunctionParameter;
 import com.har01d.lang.compiler.domain.statement.Assignment;
 import com.har01d.lang.compiler.domain.statement.Block;
 import com.har01d.lang.compiler.domain.statement.PrintStatement;
@@ -56,6 +57,10 @@ public class StatementGenerator {
 
     public void generate(Block block) {
         blockStatementGenerator.generate(block);
+    }
+
+    public void generate(FunctionParameter functionParameter) {
+        expressionGenerator.generate(functionParameter);
     }
 
 }

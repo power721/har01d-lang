@@ -20,7 +20,7 @@ public class MethodGenerator {
 
     public void generate(Function function) {
         String name = function.getName();
-        int flag = Opcodes.ACC_PUBLIC;
+        int flag = Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC;
         String descriptor = getDescriptor(function);
         Block block = (Block) function.getBlock();
 

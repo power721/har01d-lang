@@ -52,8 +52,10 @@ public class Scope {
     }
 
     public void addLocalVariable(LocalVariable localVariable) {
-        localVariables.put(localVariable.getName(), localVariable);
-        localVariablesIndex.add(localVariable.getName());
+        if (!localVariables.containsKey(localVariable.getName())) {
+            localVariables.put(localVariable.getName(), localVariable);
+            localVariablesIndex.add(localVariable.getName());
+        }
     }
 
     public Type getClassType() {
@@ -62,6 +64,10 @@ public class Scope {
 
     public String getClassName() {
         return metaData.getClassName();
+    }
+
+    public boolean isClassDeclaration() {
+        return metaData.isClassDeclaration();
     }
 
 }

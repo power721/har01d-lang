@@ -62,7 +62,7 @@ public class TypeResolver {
             return BultInType.STRING;
         }
 
-        Optional<BultInType> type = Arrays.stream(BultInType.values()).filter(e -> e.name().equals(typeName))
+        Optional<BultInType> type = Arrays.stream(BultInType.values()).filter(e -> e.getName().equals(typeName))
             .findFirst();
         if (type.isPresent()) {
             return type.get();
