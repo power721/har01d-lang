@@ -19,4 +19,5 @@ public class VariableReferenceExpressionVisitor extends Har01dBaseVisitor<Refere
         // TODO: filed
         return new LocalVariableReference(scope.getLocalVariable(ctx.getText()));
     }
+
 }

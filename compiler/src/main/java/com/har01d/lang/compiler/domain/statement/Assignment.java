@@ -24,4 +24,5 @@ public class Assignment implements Statement {
     public void accept(StatementGenerator generator) {
         generator.generate(this);
     }
+
 }

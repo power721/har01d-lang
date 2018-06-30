@@ -33,4 +33,5 @@ public class Literal implements Expression {
     public void accept(StatementGenerator generator) {
         generator.generate(this);
     }
+
 }

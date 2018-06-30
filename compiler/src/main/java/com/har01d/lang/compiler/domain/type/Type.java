@@ -23,4 +23,5 @@ public interface Type {
     int getMultiplyOpcode();
 
     int getDividOpcode();
+
 }

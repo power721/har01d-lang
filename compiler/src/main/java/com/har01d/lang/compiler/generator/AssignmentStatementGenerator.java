@@ -40,4 +40,5 @@ public class AssignmentStatementGenerator {
             methodVisitor.visitTypeInsn(Opcodes.CHECKCAST, variableType.getInternalName());
         }
     }
+
 }

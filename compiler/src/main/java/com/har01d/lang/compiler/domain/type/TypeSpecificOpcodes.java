@@ -88,5 +88,6 @@ public enum TypeSpecificOpcodes {
     public int getDivide() {
         return div;
     }
+
 }
 

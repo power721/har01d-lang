@@ -31,4 +31,5 @@ public class ByteCodeGenerator implements Opcodes {
 
         return classWriter.toByteArray();
     }
+
 }

@@ -8,4 +8,5 @@ public interface Expression extends Statement {
     Type getType();
 
     void accept(ExpressionGenerator generator);
+
 }
