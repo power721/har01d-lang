@@ -1,14 +1,15 @@
 package com.har01d.lang.compiler.generator;
 
 import com.har01d.lang.compiler.domain.Literal;
-import com.har01d.lang.compiler.domain.LocalVariableReference;
 import com.har01d.lang.compiler.domain.Scope;
+import com.har01d.lang.compiler.domain.function.FunctionCall;
 import com.har01d.lang.compiler.domain.function.FunctionParameter;
 import com.har01d.lang.compiler.domain.statement.Assignment;
 import com.har01d.lang.compiler.domain.statement.Block;
 import com.har01d.lang.compiler.domain.statement.PrintStatement;
 import com.har01d.lang.compiler.domain.statement.ReturnStatement;
 import com.har01d.lang.compiler.domain.statement.VariableDeclaration;
+import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
 import org.objectweb.asm.MethodVisitor;
 
 public class StatementGenerator {
@@ -61,6 +62,10 @@ public class StatementGenerator {
 
     public void generate(FunctionParameter functionParameter) {
         expressionGenerator.generate(functionParameter);
+    }
+
+    public void generate(FunctionCall functionCall) {
+        expressionGenerator.generate(functionCall);
     }
 
 }

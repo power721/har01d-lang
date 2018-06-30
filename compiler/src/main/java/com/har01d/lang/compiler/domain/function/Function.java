@@ -27,6 +27,10 @@ public class Function {
         return functionSignature.getReturnType();
     }
 
+    public FunctionSignature getFunctionSignature() {
+        return functionSignature;
+    }
+
     public Statement getBlock() {
         return block;
     }

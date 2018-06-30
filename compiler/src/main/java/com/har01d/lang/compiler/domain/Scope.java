@@ -1,8 +1,11 @@
 package com.har01d.lang.compiler.domain;
 
+import com.har01d.lang.compiler.domain.function.Argument;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
 import com.har01d.lang.compiler.domain.type.ClassType;
 import com.har01d.lang.compiler.domain.type.Type;
+import com.har01d.lang.compiler.domain.variable.LocalValue;
+import com.har01d.lang.compiler.domain.variable.LocalVariable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +35,11 @@ public class Scope {
     public void addSignature(FunctionSignature functionSignature) {
         // TODO: check duplicate
         functionSignatures.add(functionSignature);
+    }
+
+    public FunctionSignature getSignature(String identifier, List<Argument> arguments) {
+        return functionSignatures.stream().filter(e -> e.matches(identifier, arguments)).findFirst()
+            .orElseThrow(() -> new RuntimeException(""));
     }
 
     public boolean isLocalVariableExists(String varName) {

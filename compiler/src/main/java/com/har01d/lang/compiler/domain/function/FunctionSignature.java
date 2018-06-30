@@ -28,4 +28,21 @@ public class FunctionSignature {
         return returnType;
     }
 
+    public boolean matches(String otherSignatureName, List<Argument> arguments) {
+        if (!name.equals(otherSignatureName)) {
+            return false;
+        }
+        if (parameters.size() != arguments.size()) {
+            return false;
+        }
+        int i = 0;
+        for (FunctionParameter parameter : parameters) {
+            if (!parameter.getType().equals(arguments.get(i).getType())) {
+                return false;
+            }
+            i++;
+        }
+        return true;
+    }
+
 }

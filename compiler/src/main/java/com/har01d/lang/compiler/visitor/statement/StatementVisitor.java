@@ -3,6 +3,7 @@ package com.har01d.lang.compiler.visitor.statement;
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser.AssignmentContext;
 import com.har01d.lang.antlr.Har01dParser.BlockContext;
+import com.har01d.lang.antlr.Har01dParser.FunctionCallContext;
 import com.har01d.lang.antlr.Har01dParser.PrintContext;
 import com.har01d.lang.antlr.Har01dParser.ReturnVoidContext;
 import com.har01d.lang.antlr.Har01dParser.ReturnWithValueContext;
@@ -10,6 +11,7 @@ import com.har01d.lang.antlr.Har01dParser.ValueDeclarationContext;
 import com.har01d.lang.antlr.Har01dParser.VariableDeclarationContext;
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.statement.Statement;
+import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.visitor.function.ReturnStatementVisitor;
 import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
 
@@ -20,9 +22,10 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     private final BlockStatementVisitor blockStatementVisitor;
     private final AssignmentStatementVisitor assignmentStatementVisitor;
     private final VariableDeclarationStatementVisitor variableDeclarationStatementVisitor;
+    private final ExpressionVisitor expressionVisitor;
 
     public StatementVisitor(Scope scope) {
-        ExpressionVisitor expressionVisitor = new ExpressionVisitor(scope);
+        expressionVisitor = new ExpressionVisitor(scope);
         printStatementVisitor = new PrintStatementVisitor(expressionVisitor);
         blockStatementVisitor = new BlockStatementVisitor(scope);
         returnStatementVisitor = new ReturnStatementVisitor(expressionVisitor);
@@ -64,4 +67,10 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     public Statement visitBlock(BlockContext ctx) {
         return blockStatementVisitor.visitBlock(ctx);
     }
+
+    @Override
+    public Expression visitFunctionCall(FunctionCallContext ctx) {
+        return expressionVisitor.visitFunctionCall(ctx);
+    }
+
 }

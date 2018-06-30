@@ -34,3 +34,8 @@ fun testReturn(): int {
 fun testParameter(x: int) {
   print x
 }
+
+test()
+testPrint()
+print testReturn()
+testParameter(256)

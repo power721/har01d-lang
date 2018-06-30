@@ -1,10 +1,10 @@
 package com.har01d.lang.compiler.generator;
 
-import com.har01d.lang.compiler.domain.LocalVariable;
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.statement.Assignment;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.domain.type.Type;
+import com.har01d.lang.compiler.domain.variable.LocalVariable;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 

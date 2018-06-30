@@ -6,6 +6,7 @@ statement : variableDeclaration
             | assignment
             | print
             | block
+            | expression
             | returnStatement ;
 classDeclaration : 'class' className '{' classBody '}' ;
 className : ID ;
@@ -15,7 +16,10 @@ variableDeclaration : VARIABLE name EQUALS expression ;
 valueDeclaration : VALUE name EQUALS expression ;
 assignment : name EQUALS expression ;
 print : PRINT expression ;
-expression : variableReference | literal ;
+expression : variableReference #varReference
+             | literal #literalExpr
+             | functionName '(' argumentList ')' #FunctionCall ;
+
 literal : NUMBER | BOOL | STRING ;
 returnStatement : 'return' expression #ReturnWithValue
                 | 'return' #ReturnVoid ;
@@ -29,6 +33,11 @@ parametersList:  parameter (',' parameter)*
 functionName : ID ;
 parameter : ID ':' type ;
 parameterWithDefaultValue : ID ':' type '=' defaultValue=expression ;
+
+argumentList : argument? (',' a=argument)* #UnnamedArgumentsList
+             | namedArgument? (',' namedArgument)* #NamedArgumentsList ;
+argument : expression ;
+namedArgument : name '=' expression ;
 
 type : primitiveType
      | classType ;

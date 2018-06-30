@@ -3,11 +3,11 @@ package com.har01d.lang.compiler.visitor.statement;
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser.ValueDeclarationContext;
 import com.har01d.lang.antlr.Har01dParser.VariableDeclarationContext;
-import com.har01d.lang.compiler.domain.LocalValue;
-import com.har01d.lang.compiler.domain.LocalVariable;
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.statement.VariableDeclaration;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
+import com.har01d.lang.compiler.domain.variable.LocalValue;
+import com.har01d.lang.compiler.domain.variable.LocalVariable;
 import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
 
 public class VariableDeclarationStatementVisitor extends Har01dBaseVisitor<VariableDeclaration> {
