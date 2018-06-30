@@ -1,4 +1,4 @@
-package com.har01d.lang.compiler;
+package com.har01d.lang.compiler.listener;
 
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;

@@ -1,27 +1,25 @@
 package com.har01d.lang.compiler.domain;
 
-import com.har01d.lang.compiler.domain.statement.Expression;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.generator.ExpressionGenerator;
 import com.har01d.lang.compiler.generator.StatementGenerator;
 
-public class Literal implements Expression {
+public class LocalVariableReference implements Reference {
 
-    private final Type type;
-    private final String value;
+    private final LocalVariable variable;
 
-    public Literal(Type type, String value) {
-        this.type = type;
-        this.value = value;
+    public LocalVariableReference(LocalVariable variable) {
+        this.variable = variable;
+    }
+
+    @Override
+    public String geName() {
+        return variable.getName();
     }
 
     @Override
     public Type getType() {
-        return type;
-    }
-
-    public String getValue() {
-        return value;
+        return variable.getType();
     }
 
     @Override
@@ -33,4 +31,5 @@ public class Literal implements Expression {
     public void accept(StatementGenerator generator) {
         generator.generate(this);
     }
+
 }

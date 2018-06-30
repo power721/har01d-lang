@@ -1,18 +1,19 @@
 grammar Har01d;
 
 compilationUnit : ( statement | function | classDeclaration )* EOF ;
-statement : variable | value | assign | print ;
+statement : variableDeclaration | valueDeclaration | assignment | print ;
 classDeclaration : 'class' className '{' classBody '}' ;
 className : ID ;
 classBody : field* function* ;
 field : type name ;
-variable : VARIABLE name EQUALS literal ;
-value : VALUE name EQUALS literal ;
-assign : name EQUALS literal ;
+variableDeclaration : VARIABLE name EQUALS expression ;
+valueDeclaration : VALUE name EQUALS expression ;
+assignment : name EQUALS expression ;
 print : PRINT expression ;
-expression : ID | literal ;
+expression : variableReference | literal ;
 literal : NUMBER | BOOL | STRING ;
 
+variableReference: ID ;
 function : functionDeclaration block ;
 functionDeclaration : 'fun' functionName '(' parametersList? ')' (':' type)? ;
 parametersList:  parameter (',' parameter)*

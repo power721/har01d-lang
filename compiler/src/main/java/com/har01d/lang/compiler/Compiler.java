@@ -1,13 +1,12 @@
 package com.har01d.lang.compiler;
 
+import com.har01d.lang.compiler.domain.CompilationUnit;
+import com.har01d.lang.compiler.generator.ByteCodeGenerator;
+import com.har01d.lang.compiler.parser.Parser;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Queue;
-
-import com.har01d.lang.compiler.asm.ByteCodeGenerator;
-import com.har01d.lang.compiler.asm.Instruction;
 
 public class Compiler {
 
@@ -25,9 +24,10 @@ public class Compiler {
         String fileName = file.getName();
         String path = file.getAbsolutePath();
         String className = fileName.replace(".hd", "");
-        Queue<Instruction> instructions = new SyntaxTreeTraverser().getInstruction(path);
 
-        byte[] byteCode = new ByteCodeGenerator().generateByteCode(instructions, className);
+        CompilationUnit compilationUnit = new Parser().getCompilationUnit(path);
+
+        byte[] byteCode = new ByteCodeGenerator().generateByteCode(compilationUnit, className);
         saveByteCodeToClassFile(fileName, byteCode);
     }
 
