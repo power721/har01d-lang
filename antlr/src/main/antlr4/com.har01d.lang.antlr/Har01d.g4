@@ -18,7 +18,21 @@ assignment : name EQUALS expression ;
 print : PRINT expression ;
 expression : variableReference #varReference
              | literal #literalExpr
-             | functionName '(' argumentList ')' #FunctionCall ;
+             | functionName '(' argumentList ')' #FunctionCall
+             |  '('expression '*' expression')' #Multiply
+             | expression '*' expression  #Multiply
+             | '(' expression '/' expression ')' #Divide
+             | expression '/' expression #Divide
+             | '(' expression '+' expression ')' #Add
+             | expression '+' expression #Add
+             | '(' expression '-' expression ')' #Substract
+             | expression '-' expression #Substract
+             | expression cmp='>' expression #ConditionalExpression
+             | expression cmp='<' expression #ConditionalExpression
+             | expression cmp='==' expression #ConditionalExpression
+             | expression cmp='!=' expression #ConditionalExpression
+             | expression cmp='>=' expression #ConditionalExpression
+             | expression cmp='<=' expression #ConditionalExpression ;
 
 literal : NUMBER | BOOL | STRING ;
 returnStatement : 'return' expression #ReturnWithValue

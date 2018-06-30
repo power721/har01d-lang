@@ -19,6 +19,11 @@ print b
 
 print false
 
+print 1 + 2
+print 3 - 1
+print 2 * 3
+print 5 / 2
+
 fun test() {
 
 }
@@ -35,7 +40,12 @@ fun testParameter(x: int) {
   print x
 }
 
+fun func(x: int, y: int): int {
+  return x * y
+}
+
 test()
 testPrint()
 print testReturn()
 testParameter(256)
+print func(2, 3)

@@ -14,11 +14,12 @@ public class FunctionVisitor extends Har01dBaseVisitor<Function> {
     private final Scope scope;
 
     public FunctionVisitor(Scope scope) {
-        this.scope = new Scope(scope);
+        this.scope = scope;
     }
 
     @Override
     public Function visitFunction(FunctionContext ctx) {
+        Scope scope = new Scope(this.scope);
         FunctionSignature functionSignature = ctx.functionDeclaration().accept(new FunctionSignatureVisitor(
             scope));
 

@@ -4,18 +4,24 @@ import com.har01d.lang.compiler.domain.Literal;
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.function.FunctionCall;
 import com.har01d.lang.compiler.domain.function.FunctionParameter;
+import com.har01d.lang.compiler.domain.statement.expression.Addition;
+import com.har01d.lang.compiler.domain.statement.expression.Division;
+import com.har01d.lang.compiler.domain.statement.expression.Multiplication;
+import com.har01d.lang.compiler.domain.statement.expression.Subtraction;
 import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
 import org.objectweb.asm.MethodVisitor;
 
 public class ExpressionGenerator {
 
     private final CallExpressionGenerator callExpressionGenerator;
+    private final ArithmeticExpressionGenerator arithmeticExpressionGenerator;
     private final LiteralExpressionGenerator literalExpressionGenerator;
     private final ParameterExpressionGenerator parameterExpressionGenerator;
     private final ReferenceExpressionGenerator referenceExpressionGenerator;
 
     public ExpressionGenerator(MethodVisitor methodVisitor, Scope scope) {
         callExpressionGenerator = new CallExpressionGenerator(this, methodVisitor, scope);
+        arithmeticExpressionGenerator = new ArithmeticExpressionGenerator(this, methodVisitor);
         literalExpressionGenerator = new LiteralExpressionGenerator(methodVisitor);
         parameterExpressionGenerator = new ParameterExpressionGenerator(methodVisitor, scope);
         referenceExpressionGenerator = new ReferenceExpressionGenerator(methodVisitor, scope);
@@ -35,6 +41,22 @@ public class ExpressionGenerator {
 
     public void generate(FunctionCall functionCall) {
         callExpressionGenerator.generate(functionCall);
+    }
+
+    public void generate(Addition expression) {
+        arithmeticExpressionGenerator.generate(expression);
+    }
+
+    public void generate(Subtraction expression) {
+        arithmeticExpressionGenerator.generate(expression);
+    }
+
+    public void generate(Multiplication expression) {
+        arithmeticExpressionGenerator.generate(expression);
+    }
+
+    public void generate(Division expression) {
+        arithmeticExpressionGenerator.generate(expression);
     }
 
 }

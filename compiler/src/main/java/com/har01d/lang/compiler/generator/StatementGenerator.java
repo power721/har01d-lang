@@ -9,6 +9,10 @@ import com.har01d.lang.compiler.domain.statement.Block;
 import com.har01d.lang.compiler.domain.statement.PrintStatement;
 import com.har01d.lang.compiler.domain.statement.ReturnStatement;
 import com.har01d.lang.compiler.domain.statement.VariableDeclaration;
+import com.har01d.lang.compiler.domain.statement.expression.Addition;
+import com.har01d.lang.compiler.domain.statement.expression.Division;
+import com.har01d.lang.compiler.domain.statement.expression.Multiplication;
+import com.har01d.lang.compiler.domain.statement.expression.Subtraction;
 import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
 import org.objectweb.asm.MethodVisitor;
 
@@ -66,6 +70,22 @@ public class StatementGenerator {
 
     public void generate(FunctionCall functionCall) {
         expressionGenerator.generate(functionCall);
+    }
+
+    public void generate(Addition expression) {
+        expressionGenerator.generate(expression);
+    }
+
+    public void generate(Subtraction expression) {
+        expressionGenerator.generate(expression);
+    }
+
+    public void generate(Multiplication expression) {
+        expressionGenerator.generate(expression);
+    }
+
+    public void generate(Division expression) {
+        expressionGenerator.generate(expression);
     }
 
 }

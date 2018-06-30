@@ -63,6 +63,8 @@ public class Scope {
         if (!localVariables.containsKey(localVariable.getName())) {
             localVariables.put(localVariable.getName(), localVariable);
             localVariablesIndex.add(localVariable.getName());
+        } else {
+            throw new IllegalStateException("variable '" + localVariable.getName() + "' already declared!");
         }
     }
 
