@@ -1,8 +1,8 @@
 package com.har01d.lang.compiler.generator;
 
 import com.har01d.lang.compiler.domain.statement.Assignment;
-import com.har01d.lang.compiler.domain.statement.Expression;
 import com.har01d.lang.compiler.domain.statement.VariableDeclaration;
+import com.har01d.lang.compiler.domain.statement.expression.Expression;
 
 public class VariableDeclarationStatementGenerator {
 

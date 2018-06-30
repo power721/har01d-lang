@@ -1,7 +1,7 @@
 package com.har01d.lang.compiler.generator;
 
-import com.har01d.lang.compiler.domain.statement.Expression;
 import com.har01d.lang.compiler.domain.statement.PrintStatement;
+import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.domain.type.Type;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -11,8 +11,7 @@ public class PrintStatementGenerator {
     private final ExpressionGenerator expressionGenerator;
     private final MethodVisitor methodVisitor;
 
-    public PrintStatementGenerator(ExpressionGenerator expressionGenerator,
-        MethodVisitor methodVisitor) {
+    public PrintStatementGenerator(MethodVisitor methodVisitor, ExpressionGenerator expressionGenerator) {
         this.expressionGenerator = expressionGenerator;
         this.methodVisitor = methodVisitor;
     }

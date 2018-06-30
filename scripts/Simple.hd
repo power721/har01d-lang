@@ -18,3 +18,11 @@ val b = true
 print b
 
 print false
+
+fun test() {
+
+}
+
+fun testReturn(): int {
+  return 0
+}

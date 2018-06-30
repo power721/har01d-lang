@@ -1,5 +1,6 @@
 package com.har01d.lang.compiler.domain;
 
+import com.har01d.lang.compiler.domain.function.Function;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

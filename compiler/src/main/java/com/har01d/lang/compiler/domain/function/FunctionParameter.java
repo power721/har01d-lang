@@ -1,6 +1,6 @@
-package com.har01d.lang.compiler.domain;
+package com.har01d.lang.compiler.domain.function;
 
-import com.har01d.lang.compiler.domain.statement.Expression;
+import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.generator.ExpressionGenerator;
 import com.har01d.lang.compiler.generator.StatementGenerator;

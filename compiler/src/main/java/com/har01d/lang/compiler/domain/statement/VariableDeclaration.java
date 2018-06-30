@@ -1,5 +1,6 @@
 package com.har01d.lang.compiler.domain.statement;
 
+import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.generator.StatementGenerator;
 
 public class VariableDeclaration implements Statement {

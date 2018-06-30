@@ -14,6 +14,9 @@ public class ByteCodeGenerator implements Opcodes {
         MethodVisitor mv;
         classWriter.visit(52, ACC_PUBLIC + ACC_SUPER, name, null, "java/lang/Object", null);
 
+        MethodGenerator methodGenerator = new MethodGenerator(classWriter);
+        compilationUnit.getFunctions().forEach(e -> e.accept(methodGenerator));
+
         mv = classWriter.visitMethod(ACC_PUBLIC + ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null);
         long count = compilationUnit.getStatements().stream().filter(e -> e instanceof VariableDeclaration).count();
         int maxStack = 100;

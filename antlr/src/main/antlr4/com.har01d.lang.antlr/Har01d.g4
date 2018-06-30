@@ -1,7 +1,12 @@
 grammar Har01d;
 
 compilationUnit : ( statement | function | classDeclaration )* EOF ;
-statement : variableDeclaration | valueDeclaration | assignment | print ;
+statement : variableDeclaration
+            | valueDeclaration
+            | assignment
+            | print
+            | block
+            | returnStatement ;
 classDeclaration : 'class' className '{' classBody '}' ;
 className : ID ;
 classBody : field* function* ;
@@ -12,6 +17,8 @@ assignment : name EQUALS expression ;
 print : PRINT expression ;
 expression : variableReference | literal ;
 literal : NUMBER | BOOL | STRING ;
+returnStatement : 'return' expression #ReturnWithValue
+                | 'return' #ReturnVoid ;
 
 variableReference: ID ;
 function : functionDeclaration block ;

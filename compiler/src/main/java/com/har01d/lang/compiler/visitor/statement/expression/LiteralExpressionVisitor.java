@@ -1,4 +1,4 @@
-package com.har01d.lang.compiler.visitor;
+package com.har01d.lang.compiler.visitor.statement.expression;
 
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser.LiteralContext;

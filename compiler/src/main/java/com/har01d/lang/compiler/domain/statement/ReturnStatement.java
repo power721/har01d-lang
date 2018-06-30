@@ -3,11 +3,11 @@ package com.har01d.lang.compiler.domain.statement;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.generator.StatementGenerator;
 
-public class PrintStatement implements Statement {
+public class ReturnStatement implements Statement {
 
     private final Expression expression;
 
-    public PrintStatement(Expression expression) {
+    public ReturnStatement(Expression expression) {
         this.expression = expression;
     }
 

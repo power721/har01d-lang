@@ -1,18 +1,15 @@
-package com.har01d.lang.compiler.domain;
+package com.har01d.lang.compiler.domain.statement.expression;
 
-import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.generator.ExpressionGenerator;
 import com.har01d.lang.compiler.generator.StatementGenerator;
 
-public class Literal implements Expression {
+public class EmptyExpression implements Expression {
 
     private final Type type;
-    private final String value;
 
-    public Literal(Type type, String value) {
+    public EmptyExpression(Type type) {
         this.type = type;
-        this.value = value;
     }
 
     @Override
@@ -20,18 +17,14 @@ public class Literal implements Expression {
         return type;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     @Override
     public void accept(ExpressionGenerator generator) {
-        generator.generate(this);
+
     }
 
     @Override
     public void accept(StatementGenerator generator) {
-        generator.generate(this);
+
     }
 
 }

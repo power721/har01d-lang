@@ -1,8 +1,12 @@
 package com.har01d.lang.compiler.util;
 
 import com.har01d.lang.antlr.Har01dParser.LiteralContext;
+import com.har01d.lang.antlr.Har01dParser.TypeContext;
 import com.har01d.lang.compiler.domain.type.BultInType;
+import com.har01d.lang.compiler.domain.type.ClassType;
 import com.har01d.lang.compiler.domain.type.Type;
+import java.util.Arrays;
+import java.util.Optional;
 
 public class TypeResolver {
 
@@ -46,6 +50,25 @@ public class TypeResolver {
             return BultInType.BOOLEAN;
         }
         return BultInType.STRING;
+    }
+
+    public static Type resolve(TypeContext ctx) {
+        if (ctx == null) {
+            return BultInType.VOID;
+        }
+
+        String typeName = ctx.getText();
+        if ("java.lang.String".equals(typeName)) {
+            return BultInType.STRING;
+        }
+
+        Optional<BultInType> type = Arrays.stream(BultInType.values()).filter(e -> e.name().equals(typeName))
+            .findFirst();
+        if (type.isPresent()) {
+            return type.get();
+        }
+
+        return new ClassType(typeName);
     }
 
 }
