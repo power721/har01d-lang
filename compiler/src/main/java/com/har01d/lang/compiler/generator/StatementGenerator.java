@@ -10,6 +10,7 @@ import com.har01d.lang.compiler.domain.statement.PrintStatement;
 import com.har01d.lang.compiler.domain.statement.ReturnStatement;
 import com.har01d.lang.compiler.domain.statement.VariableDeclaration;
 import com.har01d.lang.compiler.domain.statement.expression.Addition;
+import com.har01d.lang.compiler.domain.statement.expression.ConditionalExpression;
 import com.har01d.lang.compiler.domain.statement.expression.Division;
 import com.har01d.lang.compiler.domain.statement.expression.Multiplication;
 import com.har01d.lang.compiler.domain.statement.expression.Remainder;
@@ -91,6 +92,10 @@ public class StatementGenerator {
 
     public void generate(Remainder expression) {
         expressionGenerator.generate(expression);
+    }
+
+    public void generate(ConditionalExpression conditionalExpression) {
+        expressionGenerator.generate(conditionalExpression);
     }
 
 }

@@ -1,14 +1,25 @@
-fun sum(x: int, y: int): int {
-    return x + y
-}
-
-fun max(x: int, y: int) {
-    if x>y x else y
-}
-
-fun test(x: int = 0, debug: boolean = false): void {
+fun test() {
 
 }
 
-s = sum(1, 2)
-test(x = 1)
+fun testPrint() {
+  print "test"
+}
+
+fun testReturn(): int {
+  return 0
+}
+
+fun testParameter(x: int) {
+  print x
+}
+
+fun func(x: int, y: int): int {
+  return x * y
+}
+
+test()
+testPrint()
+print testReturn()
+testParameter(256)
+print func(2, 3)

@@ -19,41 +19,4 @@ print b
 
 print false
 
-print 1 + 2
-print 3 - 1
-print 2 * 3
-print 5 / 2
-print 5 * 3 / 2
-print 5 / 3 % 2
-print 1 + 2 * 3
-
-print 5 % 3 / 2
-print 5 / 2 * 3
-print 5 % (3 / 2)
-print 5 / (2 * 3)
-
-fun test() {
-
-}
-
-fun testPrint() {
-  print "test"
-}
-
-fun testReturn(): int {
-  return 0
-}
-
-fun testParameter(x: int) {
-  print x
-}
-
-fun func(x: int, y: int): int {
-  return x * y
-}
-
-test()
-testPrint()
-print testReturn()
-testParameter(256)
-print func(2, 3)
+print -1

@@ -6,6 +6,8 @@ statement : variableDeclaration
             | assignment
             | print
             | block
+            | ifStatement
+            | forStatement
             | expression
             | returnStatement ;
 classDeclaration : 'class' className '{' classBody '}' ;
@@ -30,6 +32,9 @@ expression : variableReference #varReference
 literal : NUMBER | BOOL | STRING ;
 returnStatement : 'return' expression #ReturnWithValue
                 | 'return' #ReturnVoid ;
+ifStatement :  'if'  ('(')? expression (')')? trueStatement=statement ('else' falseStatement=statement)?;
+forStatement : 'for' ('(')? forConditions (')')? statement ;
+forConditions : iterator=variableReference  'from' startExpr=expression range='to' endExpr=expression ;
 
 variableReference: ID ;
 function : functionDeclaration block ;
@@ -70,7 +75,7 @@ VARIABLE : 'var' ;
 VALUE : 'val' ;
 PRINT : 'print' ;
 EQUALS : '=' ;
-NUMBER : [0-9]+ ;
+NUMBER : '-'?[0-9]+ ;
 BOOL : 'true' | 'false' ;
 STRING : '"'.*?'"' | '\''.*?'\'' ;
 ID: [_a-zA-Z][_a-zA-Z0-9]* ;

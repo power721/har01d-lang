@@ -11,16 +11,18 @@ import java.io.OutputStream;
 public class Compiler {
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
+        if (args.length < 1) {
             System.err.println("Usage: java com.har01d.lang.compiler.Compiler <FILE_NAME>.hd");
             System.exit(1);
         }
 
-        new Compiler().compile(args);
+        Compiler compiler = new Compiler();
+        for (String fileName : args) {
+            compiler.compile(new File(fileName));
+        }
     }
 
-    public void compile(String[] args) throws Exception {
-        File file = new File(args[0]);
+    public void compile(File file) throws Exception {
         String fileName = file.getName();
         String path = file.getAbsolutePath();
         String className = fileName.replace(".hd", "");

@@ -3,6 +3,7 @@ package com.har01d.lang.compiler.generator;
 import com.har01d.lang.compiler.domain.CompilationUnit;
 import com.har01d.lang.compiler.domain.statement.Statement;
 import com.har01d.lang.compiler.domain.statement.VariableDeclaration;
+import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -32,7 +33,11 @@ public class ByteCodeGenerator implements Opcodes {
 
         classWriter.visitEnd();
 
-        return classWriter.toByteArray();
+        byte[] bytecode = classWriter.toByteArray();
+        ClassReader cr = new ClassReader(bytecode);
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+        cr.accept(cw, ClassReader.SKIP_FRAMES);
+        return cw.toByteArray();
     }
 
 }
