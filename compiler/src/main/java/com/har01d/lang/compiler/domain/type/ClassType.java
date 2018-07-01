@@ -10,6 +10,7 @@ public class ClassType implements Type {
     private static final Map<String, String> shortcuts = Collections.singletonMap(
         "List", "java.util.ArrayList"
     );
+    public static final ClassType BIGINTEGER = new ClassType("java.math.BigInteger");
     private final String name;
 
     public ClassType(String name) {

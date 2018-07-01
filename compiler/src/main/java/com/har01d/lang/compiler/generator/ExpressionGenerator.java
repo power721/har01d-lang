@@ -21,7 +21,7 @@ public class ExpressionGenerator {
     private final ParameterExpressionGenerator parameterExpressionGenerator;
     private final ReferenceExpressionGenerator referenceExpressionGenerator;
     private final ArithmeticExpressionGenerator arithmeticExpressionGenerator;
-    private final ConditionalExpressionGenerator conditionalExpressionGenerator;
+    private final RelationalExpressionGenerator relationalExpressionGenerator;
 
     public ExpressionGenerator(MethodVisitor methodVisitor, Scope scope) {
         literalExpressionGenerator = new LiteralExpressionGenerator(methodVisitor);
@@ -29,7 +29,7 @@ public class ExpressionGenerator {
         referenceExpressionGenerator = new ReferenceExpressionGenerator(methodVisitor, scope);
         callExpressionGenerator = new CallExpressionGenerator(this, methodVisitor, scope);
         arithmeticExpressionGenerator = new ArithmeticExpressionGenerator(this, methodVisitor);
-        conditionalExpressionGenerator = new ConditionalExpressionGenerator(this, methodVisitor);
+        relationalExpressionGenerator = new RelationalExpressionGenerator(this, methodVisitor);
     }
 
     public void generate(Literal literal) {
@@ -73,7 +73,7 @@ public class ExpressionGenerator {
     }
 
     public void generate(RelationalExpression relationalExpression) {
-        conditionalExpressionGenerator.generate(relationalExpression);
+        relationalExpressionGenerator.generate(relationalExpression);
     }
 
 }

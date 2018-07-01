@@ -1,6 +1,7 @@
 package com.har01d.lang.compiler.domain.statement.expression;
 
 import com.har01d.lang.compiler.domain.type.BultInType;
+import com.har01d.lang.compiler.domain.type.ClassType;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.generator.ExpressionGenerator;
 import com.har01d.lang.compiler.generator.StatementGenerator;
@@ -11,15 +12,14 @@ public class Power extends ArithmeticExpression {
 
     public Power(Expression leftExpression, Expression rightExpression) {
         super(leftExpression, rightExpression);
-//        type = getCommonType(leftExpression, rightExpression);
-        type = BultInType.DOUBLE;
+        type = getCommonType(leftExpression, rightExpression);
     }
 
     private static Type getCommonType(Expression leftExpression, Expression rightExpression) {
-        if (rightExpression.getType() == BultInType.DOUBLE) {
-            return BultInType.DOUBLE;
+        if (leftExpression.getType() == ClassType.BIGINTEGER && rightExpression.getType().equals(BultInType.INT)) {
+            return ClassType.BIGINTEGER;
         }
-        return leftExpression.getType();
+        return BultInType.DOUBLE;
     }
 
     @Override

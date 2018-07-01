@@ -2,6 +2,7 @@ package com.har01d.lang.compiler.generator;
 
 import com.har01d.lang.compiler.domain.statement.PrintStatement;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
+import com.har01d.lang.compiler.domain.type.ClassType;
 import com.har01d.lang.compiler.domain.type.Type;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -22,6 +23,9 @@ public class PrintStatementGenerator {
         expression.accept(expressionGenerator);
         Type type = expression.getType();
         String descriptor = "(" + type.getDescriptor() + ")V";
+        if (type instanceof ClassType) {
+            descriptor = "(Ljava/lang/Object;)V";
+        }
         methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", descriptor, false);
     }
 

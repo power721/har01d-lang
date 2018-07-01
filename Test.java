@@ -1,9 +1,7 @@
 class Test {
 
     public static void test(int s) {
-        int x = 128;
-        int y = 256;
-        System.out.println(Math.pow(x, y));
+        System.out.println(new java.math.BigInteger("18446744073709551616").add(new java.math.BigInteger("1")));
     }
 
 }

@@ -77,9 +77,22 @@ VARIABLE : 'var' ;
 VALUE : 'val' ;
 PRINT : 'print' ;
 EQUALS : '=' ;
-NUMBER : '-'?[0-9]+ ;
+NUMBER : ('+'|'-')?[0-9]+(.[0-9]+)? ;
 BOOL : 'true' | 'false' ;
 STRING : '"'.*?'"' | '\''.*?'\'' ;
 ID: [_a-zA-Z][_a-zA-Z0-9]* ;
 WS: [ \t\n\r]+ -> skip ;
-COMMENT: ('//' | '#').*?[\r\n] -> skip ;
+ShebangLine
+    : '#!' ~[\u000A\u000D]*
+      -> channel(HIDDEN)
+    ;
+
+DelimitedComment
+    : '/*' ( DelimitedComment | . )*? '*/'
+      -> channel(HIDDEN)
+    ;
+
+LineComment
+    : ('//' | '#') ~[\u000A\u000D]*
+      -> channel(HIDDEN)
+    ;
