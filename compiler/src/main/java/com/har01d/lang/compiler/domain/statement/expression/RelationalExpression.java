@@ -6,13 +6,13 @@ import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.generator.ExpressionGenerator;
 import com.har01d.lang.compiler.generator.StatementGenerator;
 
-public class ConditionalExpression implements Expression {
+public class RelationalExpression implements Expression {
 
     private final Expression leftExpression;
     private final Expression rightExpression;
     private final CompareSign compareSign;
 
-    public ConditionalExpression(Expression leftExpression,
+    public RelationalExpression(Expression leftExpression,
         Expression rightExpression, CompareSign compareSign) {
         this.leftExpression = leftExpression;
         this.rightExpression = rightExpression;

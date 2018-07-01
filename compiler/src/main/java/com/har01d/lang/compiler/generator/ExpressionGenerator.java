@@ -5,9 +5,9 @@ import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.function.FunctionCall;
 import com.har01d.lang.compiler.domain.function.FunctionParameter;
 import com.har01d.lang.compiler.domain.statement.expression.Addition;
-import com.har01d.lang.compiler.domain.statement.expression.ConditionalExpression;
 import com.har01d.lang.compiler.domain.statement.expression.Division;
 import com.har01d.lang.compiler.domain.statement.expression.Multiplication;
+import com.har01d.lang.compiler.domain.statement.expression.RelationalExpression;
 import com.har01d.lang.compiler.domain.statement.expression.Remainder;
 import com.har01d.lang.compiler.domain.statement.expression.Subtraction;
 import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
@@ -67,8 +67,8 @@ public class ExpressionGenerator {
         arithmeticExpressionGenerator.generate(expression);
     }
 
-    public void generate(ConditionalExpression conditionalExpression) {
-        conditionalExpressionGenerator.generate(conditionalExpression);
+    public void generate(RelationalExpression relationalExpression) {
+        conditionalExpressionGenerator.generate(relationalExpression);
     }
 
 }

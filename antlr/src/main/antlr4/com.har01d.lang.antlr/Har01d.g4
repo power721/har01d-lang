@@ -25,8 +25,8 @@ expression : variableReference #varReference
              | expression op=('*' | '/' | '%') expression  #Multiply
              | '(' expression op=('+' | '-') expression ')' #Add
              | expression op=('+' | '-') expression #Add
-             | expression cmp=('>' | '<' | '>=' | '<=') expression #ConditionalExpression
-             | expression cmp=('==' | '!=') expression #ConditionalExpression
+             | expression cmp=('>' | '<' | '>=' | '<=') expression #RelationalExpression
+             | expression cmp=('==' | '!=') expression #RelationalExpression
              ;
 
 literal : NUMBER | BOOL | STRING ;

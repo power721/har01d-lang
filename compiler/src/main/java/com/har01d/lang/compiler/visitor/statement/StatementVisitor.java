@@ -4,10 +4,10 @@ import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser.AddContext;
 import com.har01d.lang.antlr.Har01dParser.AssignmentContext;
 import com.har01d.lang.antlr.Har01dParser.BlockContext;
-import com.har01d.lang.antlr.Har01dParser.ConditionalExpressionContext;
 import com.har01d.lang.antlr.Har01dParser.FunctionCallContext;
 import com.har01d.lang.antlr.Har01dParser.MultiplyContext;
 import com.har01d.lang.antlr.Har01dParser.PrintContext;
+import com.har01d.lang.antlr.Har01dParser.RelationalExpressionContext;
 import com.har01d.lang.antlr.Har01dParser.ReturnVoidContext;
 import com.har01d.lang.antlr.Har01dParser.ReturnWithValueContext;
 import com.har01d.lang.antlr.Har01dParser.ValueDeclarationContext;
@@ -87,8 +87,8 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     }
 
     @Override
-    public Expression visitConditionalExpression(ConditionalExpressionContext ctx) {
-        return expressionVisitor.visitConditionalExpression(ctx);
+    public Expression visitRelationalExpression(RelationalExpressionContext ctx) {
+        return expressionVisitor.visitRelationalExpression(ctx);
     }
 
 }

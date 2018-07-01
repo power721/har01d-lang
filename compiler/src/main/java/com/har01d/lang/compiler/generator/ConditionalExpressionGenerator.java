@@ -1,6 +1,6 @@
 package com.har01d.lang.compiler.generator;
 
-import com.har01d.lang.compiler.domain.statement.expression.ConditionalExpression;
+import com.har01d.lang.compiler.domain.statement.expression.RelationalExpression;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -15,7 +15,7 @@ public class ConditionalExpressionGenerator {
         this.methodVisitor = methodVisitor;
     }
 
-    public void generate(ConditionalExpression expression) {
+    public void generate(RelationalExpression expression) {
         expression.getLeftExpression().accept(expressionGenerator);
         expression.getRightExpression().accept(expressionGenerator);
         methodVisitor.visitInsn(Opcodes.ISUB);
