@@ -20,6 +20,11 @@ public abstract class ArithmeticExpression implements Expression {
         if (rightExpression.getType() == BultInType.STRING) {
             return BultInType.STRING;
         }
+
+        if (rightExpression.getType() == BultInType.DOUBLE) {
+            return BultInType.DOUBLE;
+        }
+
         return leftExpression.getType();
     }
 

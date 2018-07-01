@@ -21,6 +21,8 @@ print : PRINT expression ;
 expression : variableReference #varReference
              | literal #literalExpr
              | functionName '(' argumentList ')' #FunctionCall
+             |  '('expression '^' expression')' #Power
+             | expression '^' expression  #Power
              |  '('expression op=('*' | '/' | '%') expression')' #Multiply
              | expression op=('*' | '/' | '%') expression  #Multiply
              | '(' expression op=('+' | '-') expression ')' #Add

@@ -5,6 +5,7 @@ import com.har01d.lang.antlr.Har01dParser.AddContext;
 import com.har01d.lang.antlr.Har01dParser.FunctionCallContext;
 import com.har01d.lang.antlr.Har01dParser.LiteralContext;
 import com.har01d.lang.antlr.Har01dParser.MultiplyContext;
+import com.har01d.lang.antlr.Har01dParser.PowerContext;
 import com.har01d.lang.antlr.Har01dParser.RelationalExpressionContext;
 import com.har01d.lang.antlr.Har01dParser.VariableReferenceContext;
 import com.har01d.lang.compiler.domain.Scope;
@@ -51,6 +52,11 @@ public class ExpressionVisitor extends Har01dBaseVisitor<Expression> {
     @Override
     public Expression visitMultiply(MultiplyContext ctx) {
         return arithmeticExpressionVisitor.visitMultiply(ctx);
+    }
+
+    @Override
+    public Expression visitPower(PowerContext ctx) {
+        return arithmeticExpressionVisitor.visitPower(ctx);
     }
 
     @Override
