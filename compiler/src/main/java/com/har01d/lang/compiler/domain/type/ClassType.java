@@ -81,7 +81,7 @@ public class ClassType implements Type {
     }
 
     @Override
-    public int getSubstractOpcode() {
+    public int getSubtractOpcode() {
         throw new RuntimeException("Substraction operation not (yet ;) ) supported for custom objects");
     }
 
@@ -91,7 +91,7 @@ public class ClassType implements Type {
     }
 
     @Override
-    public int getDividOpcode() {
+    public int getDivideOpcode() {
         throw new RuntimeException("Division operation not (yet ;) ) supported for custom objects");
     }
 

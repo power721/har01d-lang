@@ -18,11 +18,11 @@ public interface Type {
 
     int getAddOpcode();
 
-    int getSubstractOpcode();
+    int getSubtractOpcode();
 
     int getMultiplyOpcode();
 
-    int getDividOpcode();
+    int getDivideOpcode();
 
     int getRemainderOpcode();
 

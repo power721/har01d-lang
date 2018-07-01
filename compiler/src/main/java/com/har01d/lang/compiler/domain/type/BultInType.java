@@ -77,7 +77,7 @@ public enum BultInType implements Type {
     }
 
     @Override
-    public int getSubstractOpcode() {
+    public int getSubtractOpcode() {
         return opcodes.getSubtract();
     }
 
@@ -87,7 +87,7 @@ public enum BultInType implements Type {
     }
 
     @Override
-    public int getDividOpcode() {
+    public int getDivideOpcode() {
         return opcodes.getDivide();
     }
 

@@ -11,7 +11,19 @@ public class LiteralExpressionVisitor extends Har01dBaseVisitor<Literal> {
     @Override
     public Literal visitLiteral(LiteralContext ctx) {
         Type type = TypeResolver.resolve(ctx);
-        return new Literal(type, ctx.getText());
+        return new Literal(type, fixString(ctx.getText()));
+    }
+
+    private String fixString(String value) {
+        if (value.charAt(0) == '\'' && value.charAt(value.length() - 1) == '\'') {
+            return value.substring(1, value.length() - 1);
+        }
+
+        if (value.charAt(0) == '"' && value.charAt(value.length() - 1) == '"') {
+            return value.substring(1, value.length() - 1);
+        }
+
+        return value;
     }
 
 }
