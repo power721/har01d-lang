@@ -45,16 +45,23 @@ public class Compiler {
     public void compile(File directory, File file) throws Exception {
         String fileName = file.getName();
         String path = file.getAbsolutePath();
-        String className = fileName.replace(".hd", "");
+        String className = getClassName(fileName);
 
         CompilationUnit compilationUnit = new Parser().getCompilationUnit(path);
 
         byte[] byteCode = new ByteCodeGenerator().generateByteCode(compilationUnit, className);
-        saveByteCodeToClassFile(directory, fileName, byteCode);
+        saveByteCodeToClassFile(directory, className, byteCode);
     }
 
-    private void saveByteCodeToClassFile(File directory, String fileName, byte[] byteCode) throws IOException {
-        String classFile = fileName.replace(".hd", ".class");
+    private String getClassName(String fileName) {
+        if (fileName.endsWith(".hd")) {
+            return fileName.substring(0, fileName.length() - 3);
+        }
+        return fileName;
+    }
+
+    private void saveByteCodeToClassFile(File directory, String className, byte[] byteCode) throws IOException {
+        String classFile = className + ".class";
         File file = new File(directory, classFile);
 
         try (OutputStream os = new FileOutputStream(file)) {
