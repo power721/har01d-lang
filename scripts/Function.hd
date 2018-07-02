@@ -25,3 +25,11 @@ testParameter(256)
 print func(1, 2)
 print func(3)
 print func()
+
+fun func4(a: int, b: int, x: int = 2, y: int = 3): int {
+  return a * b + x * y
+}
+
+print func4(1, 2)
+print func4(1, 2, 3)
+print func4(1, 2, 3, 4)

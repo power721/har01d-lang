@@ -41,8 +41,7 @@ forConditions : iterator=variableReference  'from' startExpr=expression range='t
 variableReference: ID ;
 function : functionDeclaration block ;
 functionDeclaration : 'fun' functionName '(' parametersList? ')' (':' type)? ;
-parametersList:  parameter (',' parameter)*
-          |  parameter (',' parameterWithDefaultValue)*
+parametersList:  parameter (',' parameter)* (',' parameterWithDefaultValue)*
           |  parameterWithDefaultValue (',' parameterWithDefaultValue)* ;
 functionName : ID ;
 parameter : ID ':' type ;
