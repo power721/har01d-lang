@@ -32,7 +32,7 @@ public class ArithmeticExpressionGenerator {
             return;
         }
 
-        if (expression.getType() == ClassType.BIGINTEGER) {
+        if (expression.getType() == ClassType.BIG_INTEGER) {
             generateBigInteger(expression, "add");
             return;
         }
@@ -46,7 +46,7 @@ public class ArithmeticExpressionGenerator {
     }
 
     public void generate(Subtraction expression) {
-        if (expression.getType() == ClassType.BIGINTEGER) {
+        if (expression.getType() == ClassType.BIG_INTEGER) {
             generateBigInteger(expression, "subtract");
             return;
         }
@@ -60,7 +60,7 @@ public class ArithmeticExpressionGenerator {
     }
 
     public void generate(Multiplication expression) {
-        if (expression.getType() == ClassType.BIGINTEGER) {
+        if (expression.getType() == ClassType.BIG_INTEGER) {
             generateBigInteger(expression, "multiply");
             return;
         }
@@ -74,7 +74,7 @@ public class ArithmeticExpressionGenerator {
     }
 
     public void generate(Division expression) {
-        if (expression.getType() == ClassType.BIGINTEGER) {
+        if (expression.getType() == ClassType.BIG_INTEGER) {
             generateBigInteger(expression, "divide");
             return;
         }
@@ -88,7 +88,7 @@ public class ArithmeticExpressionGenerator {
     }
 
     public void generate(Remainder expression) {
-        if (expression.getType() == ClassType.BIGINTEGER) {
+        if (expression.getType() == ClassType.BIG_INTEGER) {
             generateBigInteger(expression, "remainder");
             return;
         }
@@ -102,7 +102,7 @@ public class ArithmeticExpressionGenerator {
     }
 
     public void generate(Power expression) {
-        if (expression.getType() == ClassType.BIGINTEGER) {
+        if (expression.getType() == ClassType.BIG_INTEGER) {
             generateBigIntegerPower(expression);
             return;
         }
@@ -128,7 +128,7 @@ public class ArithmeticExpressionGenerator {
             }
         }
 
-        if (expression.getType() == ClassType.BIGINTEGER) {
+        if (expression.getType() == ClassType.BIG_INTEGER) {
             if (type.equals(BuiltInType.DOUBLE)) {
                 methodVisitor
                     .visitMethodInsn(Opcodes.INVOKEVIRTUAL, "Ljava/math/BigInteger;", "doubleValue", "()D", false);
@@ -155,7 +155,7 @@ public class ArithmeticExpressionGenerator {
     }
 
     private void generateSubExpression(Expression expression) {
-        Type type = ClassType.BIGINTEGER;
+        Type type = ClassType.BIG_INTEGER;
         if (expression.getType().equals(type)) {
             expression.accept(expressionGenerator);
         } else {

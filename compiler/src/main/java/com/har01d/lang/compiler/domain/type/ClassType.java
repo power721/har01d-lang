@@ -3,6 +3,7 @@ package com.har01d.lang.compiler.domain.type;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
+
 import org.objectweb.asm.Opcodes;
 
 public class ClassType implements Type {
@@ -10,7 +11,7 @@ public class ClassType implements Type {
     private static final Map<String, String> shortcuts = Collections.singletonMap(
         "List", "java.util.ArrayList"
     );
-    public static final ClassType BIGINTEGER = new ClassType("java.math.BigInteger");
+    public static final ClassType BIG_INTEGER = new ClassType("java.math.BigInteger");
     private final String name;
 
     public ClassType(String name) {
@@ -83,12 +84,12 @@ public class ClassType implements Type {
 
     @Override
     public int getSubtractOpcode() {
-        throw new RuntimeException("Substraction operation not (yet ;) ) supported for custom objects");
+        throw new RuntimeException("Subtract operation not (yet ;) ) supported for custom objects");
     }
 
     @Override
     public int getMultiplyOpcode() {
-        throw new RuntimeException("Multiplcation operation not (yet ;) ) supported for custom objects");
+        throw new RuntimeException("Multiply operation not (yet ;) ) supported for custom objects");
     }
 
     @Override
@@ -113,7 +114,6 @@ public class ClassType implements Type {
         ClassType classType = (ClassType) o;
 
         return !(name != null ? !name.equals(classType.name) : classType.name != null);
-
     }
 
     @Override

@@ -82,7 +82,7 @@ public class TypeResolver {
 
         try {
             new BigInteger(value);
-            return ClassType.BIGINTEGER;
+            return ClassType.BIG_INTEGER;
         } catch (NumberFormatException e) {
             // ignore
         }

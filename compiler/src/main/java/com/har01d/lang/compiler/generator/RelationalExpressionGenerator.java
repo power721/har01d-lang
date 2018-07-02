@@ -22,8 +22,8 @@ public class RelationalExpressionGenerator {
     }
 
     private static Type getCommonType(Expression leftExpression, Expression rightExpression) {
-        if (rightExpression.getType() == ClassType.BIGINTEGER) {
-            return ClassType.BIGINTEGER;
+        if (rightExpression.getType() == ClassType.BIG_INTEGER) {
+            return ClassType.BIG_INTEGER;
         }
         if (rightExpression.getType() == BuiltInType.STRING) {
             return BuiltInType.STRING;
@@ -92,7 +92,7 @@ public class RelationalExpressionGenerator {
     }
 
     private void generateSubExpression(Expression expression, Type type) {
-        if (type == ClassType.BIGINTEGER && expression.getType() != ClassType.BIGINTEGER) {
+        if (type == ClassType.BIG_INTEGER && expression.getType() != ClassType.BIG_INTEGER) {
             methodVisitor.visitTypeInsn(Opcodes.NEW, type.getInternalName());
             methodVisitor.visitInsn(Opcodes.DUP);
             expression.accept(expressionGenerator);

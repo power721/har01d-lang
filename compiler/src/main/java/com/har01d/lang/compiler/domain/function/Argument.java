@@ -27,4 +27,5 @@ public class Argument implements Expression {
     public void accept(StatementGenerator generator) {
         expression.accept(generator);
     }
+
 }

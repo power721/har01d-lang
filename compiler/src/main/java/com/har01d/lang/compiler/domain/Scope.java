@@ -1,15 +1,16 @@
 package com.har01d.lang.compiler.domain;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.har01d.lang.compiler.domain.function.Argument;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
 import com.har01d.lang.compiler.domain.type.ClassType;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.domain.variable.LocalValue;
 import com.har01d.lang.compiler.domain.variable.LocalVariable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Scope {
 

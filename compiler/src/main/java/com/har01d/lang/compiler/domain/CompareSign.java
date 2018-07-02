@@ -1,6 +1,7 @@
 package com.har01d.lang.compiler.domain;
 
 import java.util.Arrays;
+
 import org.objectweb.asm.Opcodes;
 
 public enum CompareSign {
@@ -28,4 +29,5 @@ public enum CompareSign {
     public int getOpcode() {
         return opcode;
     }
+
 }

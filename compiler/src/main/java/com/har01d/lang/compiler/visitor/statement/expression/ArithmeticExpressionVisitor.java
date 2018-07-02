@@ -26,14 +26,14 @@ public class ArithmeticExpressionVisitor extends Har01dBaseVisitor<ArithmeticExp
     public ArithmeticExpression visitAdd(AddContext ctx) {
         Expression leftExpression = ctx.expression(0).accept(expressionVisitor);
         Expression rightExpression = ctx.expression(1).accept(expressionVisitor);
-        String token = ctx.op.getText();
-        switch (token) {
+        String operator = ctx.op.getText();
+        switch (operator) {
             case "+":
                 return new Addition(leftExpression, rightExpression);
             case "-":
                 return new Subtraction(leftExpression, rightExpression);
             default:
-                throw new RuntimeException();
+                throw new RuntimeException("invalid operator " + operator);
         }
     }
 
@@ -41,8 +41,8 @@ public class ArithmeticExpressionVisitor extends Har01dBaseVisitor<ArithmeticExp
     public ArithmeticExpression visitMultiply(MultiplyContext ctx) {
         Expression leftExpression = ctx.expression(0).accept(expressionVisitor);
         Expression rightExpression = ctx.expression(1).accept(expressionVisitor);
-        String token = ctx.op.getText();
-        switch (token) {
+        String operator = ctx.op.getText();
+        switch (operator) {
             case "*":
                 return new Multiplication(leftExpression, rightExpression);
             case "/":
@@ -50,7 +50,7 @@ public class ArithmeticExpressionVisitor extends Har01dBaseVisitor<ArithmeticExp
             case "%":
                 return new Remainder(leftExpression, rightExpression);
             default:
-                throw new RuntimeException();
+                throw new RuntimeException("invalid operator " + operator);
         }
     }
 
