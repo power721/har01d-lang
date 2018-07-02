@@ -6,6 +6,10 @@ fun testPrint() {
   print "Hi"
 }
 
+fun testVoid(): void {
+    return
+}
+
 fun testReturn(): int {
   return 0
 }

@@ -26,16 +26,16 @@ public class TypeResolver {
 
     public static Object getValue(Type type, String value) {
         if (type == BuiltInType.BYTE) {
-            return Byte.valueOf(value);
+            return Byte.decode(value);
         }
         if (type == BuiltInType.SHORT) {
-            return Short.valueOf(value);
+            return Short.decode(value);
         }
         if (type == BuiltInType.INT) {
-            return Integer.valueOf(value);
+            return Integer.decode(value);
         }
         if (type == BuiltInType.LONG) {
-            return Long.valueOf(value);
+            return Long.decode(value);
         }
         if (type == BuiltInType.BOOLEAN) {
             return Boolean.valueOf(value);
@@ -67,14 +67,17 @@ public class TypeResolver {
 
     private static Type resolveNumber(String value) {
         try {
-            Integer.parseInt(value);
+            Integer.decode(value);
             return BuiltInType.INT;
         } catch (NumberFormatException e) {
             // ignore
         }
 
         try {
-            Long.parseLong(value);
+            if (value.endsWith("L")) {
+                value = value.substring(0, value.length() - 1);
+            }
+            Long.decode(value);
             return BuiltInType.LONG;
         } catch (NumberFormatException e) {
             // ignore

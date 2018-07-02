@@ -5,7 +5,7 @@
     comment
     assignment
     print
-    type: int / string / boolean
+    type: int / long / string / boolean
     string append
     unicode
 */
@@ -14,6 +14,12 @@ print x
 
 var s = "hello world!"
 print s
+
+print 0
+print +0
+print -0
+print 0xFFFF
+print 2147483648L
 
 // reassign
 x = 1
