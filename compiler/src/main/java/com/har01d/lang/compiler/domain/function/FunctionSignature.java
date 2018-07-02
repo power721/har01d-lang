@@ -1,8 +1,9 @@
 package com.har01d.lang.compiler.domain.function;
 
-import com.har01d.lang.compiler.domain.type.Type;
 import java.util.Collections;
 import java.util.List;
+
+import com.har01d.lang.compiler.domain.type.Type;
 
 public class FunctionSignature {
 
@@ -32,16 +33,24 @@ public class FunctionSignature {
         if (!name.equals(otherSignatureName)) {
             return false;
         }
-        if (parameters.size() != arguments.size()) {
+
+        if (parameters.size() < arguments.size()) {
             return false;
         }
+
         int i = 0;
-        for (FunctionParameter parameter : parameters) {
-            if (!parameter.getType().equals(arguments.get(i).getType())) {
+        for (; i < arguments.size(); ++i) {
+            if (!arguments.get(i).getType().equals(parameters.get(i).getType())) {
                 return false;
             }
-            i++;
         }
+
+        for (; i < parameters.size(); ++i) {
+            if (!parameters.get(i).getDefaultValue().isPresent()) {
+                return false;
+            }
+        }
+
         return true;
     }
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.har01d.lang.compiler.domain.function.Argument;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
@@ -39,8 +40,10 @@ public class Scope {
     }
 
     public FunctionSignature getSignature(String identifier, List<Argument> arguments) {
-        return functionSignatures.stream().filter(e -> e.matches(identifier, arguments)).findFirst()
-            .orElseThrow(() -> new RuntimeException(""));
+        return functionSignatures.stream().filter(e -> e.matches(identifier, arguments)).findFirst().orElseThrow(
+                                        () -> new RuntimeException("Cannot find function " + identifier + arguments
+                                                                        .stream().map(e -> e.getType().getName())
+                                                                        .collect(Collectors.joining(", ", "(", ")"))));
     }
 
     public boolean isLocalVariableExists(String varName) {

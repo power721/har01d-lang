@@ -14,7 +14,7 @@ fun testParameter(x: int) {
   print x
 }
 
-fun func(x: int, y: int): int {
+fun func(x: int = 2, y: int = 3): int {
   return x * y  // a comment here
 }
 
@@ -22,4 +22,6 @@ test()
 testPrint()
 print testReturn()
 testParameter(256)
-print func(2, 3)
+print func(1, 2)
+print func(3)
+print func()
