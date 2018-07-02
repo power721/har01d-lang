@@ -7,10 +7,16 @@ import com.har01d.lang.compiler.generator.StatementGenerator;
 
 public class Argument implements Expression {
 
+    private final String name;
     private final Expression expression;
 
-    public Argument(Expression expression) {
+    public Argument(String name, Expression expression) {
+        this.name = name;
         this.expression = expression;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

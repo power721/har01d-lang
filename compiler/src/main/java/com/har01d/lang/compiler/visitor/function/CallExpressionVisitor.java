@@ -1,5 +1,8 @@
 package com.har01d.lang.compiler.visitor.function;
 
+import java.util.Collections;
+import java.util.List;
+
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser.ArgumentListContext;
 import com.har01d.lang.antlr.Har01dParser.FunctionCallContext;
@@ -9,8 +12,6 @@ import com.har01d.lang.compiler.domain.function.Call;
 import com.har01d.lang.compiler.domain.function.FunctionCall;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
 import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
-import java.util.Collections;
-import java.util.List;
 
 public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
 
@@ -37,7 +38,7 @@ public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
         FunctionSignature signature = scope.getSignature(name, arguments);
         // TODO
 
-        return new FunctionCall(null, signature, arguments);
+        return new FunctionCall(null, signature, signature.getArguments(arguments));
     }
 
 }
