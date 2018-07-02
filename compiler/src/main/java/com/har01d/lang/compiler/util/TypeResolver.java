@@ -1,14 +1,15 @@
 package com.har01d.lang.compiler.util;
 
-import com.har01d.lang.antlr.Har01dParser.LiteralContext;
-import com.har01d.lang.antlr.Har01dParser.TypeContext;
-import com.har01d.lang.compiler.domain.type.BultInType;
-import com.har01d.lang.compiler.domain.type.ClassType;
-import com.har01d.lang.compiler.domain.type.Type;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
+import com.har01d.lang.antlr.Har01dParser.LiteralContext;
+import com.har01d.lang.antlr.Har01dParser.TypeContext;
+import com.har01d.lang.compiler.domain.type.BuiltInType;
+import com.har01d.lang.compiler.domain.type.ClassType;
+import com.har01d.lang.compiler.domain.type.Type;
 
 public class TypeResolver {
 
@@ -24,28 +25,28 @@ public class TypeResolver {
     }
 
     public static Object getValue(Type type, String value) {
-        if (type == BultInType.BYTE) {
+        if (type == BuiltInType.BYTE) {
             return Byte.valueOf(value);
         }
-        if (type == BultInType.SHORT) {
+        if (type == BuiltInType.SHORT) {
             return Short.valueOf(value);
         }
-        if (type == BultInType.INT) {
+        if (type == BuiltInType.INT) {
             return Integer.valueOf(value);
         }
-        if (type == BultInType.LONG) {
+        if (type == BuiltInType.LONG) {
             return Long.valueOf(value);
         }
-        if (type == BultInType.BOOLEAN) {
+        if (type == BuiltInType.BOOLEAN) {
             return Boolean.valueOf(value);
         }
-        if (type == BultInType.FLOAT) {
+        if (type == BuiltInType.FLOAT) {
             return Float.valueOf(value);
         }
-        if (type == BultInType.DOUBLE) {
+        if (type == BuiltInType.DOUBLE) {
             return Double.valueOf(value);
         }
-        if (type == BultInType.STRING) {
+        if (type == BuiltInType.STRING) {
             return value;
         }
         throw new AssertionError("unsupported type " + type);
@@ -54,27 +55,27 @@ public class TypeResolver {
     public static Type resolve(LiteralContext ctx) {
         String value = ctx.getText();
         if (value == null || value.isEmpty()) {
-            return BultInType.VOID;
+            return BuiltInType.VOID;
         }
         if (ctx.NUMBER() != null) {
             return resolveNumber(value);
         } else if (ctx.BOOL() != null) {
-            return BultInType.BOOLEAN;
+            return BuiltInType.BOOLEAN;
         }
-        return BultInType.STRING;
+        return BuiltInType.STRING;
     }
 
     private static Type resolveNumber(String value) {
         try {
             Integer.parseInt(value);
-            return BultInType.INT;
+            return BuiltInType.INT;
         } catch (NumberFormatException e) {
             // ignore
         }
 
         try {
             Long.parseLong(value);
-            return BultInType.LONG;
+            return BuiltInType.LONG;
         } catch (NumberFormatException e) {
             // ignore
         }
@@ -89,26 +90,26 @@ public class TypeResolver {
         if (FLOATING_POINT_PATTERN.matcher(value).matches()) {
             try {
                 Double.parseDouble(value);
-                return BultInType.DOUBLE;
+                return BuiltInType.DOUBLE;
             } catch (NumberFormatException e) {
                 // ignore
             }
         }
 
-        return BultInType.STRING;
+        return BuiltInType.STRING;
     }
 
     public static Type resolve(TypeContext ctx) {
         if (ctx == null) {
-            return BultInType.VOID;
+            return BuiltInType.VOID;
         }
 
         String typeName = ctx.getText();
         if ("java.lang.String".equals(typeName)) {
-            return BultInType.STRING;
+            return BuiltInType.STRING;
         }
 
-        Optional<BultInType> type = Arrays.stream(BultInType.values()).filter(e -> e.getName().equals(typeName))
+        Optional<BuiltInType> type = Arrays.stream(BuiltInType.values()).filter(e -> e.getName().equals(typeName))
             .findFirst();
         if (type.isPresent()) {
             return type.get();

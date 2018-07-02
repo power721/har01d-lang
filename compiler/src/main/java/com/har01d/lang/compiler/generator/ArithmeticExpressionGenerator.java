@@ -1,5 +1,8 @@
 package com.har01d.lang.compiler.generator;
 
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+
 import com.har01d.lang.compiler.domain.statement.expression.Addition;
 import com.har01d.lang.compiler.domain.statement.expression.ArithmeticExpression;
 import com.har01d.lang.compiler.domain.statement.expression.Division;
@@ -8,11 +11,9 @@ import com.har01d.lang.compiler.domain.statement.expression.Multiplication;
 import com.har01d.lang.compiler.domain.statement.expression.Power;
 import com.har01d.lang.compiler.domain.statement.expression.Remainder;
 import com.har01d.lang.compiler.domain.statement.expression.Subtraction;
-import com.har01d.lang.compiler.domain.type.BultInType;
+import com.har01d.lang.compiler.domain.type.BuiltInType;
 import com.har01d.lang.compiler.domain.type.ClassType;
 import com.har01d.lang.compiler.domain.type.Type;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
 
 public class ArithmeticExpressionGenerator {
 
@@ -26,7 +27,7 @@ public class ArithmeticExpressionGenerator {
     }
 
     public void generate(Addition expression) {
-        if (expression.getType().equals(BultInType.STRING)) {
+        if (expression.getType().equals(BuiltInType.STRING)) {
             generateStringAppend(expression);
             return;
         }
@@ -118,17 +119,17 @@ public class ArithmeticExpressionGenerator {
             return;
         }
 
-        if (expression.getType().equals(BultInType.INT)) {
-            if (type.equals(BultInType.DOUBLE)) {
+        if (expression.getType().equals(BuiltInType.INT)) {
+            if (type.equals(BuiltInType.DOUBLE)) {
                 methodVisitor.visitInsn(Opcodes.I2D);
             }
-            if (type.equals(BultInType.LONG)) {
+            if (type.equals(BuiltInType.LONG)) {
                 methodVisitor.visitInsn(Opcodes.I2L);
             }
         }
 
         if (expression.getType() == ClassType.BIGINTEGER) {
-            if (type.equals(BultInType.DOUBLE)) {
+            if (type.equals(BuiltInType.DOUBLE)) {
                 methodVisitor
                     .visitMethodInsn(Opcodes.INVOKEVIRTUAL, "Ljava/math/BigInteger;", "doubleValue", "()D", false);
             }
@@ -161,7 +162,7 @@ public class ArithmeticExpressionGenerator {
             methodVisitor.visitTypeInsn(Opcodes.NEW, type.getInternalName());
             methodVisitor.visitInsn(Opcodes.DUP);
             expression.accept(expressionGenerator);
-            if (expression.getType() != BultInType.STRING) {
+            if (expression.getType() != BuiltInType.STRING) {
                 String descriptor = "(" + expression.getType().getDescriptor() + ")Ljava/lang/String;";
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/String", "valueOf", descriptor, false);
             }

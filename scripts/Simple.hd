@@ -1,3 +1,14 @@
+/*
+    variable declaration
+    value declaration
+    literal
+    comment
+    assignment
+    print
+    type: int / string / boolean
+    string append
+    unicode
+*/
 var x = 5
 print x
 

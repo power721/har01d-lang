@@ -1,6 +1,6 @@
 package com.har01d.lang.compiler.domain.type;
 
-public enum BultInType implements Type {
+public enum BuiltInType implements Type {
 
     BOOLEAN("boolean", boolean.class, "Z", TypeSpecificOpcodes.INT),
     INT("int", int.class, "I", TypeSpecificOpcodes.INT),
@@ -28,8 +28,7 @@ public enum BultInType implements Type {
     private final String descriptor;
     private final TypeSpecificOpcodes opcodes;
 
-
-    BultInType(String name, Class<?> typeClass, String descriptor, TypeSpecificOpcodes opcodes) {
+    BuiltInType(String name, Class<?> typeClass, String descriptor, TypeSpecificOpcodes opcodes) {
         this.name = name;
         this.typeClass = typeClass;
         this.descriptor = descriptor;

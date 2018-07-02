@@ -1,6 +1,6 @@
 package com.har01d.lang.compiler.domain.statement.expression;
 
-import com.har01d.lang.compiler.domain.type.BultInType;
+import com.har01d.lang.compiler.domain.type.BuiltInType;
 import com.har01d.lang.compiler.domain.type.Type;
 
 public abstract class ArithmeticExpression implements Expression {
@@ -17,12 +17,12 @@ public abstract class ArithmeticExpression implements Expression {
     }
 
     private static Type getCommonType(Expression leftExpression, Expression rightExpression) {
-        if (rightExpression.getType() == BultInType.STRING) {
-            return BultInType.STRING;
+        if (rightExpression.getType() == BuiltInType.STRING) {
+            return BuiltInType.STRING;
         }
 
-        if (rightExpression.getType() == BultInType.DOUBLE) {
-            return BultInType.DOUBLE;
+        if (rightExpression.getType() == BuiltInType.DOUBLE) {
+            return BuiltInType.DOUBLE;
         }
 
         return leftExpression.getType();

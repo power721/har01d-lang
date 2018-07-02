@@ -1,7 +1,7 @@
 package com.har01d.lang.compiler.domain.statement.expression;
 
 import com.har01d.lang.compiler.domain.CompareSign;
-import com.har01d.lang.compiler.domain.type.BultInType;
+import com.har01d.lang.compiler.domain.type.BuiltInType;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.generator.ExpressionGenerator;
 import com.har01d.lang.compiler.generator.StatementGenerator;
@@ -33,7 +33,7 @@ public class RelationalExpression implements Expression {
 
     @Override
     public Type getType() {
-        return BultInType.BOOLEAN;
+        return BuiltInType.BOOLEAN;
     }
 
     @Override

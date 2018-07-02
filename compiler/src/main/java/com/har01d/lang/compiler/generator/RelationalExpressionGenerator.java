@@ -1,14 +1,15 @@
 package com.har01d.lang.compiler.generator;
 
-import com.har01d.lang.compiler.domain.CompareSign;
-import com.har01d.lang.compiler.domain.statement.expression.Expression;
-import com.har01d.lang.compiler.domain.statement.expression.RelationalExpression;
-import com.har01d.lang.compiler.domain.type.BultInType;
-import com.har01d.lang.compiler.domain.type.ClassType;
-import com.har01d.lang.compiler.domain.type.Type;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+
+import com.har01d.lang.compiler.domain.CompareSign;
+import com.har01d.lang.compiler.domain.statement.expression.Expression;
+import com.har01d.lang.compiler.domain.statement.expression.RelationalExpression;
+import com.har01d.lang.compiler.domain.type.BuiltInType;
+import com.har01d.lang.compiler.domain.type.ClassType;
+import com.har01d.lang.compiler.domain.type.Type;
 
 public class RelationalExpressionGenerator {
 
@@ -24,11 +25,11 @@ public class RelationalExpressionGenerator {
         if (rightExpression.getType() == ClassType.BIGINTEGER) {
             return ClassType.BIGINTEGER;
         }
-        if (rightExpression.getType() == BultInType.STRING) {
-            return BultInType.STRING;
+        if (rightExpression.getType() == BuiltInType.STRING) {
+            return BuiltInType.STRING;
         }
-        if (rightExpression.getType() == BultInType.DOUBLE) {
-            return BultInType.DOUBLE;
+        if (rightExpression.getType() == BuiltInType.DOUBLE) {
+            return BuiltInType.DOUBLE;
         }
         return leftExpression.getType();
     }
@@ -95,7 +96,7 @@ public class RelationalExpressionGenerator {
             methodVisitor.visitTypeInsn(Opcodes.NEW, type.getInternalName());
             methodVisitor.visitInsn(Opcodes.DUP);
             expression.accept(expressionGenerator);
-            if (expression.getType() != BultInType.STRING) {
+            if (expression.getType() != BuiltInType.STRING) {
                 String descriptor = "(" + expression.getType().getDescriptor() + ")Ljava/lang/String;";
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/String", "valueOf", descriptor, false);
             }
@@ -113,11 +114,11 @@ public class RelationalExpressionGenerator {
             return;
         }
 
-        if (expression.getType().equals(BultInType.INT)) {
-            if (type.equals(BultInType.DOUBLE)) {
+        if (expression.getType().equals(BuiltInType.INT)) {
+            if (type.equals(BuiltInType.DOUBLE)) {
                 methodVisitor.visitInsn(Opcodes.I2D);
             }
-            if (type.equals(BultInType.LONG)) {
+            if (type.equals(BuiltInType.LONG)) {
                 methodVisitor.visitInsn(Opcodes.I2L);
             }
         }
