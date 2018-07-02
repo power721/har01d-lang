@@ -106,9 +106,9 @@ NameStartChar
    | '\uFDF0'..'\uFFFD'
    ;
 
-WS: [ \t\n\r]+ -> skip ;
+WS: [ \t\r\n\f]+ -> skip ;
 ShebangLine
-    : '#!' ~[\u000A\u000D]*
+    : '#!' ~[\r\n]*
       -> channel(HIDDEN)
     ;
 
@@ -118,6 +118,6 @@ DelimitedComment
     ;
 
 LineComment
-    : ('//' | '#') ~[\u000A\u000D]*
+    : ('//' | '#') ~[\r\n]*
       -> channel(HIDDEN)
     ;

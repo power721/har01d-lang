@@ -1,12 +1,15 @@
 package com.har01d.lang.compiler;
 
-import com.har01d.lang.compiler.domain.CompilationUnit;
-import com.har01d.lang.compiler.generator.ByteCodeGenerator;
-import com.har01d.lang.compiler.parser.Parser;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.har01d.lang.compiler.domain.CompilationUnit;
+import com.har01d.lang.compiler.generator.ByteCodeGenerator;
+import com.har01d.lang.compiler.parser.Parser;
 
 public class Compiler {
 
@@ -17,12 +20,29 @@ public class Compiler {
         }
 
         Compiler compiler = new Compiler();
-        for (String fileName : args) {
-            compiler.compile(new File(fileName));
+        File directory = new File(".");
+        List<File> files = new ArrayList<>();
+        for (int i = 0; i < args.length; ++i) {
+            String arg = args[i];
+            if (arg.equals("-d") || arg.equals("--directory")) {
+                if (i + 1 < args.length) {
+                    directory = new File(args[i + 1]);
+                    i++;
+                }
+            } else {
+                files.add(new File(arg));
+            }
+        }
+
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        for (File file : files) {
+            compiler.compile(directory, file);
         }
     }
 
-    public void compile(File file) throws Exception {
+    public void compile(File directory, File file) throws Exception {
         String fileName = file.getName();
         String path = file.getAbsolutePath();
         String className = fileName.replace(".hd", "");
@@ -30,12 +50,14 @@ public class Compiler {
         CompilationUnit compilationUnit = new Parser().getCompilationUnit(path);
 
         byte[] byteCode = new ByteCodeGenerator().generateByteCode(compilationUnit, className);
-        saveByteCodeToClassFile(fileName, byteCode);
+        saveByteCodeToClassFile(directory, fileName, byteCode);
     }
 
-    private void saveByteCodeToClassFile(String fileName, byte[] byteCode) throws IOException {
+    private void saveByteCodeToClassFile(File directory, String fileName, byte[] byteCode) throws IOException {
         String classFile = fileName.replace(".hd", ".class");
-        try (OutputStream os = new FileOutputStream(classFile)) {
+        File file = new File(directory, classFile);
+
+        try (OutputStream os = new FileOutputStream(file)) {
             os.write(byteCode);
         }
     }

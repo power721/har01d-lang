@@ -1,0 +1,15 @@
+#!/bin/env bash
+
+JAR=compiler/target/compiler-0.1-bin.jar
+
+if [ $# -eq 0 ]; then
+    echo "$0 <FILENAME>.hd"
+else
+    FILE=$1
+    FILENAME=$(basename -- "$FILE")
+    FILENAME="${FILENAME%.*}"
+    WD=.tmp/$$
+    java -jar $JAR -d $WD $FILE && \
+    java -Dfile.encoding=UTF-8 -Duser.dir=$WD $FILENAME && \
+    rm -rf $WD
+fi
