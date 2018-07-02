@@ -1,6 +1,7 @@
 package com.har01d.lang.compiler.visitor.statement;
 
 import com.har01d.lang.antlr.Har01dBaseVisitor;
+import com.har01d.lang.antlr.Har01dParser;
 import com.har01d.lang.antlr.Har01dParser.AddContext;
 import com.har01d.lang.antlr.Har01dParser.AssignmentContext;
 import com.har01d.lang.antlr.Har01dParser.BlockContext;
@@ -20,9 +21,10 @@ import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
 
 public class StatementVisitor extends Har01dBaseVisitor<Statement> {
 
+    private final IfStatementVisitor ifStatementVisitor;
     private final PrintStatementVisitor printStatementVisitor;
-    private final ReturnStatementVisitor returnStatementVisitor;
     private final BlockStatementVisitor blockStatementVisitor;
+    private final ReturnStatementVisitor returnStatementVisitor;
     private final AssignmentStatementVisitor assignmentStatementVisitor;
     private final VariableDeclarationStatementVisitor variableDeclarationStatementVisitor;
     private final ExpressionVisitor expressionVisitor;
@@ -32,6 +34,7 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
         printStatementVisitor = new PrintStatementVisitor(expressionVisitor);
         blockStatementVisitor = new BlockStatementVisitor(scope);
         returnStatementVisitor = new ReturnStatementVisitor(expressionVisitor);
+        ifStatementVisitor = new IfStatementVisitor(expressionVisitor, this);
         assignmentStatementVisitor = new AssignmentStatementVisitor(expressionVisitor, scope);
         variableDeclarationStatementVisitor = new VariableDeclarationStatementVisitor(expressionVisitor, scope);
     }
@@ -89,6 +92,11 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     @Override
     public Expression visitRelationalExpression(RelationalExpressionContext ctx) {
         return expressionVisitor.visitRelationalExpression(ctx);
+    }
+
+    @Override
+    public Statement visitIfStatement(Har01dParser.IfStatementContext ctx) {
+        return ifStatementVisitor.visitIfStatement(ctx);
     }
 
 }

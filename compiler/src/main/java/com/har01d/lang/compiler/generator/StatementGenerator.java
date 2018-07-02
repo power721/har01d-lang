@@ -1,11 +1,14 @@
 package com.har01d.lang.compiler.generator;
 
+import org.objectweb.asm.MethodVisitor;
+
 import com.har01d.lang.compiler.domain.Literal;
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.function.FunctionCall;
 import com.har01d.lang.compiler.domain.function.FunctionParameter;
 import com.har01d.lang.compiler.domain.statement.Assignment;
 import com.har01d.lang.compiler.domain.statement.Block;
+import com.har01d.lang.compiler.domain.statement.IfStatement;
 import com.har01d.lang.compiler.domain.statement.PrintStatement;
 import com.har01d.lang.compiler.domain.statement.ReturnStatement;
 import com.har01d.lang.compiler.domain.statement.VariableDeclaration;
@@ -17,11 +20,11 @@ import com.har01d.lang.compiler.domain.statement.expression.RelationalExpression
 import com.har01d.lang.compiler.domain.statement.expression.Remainder;
 import com.har01d.lang.compiler.domain.statement.expression.Subtraction;
 import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
-import org.objectweb.asm.MethodVisitor;
 
 public class StatementGenerator {
 
     private final ExpressionGenerator expressionGenerator;
+    private final IfStatementGenerator ifStatementGenerator;
     private final BlockStatementGenerator blockStatementGenerator;
     private final PrintStatementGenerator printStatementGenerator;
     private final ReturnStatementGenerator returnStatementGenerator;
@@ -36,6 +39,7 @@ public class StatementGenerator {
         printStatementGenerator = new PrintStatementGenerator(methodVisitor, expressionGenerator);
         returnStatementGenerator = new ReturnStatementGenerator(methodVisitor, expressionGenerator);
         assignmentStatementGenerator = new AssignmentStatementGenerator(methodVisitor, expressionGenerator, scope);
+        ifStatementGenerator = new IfStatementGenerator(expressionGenerator, this, methodVisitor);
         variableDeclarationStatementGenerator = new VariableDeclarationStatementGenerator(this, expressionGenerator);
     }
 
@@ -101,6 +105,10 @@ public class StatementGenerator {
 
     public void generate(RelationalExpression relationalExpression) {
         expressionGenerator.generate(relationalExpression);
+    }
+
+    public void generate(IfStatement ifStatement) {
+        ifStatementGenerator.generate(ifStatement);
     }
 
 }
