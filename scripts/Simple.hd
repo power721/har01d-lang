@@ -23,3 +23,6 @@ print -1
 
 print "count = " + 5
 print 5 + " cats"
+
+var 变量 = "中文"
+print 变量

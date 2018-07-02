@@ -1,9 +1,9 @@
 fun test() {
-
+    // empty body
 }
 
 fun testPrint() {
-  print "test"
+  print "Hi"
 }
 
 fun testReturn(): int {
@@ -15,7 +15,7 @@ fun testParameter(x: int) {
 }
 
 fun func(x: int, y: int): int {
-  return x * y
+  return x * y  // a comment here
 }
 
 test()
