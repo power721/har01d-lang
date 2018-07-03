@@ -12,7 +12,6 @@ import com.har01d.lang.compiler.domain.function.Argument;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
 import com.har01d.lang.compiler.domain.type.ClassType;
 import com.har01d.lang.compiler.domain.type.Type;
-import com.har01d.lang.compiler.domain.variable.LocalValue;
 import com.har01d.lang.compiler.domain.variable.LocalVariable;
 import com.har01d.lang.compiler.exception.InvalidSyntaxException;
 
@@ -53,11 +52,6 @@ public class Scope {
         return localVariables.containsKey(varName);
     }
 
-    public boolean isLocalValue(String varName) {
-        LocalVariable localVariable = localVariables.get(varName);
-        return localVariable instanceof LocalValue;
-    }
-
     public LocalVariable getLocalVariable(String varName) {
         return localVariables.get(varName);
     }
@@ -66,12 +60,21 @@ public class Scope {
         return localVariablesIndex.indexOf(varName);
     }
 
-    public void addLocalVariable(LocalVariable localVariable, ParserRuleContext ctx) {
-        if (!localVariables.containsKey(localVariable.getName())) {
-            localVariables.put(localVariable.getName(), localVariable);
-            localVariablesIndex.add(localVariable.getName());
+    public void addLocalVariable(String name, Type type, boolean initialized, ParserRuleContext ctx) {
+        if (!localVariables.containsKey(name)) {
+            localVariables.put(name, new LocalVariable(name, type, initialized));
+            localVariablesIndex.add(name);
         } else {
-            throw new InvalidSyntaxException("variable '" + localVariable.getName() + "' already declared!", ctx);
+            throw new InvalidSyntaxException("variable '" + name + "' already declared!", ctx);
+        }
+    }
+
+    public void addLocalValue(String name, Type type, boolean initialized, ParserRuleContext ctx) {
+        if (!localVariables.containsKey(name)) {
+            localVariables.put(name, new LocalVariable(name, type, initialized, true));
+            localVariablesIndex.add(name);
+        } else {
+            throw new InvalidSyntaxException("variable '" + name + "' already declared!", ctx);
         }
     }
 

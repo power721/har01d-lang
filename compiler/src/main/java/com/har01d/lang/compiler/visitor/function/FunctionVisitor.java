@@ -6,7 +6,6 @@ import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.function.Function;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
 import com.har01d.lang.compiler.domain.statement.Statement;
-import com.har01d.lang.compiler.domain.variable.LocalValue;
 import com.har01d.lang.compiler.visitor.statement.StatementVisitor;
 
 public class FunctionVisitor extends Har01dBaseVisitor<Function> {
@@ -23,13 +22,11 @@ public class FunctionVisitor extends Har01dBaseVisitor<Function> {
         FunctionSignature functionSignature = ctx.functionDeclaration().accept(new FunctionSignatureVisitor(scope));
 
         if (scope.isClassDeclaration()) {
-            scope.addLocalVariable(new LocalValue("this", scope.getClassType(), true), ctx);
+            scope.addLocalValue("this", scope.getClassType(), true, ctx);
         }
 
         StatementVisitor statementVisitor = new StatementVisitor(scope);
-        functionSignature.getParameters().forEach(
-                                        e -> scope.addLocalVariable(new LocalValue(e.getName(), e.getType(), false),
-                                                                        ctx));
+        functionSignature.getParameters().forEach(e -> scope.addLocalValue(e.getName(), e.getType(), false, ctx));
         Statement block = ctx.block().accept(statementVisitor);
         // TODO: constructor
         return new Function(functionSignature, block);

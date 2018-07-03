@@ -5,7 +5,6 @@ import com.har01d.lang.antlr.Har01dParser.AssignmentContext;
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.statement.Assignment;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
-import com.har01d.lang.compiler.domain.variable.LocalValue;
 import com.har01d.lang.compiler.domain.variable.LocalVariable;
 import com.har01d.lang.compiler.exception.InvalidSyntaxException;
 import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
@@ -24,7 +23,7 @@ public class AssignmentStatementVisitor extends Har01dBaseVisitor<Assignment> {
     public Assignment visitAssignment(AssignmentContext ctx) {
         String varName = ctx.name().getText();
         LocalVariable variable = scope.getLocalVariable(varName);
-        if (variable.isInitialized() && variable instanceof LocalValue) {
+        if (variable.isInitialized() && variable.isReadonly()) {
             throw new InvalidSyntaxException("variable '" + varName + "' is readonly!", ctx);
         }
 

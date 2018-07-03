@@ -11,7 +11,6 @@ import com.har01d.lang.antlr.Har01dParser.PrintContext;
 import com.har01d.lang.antlr.Har01dParser.RelationalExpressionContext;
 import com.har01d.lang.antlr.Har01dParser.ReturnVoidContext;
 import com.har01d.lang.antlr.Har01dParser.ReturnWithValueContext;
-import com.har01d.lang.antlr.Har01dParser.ValueDeclarationContext;
 import com.har01d.lang.antlr.Har01dParser.VariableDeclarationContext;
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.statement.Statement;
@@ -52,11 +51,6 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     @Override
     public Statement visitVariableDeclaration(VariableDeclarationContext ctx) {
         return variableDeclarationStatementVisitor.visitVariableDeclaration(ctx);
-    }
-
-    @Override
-    public Statement visitValueDeclaration(ValueDeclarationContext ctx) {
-        return variableDeclarationStatementVisitor.visitValueDeclaration(ctx);
     }
 
     @Override

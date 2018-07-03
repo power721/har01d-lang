@@ -2,7 +2,6 @@ grammar Har01d;
 
 compilationUnit : ( statement | function | classDeclaration )* EOF ;
 statement : variableDeclaration
-            | valueDeclaration
             | assignment
             | print
             | block
@@ -14,8 +13,7 @@ classDeclaration : 'class' className '{' classBody '}' ;
 className : ID ;
 classBody : field* function* ;
 field : type name ;
-variableDeclaration : VARIABLE name ':' type | VARIABLE name EQUALS expression ;
-valueDeclaration : VALUE name ':' type | VALUE name EQUALS expression ;
+variableDeclaration : c=(VARIABLE | VALUE) name ':' type | c=(VARIABLE | VALUE) name EQUALS expression ;
 assignment : name EQUALS expression ;
 print : PRINT expression ;
 expression : variableReference #varReference
