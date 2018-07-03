@@ -23,6 +23,11 @@ public class VariableReferenceExpressionVisitor extends Har01dBaseVisitor<Refere
         if (variable == null) {
             throw new InvalidSyntaxException("variable '" + ctx.getText() + "' doesn't declared!", ctx);
         }
+
+        if (!variable.isInitialized()) {
+            throw new InvalidSyntaxException("variable '" + ctx.getText() + "' doesn't initialized!", ctx);
+        }
+
         return new LocalVariableReference(variable);
     }
 

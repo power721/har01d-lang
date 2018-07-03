@@ -17,10 +17,12 @@ public class VariableDeclarationStatementGenerator {
 
     public void generate(VariableDeclaration variableDeclaration) {
         Expression expression = variableDeclaration.getExpression();
-        expression.accept(expressionGenerator);
+        if (expression != null) {
+            expression.accept(expressionGenerator);
 
-        Assignment assignment = new Assignment(variableDeclaration.getName(), variableDeclaration.getExpression());
-        assignment.accept(statementGenerator);
+            Assignment assignment = new Assignment(variableDeclaration.getName(), expression);
+            assignment.accept(statementGenerator);
+        }
     }
 
 }

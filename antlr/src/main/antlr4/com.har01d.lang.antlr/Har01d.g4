@@ -14,8 +14,8 @@ classDeclaration : 'class' className '{' classBody '}' ;
 className : ID ;
 classBody : field* function* ;
 field : type name ;
-variableDeclaration : VARIABLE name EQUALS expression ;
-valueDeclaration : VALUE name EQUALS expression ;
+variableDeclaration : VARIABLE name ':' type | VARIABLE name EQUALS expression ;
+valueDeclaration : VALUE name ':' type | VALUE name EQUALS expression ;
 assignment : name EQUALS expression ;
 print : PRINT expression ;
 expression : variableReference #varReference

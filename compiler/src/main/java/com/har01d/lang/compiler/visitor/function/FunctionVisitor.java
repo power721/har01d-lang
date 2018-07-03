@@ -23,12 +23,13 @@ public class FunctionVisitor extends Har01dBaseVisitor<Function> {
         FunctionSignature functionSignature = ctx.functionDeclaration().accept(new FunctionSignatureVisitor(scope));
 
         if (scope.isClassDeclaration()) {
-            scope.addLocalVariable(new LocalValue("this", scope.getClassType()), ctx);
+            scope.addLocalVariable(new LocalValue("this", scope.getClassType(), true), ctx);
         }
 
         StatementVisitor statementVisitor = new StatementVisitor(scope);
         functionSignature.getParameters().forEach(
-                                        e -> scope.addLocalVariable(new LocalValue(e.getName(), e.getType()), ctx));
+                                        e -> scope.addLocalVariable(new LocalValue(e.getName(), e.getType(), false),
+                                                                        ctx));
         Statement block = ctx.block().accept(statementVisitor);
         // TODO: constructor
         return new Function(functionSignature, block);

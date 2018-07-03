@@ -43,8 +43,6 @@ public class Compiler {
                 compiler.compile(directory, file);
             } catch (InvalidSyntaxException e) {
                 System.err.println("Compile " + file + " failed at line " + e.getLine() + ": " + e.getMessage());
-            } catch (Exception e) {
-                System.err.println("Compile " + file + " failed: " + e.getMessage());
             }
         }
     }
