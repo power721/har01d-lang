@@ -20,16 +20,15 @@ public class FunctionVisitor extends Har01dBaseVisitor<Function> {
     @Override
     public Function visitFunction(FunctionContext ctx) {
         Scope scope = new Scope(this.scope);
-        FunctionSignature functionSignature = ctx.functionDeclaration().accept(new FunctionSignatureVisitor(
-            scope));
+        FunctionSignature functionSignature = ctx.functionDeclaration().accept(new FunctionSignatureVisitor(scope));
 
         if (scope.isClassDeclaration()) {
-            scope.addLocalVariable(new LocalValue("this", scope.getClassType()));
+            scope.addLocalVariable(new LocalValue("this", scope.getClassType()), ctx);
         }
 
         StatementVisitor statementVisitor = new StatementVisitor(scope);
-        functionSignature.getParameters()
-            .forEach(e -> scope.addLocalVariable(new LocalValue(e.getName(), e.getType())));
+        functionSignature.getParameters().forEach(
+                                        e -> scope.addLocalVariable(new LocalValue(e.getName(), e.getType()), ctx));
         Statement block = ctx.block().accept(statementVisitor);
         // TODO: constructor
         return new Function(functionSignature, block);

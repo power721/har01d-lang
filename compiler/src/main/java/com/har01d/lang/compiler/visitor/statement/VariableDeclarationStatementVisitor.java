@@ -25,7 +25,7 @@ public class VariableDeclarationStatementVisitor extends Har01dBaseVisitor<Varia
     public VariableDeclaration visitVariableDeclaration(VariableDeclarationContext ctx) {
         Expression expression = ctx.expression().accept(expressionVisitor);
         String varName = ctx.name().getText();
-        scope.addLocalVariable(new LocalVariable(varName, expression.getType()));
+        scope.addLocalVariable(new LocalVariable(varName, expression.getType()), ctx);
         return new VariableDeclaration(varName, expression);
     }
 
@@ -33,7 +33,7 @@ public class VariableDeclarationStatementVisitor extends Har01dBaseVisitor<Varia
     public VariableDeclaration visitValueDeclaration(ValueDeclarationContext ctx) {
         Expression expression = ctx.expression().accept(expressionVisitor);
         String varName = ctx.name().getText();
-        scope.addLocalVariable(new LocalValue(varName, expression.getType()));
+        scope.addLocalVariable(new LocalValue(varName, expression.getType()), ctx);
         return new VariableDeclaration(varName, expression);
     }
 

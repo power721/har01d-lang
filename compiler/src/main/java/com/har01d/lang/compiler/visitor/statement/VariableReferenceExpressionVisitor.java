@@ -6,6 +6,7 @@ import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.variable.LocalVariable;
 import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
 import com.har01d.lang.compiler.domain.variable.Reference;
+import com.har01d.lang.compiler.exception.InvalidSyntaxException;
 
 public class VariableReferenceExpressionVisitor extends Har01dBaseVisitor<Reference> {
 
@@ -20,7 +21,7 @@ public class VariableReferenceExpressionVisitor extends Har01dBaseVisitor<Refere
         // TODO: filed
         LocalVariable variable = scope.getLocalVariable(ctx.getText());
         if (variable == null) {
-            throw new IllegalArgumentException("variable '" + ctx.getText() + "' doesn't declared!");
+            throw new InvalidSyntaxException("variable '" + ctx.getText() + "' doesn't declared!", ctx);
         }
         return new LocalVariableReference(variable);
     }

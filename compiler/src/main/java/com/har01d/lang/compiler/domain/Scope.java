@@ -6,12 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.antlr.v4.runtime.ParserRuleContext;
+
 import com.har01d.lang.compiler.domain.function.Argument;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
 import com.har01d.lang.compiler.domain.type.ClassType;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.domain.variable.LocalValue;
 import com.har01d.lang.compiler.domain.variable.LocalVariable;
+import com.har01d.lang.compiler.exception.InvalidSyntaxException;
 
 public class Scope {
 
@@ -63,12 +66,12 @@ public class Scope {
         return localVariablesIndex.indexOf(varName);
     }
 
-    public void addLocalVariable(LocalVariable localVariable) {
+    public void addLocalVariable(LocalVariable localVariable, ParserRuleContext ctx) {
         if (!localVariables.containsKey(localVariable.getName())) {
             localVariables.put(localVariable.getName(), localVariable);
             localVariablesIndex.add(localVariable.getName());
         } else {
-            throw new IllegalStateException("variable '" + localVariable.getName() + "' already declared!");
+            throw new InvalidSyntaxException("variable '" + localVariable.getName() + "' already declared!", ctx);
         }
     }
 
