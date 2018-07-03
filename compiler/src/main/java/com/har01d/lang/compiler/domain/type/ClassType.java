@@ -22,6 +22,10 @@ public class ClassType implements Type {
         return new ClassType("java.lang.Integer");
     }
 
+    public static ClassType Long() {
+        return new ClassType("java.lang.Long");
+    }
+
     public static ClassType Double() {
         return new ClassType("java.lang.Double");
     }

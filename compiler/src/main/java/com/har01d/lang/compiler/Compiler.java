@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.har01d.lang.compiler.domain.CompilationUnit;
+import com.har01d.lang.compiler.exception.InvalidSyntaxException;
 import com.har01d.lang.compiler.generator.ByteCodeGenerator;
 import com.har01d.lang.compiler.parser.Parser;
 
@@ -38,7 +39,13 @@ public class Compiler {
             directory.mkdirs();
         }
         for (File file : files) {
-            compiler.compile(directory, file);
+            try {
+                compiler.compile(directory, file);
+            } catch (InvalidSyntaxException e) {
+                System.err.println("Compile " + file + " failed at line " + e.getLine() + ": " + e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Compile " + file + " failed: " + e.getMessage());
+            }
         }
     }
 
