@@ -26,7 +26,7 @@ public class FunctionVisitor extends Har01dBaseVisitor<Function> {
         }
 
         StatementVisitor statementVisitor = new StatementVisitor(scope);
-        functionSignature.getParameters().forEach(e -> scope.addLocalValue(e.getName(), e.getType(), false, ctx));
+        functionSignature.getParameters().forEach(e -> scope.addLocalValue(e.getName(), e.getType(), true, ctx));
         Statement block = ctx.block().accept(statementVisitor);
         // TODO: constructor
         return new Function(functionSignature, block);
