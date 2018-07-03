@@ -62,7 +62,7 @@ public class Scope {
 
     public void addLocalVariable(String name, Type type, boolean initialized, ParserRuleContext ctx) {
         if (!localVariables.containsKey(name)) {
-            localVariables.put(name, new LocalVariable(name, type, initialized));
+            localVariables.put(name, new LocalVariable(name, type, initialized, false));
             localVariablesIndex.add(name);
         } else {
             throw new InvalidSyntaxException("variable '" + name + "' already declared!", ctx);

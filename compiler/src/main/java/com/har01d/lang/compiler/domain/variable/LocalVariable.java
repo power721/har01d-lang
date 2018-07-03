@@ -9,13 +9,6 @@ public class LocalVariable {
     private final boolean readonly;
     private boolean initialized;
 
-    public LocalVariable(String name, Type type, boolean initialized) {
-        this.type = type;
-        this.name = name;
-        this.readonly = false;
-        this.initialized = initialized;
-    }
-
     public LocalVariable(String name, Type type, boolean initialized, boolean readonly) {
         this.type = type;
         this.name = name;
