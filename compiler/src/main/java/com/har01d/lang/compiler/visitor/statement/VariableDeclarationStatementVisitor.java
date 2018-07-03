@@ -21,13 +21,17 @@ public class VariableDeclarationStatementVisitor extends Har01dBaseVisitor<Varia
 
     @Override
     public VariableDeclaration visitVariableDeclaration(VariableDeclarationContext ctx) {
-        Type type;
+        Type type = null;
         Expression expression = null;
+        if (ctx.type() != null) {
+            type = TypeResolver.resolve(ctx.type());
+        }
+
         if (ctx.expression() != null) {
             expression = ctx.expression().accept(expressionVisitor);
-            type = expression.getType();
-        } else {
-            type = TypeResolver.resolve(ctx.type());
+            if (type == null) {
+                type = expression.getType();
+            }
         }
 
         String category = ctx.c.getText();

@@ -13,7 +13,7 @@ classDeclaration : 'class' className '{' classBody '}' ;
 className : ID ;
 classBody : field* function* ;
 field : type name ;
-variableDeclaration : c=(VARIABLE | VALUE) name ':' type | c=(VARIABLE | VALUE) name EQUALS expression ;
+variableDeclaration : c=(VARIABLE | VALUE) name ':' type | c=(VARIABLE | VALUE) name (':' type)? EQUALS expression ;
 assignment : name EQUALS expression ;
 print : PRINT expression ;
 expression : variableReference #varReference

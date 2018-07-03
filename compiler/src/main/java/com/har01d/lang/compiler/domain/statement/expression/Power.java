@@ -16,7 +16,8 @@ public class Power extends ArithmeticExpression {
     }
 
     private static Type getCommonType(Expression leftExpression, Expression rightExpression) {
-        if (leftExpression.getType() == ClassType.BIG_INTEGER && rightExpression.getType().equals(BuiltInType.INT)) {
+        if (leftExpression.getType().equals(ClassType.BIG_INTEGER)
+                                        && rightExpression.getType().equals(BuiltInType.INT)) {
             return ClassType.BIG_INTEGER;
         }
         return BuiltInType.DOUBLE;

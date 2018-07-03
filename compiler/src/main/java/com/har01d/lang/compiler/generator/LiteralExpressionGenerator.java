@@ -19,7 +19,7 @@ public class LiteralExpressionGenerator {
     public void generate(Literal literal) {
         Type type = literal.getType();
         String value = literal.getValue();
-        if (type == ClassType.BIG_INTEGER) {
+        if (type.equals(ClassType.BIG_INTEGER)) {
             methodVisitor.visitTypeInsn(Opcodes.NEW, type.getInternalName());
             methodVisitor.visitInsn(Opcodes.DUP);
             methodVisitor.visitLdcInsn(value);

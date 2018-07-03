@@ -40,7 +40,7 @@ public class StatementGenerator {
         returnStatementGenerator = new ReturnStatementGenerator(methodVisitor, expressionGenerator);
         assignmentStatementGenerator = new AssignmentStatementGenerator(methodVisitor, expressionGenerator, scope);
         ifStatementGenerator = new IfStatementGenerator(expressionGenerator, this, methodVisitor);
-        variableDeclarationStatementGenerator = new VariableDeclarationStatementGenerator(this, expressionGenerator);
+        variableDeclarationStatementGenerator = new VariableDeclarationStatementGenerator(this);
     }
 
     public void generate(PrintStatement printStatement) {

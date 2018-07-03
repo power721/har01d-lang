@@ -10,6 +10,7 @@ import com.har01d.lang.compiler.domain.statement.expression.RelationalExpression
 import com.har01d.lang.compiler.domain.type.BuiltInType;
 import com.har01d.lang.compiler.domain.type.ClassType;
 import com.har01d.lang.compiler.domain.type.Type;
+import com.har01d.lang.compiler.util.TypeUtil;
 
 public class RelationalExpressionGenerator {
 
@@ -25,7 +26,8 @@ public class RelationalExpressionGenerator {
         if (leftExpression.getType() == BuiltInType.STRING || rightExpression.getType() == BuiltInType.STRING) {
             return BuiltInType.STRING;
         }
-        if (leftExpression.getType() == ClassType.BIG_INTEGER || rightExpression.getType() == ClassType.BIG_INTEGER) {
+        if (leftExpression.getType().equals(ClassType.BIG_INTEGER)
+                                        || rightExpression.getType().equals(ClassType.BIG_INTEGER)) {
             return ClassType.BIG_INTEGER;
         }
         if (leftExpression.getType() == BuiltInType.DOUBLE || rightExpression.getType() == BuiltInType.DOUBLE) {
@@ -68,8 +70,7 @@ public class RelationalExpressionGenerator {
     private boolean isPrimitiveComparison(RelationalExpression expression) {
         Expression leftExpression = expression.getLeftExpression();
         Expression rightExpression = expression.getRightExpression();
-        return leftExpression.getType().getTypeClass().isPrimitive()
-                                        && rightExpression.getType().getTypeClass().isPrimitive();
+        return TypeUtil.isPrimitive(leftExpression.getType()) && TypeUtil.isPrimitive(rightExpression.getType());
     }
 
     public void generate4Object(RelationalExpression expression) {
@@ -102,16 +103,8 @@ public class RelationalExpressionGenerator {
     }
 
     private void generateSubExpression(Expression expression, Type type) {
-        if (type == ClassType.BIG_INTEGER && expression.getType() != ClassType.BIG_INTEGER) {
-            methodVisitor.visitTypeInsn(Opcodes.NEW, type.getInternalName());
-            methodVisitor.visitInsn(Opcodes.DUP);
-            expression.accept(expressionGenerator);
-            if (expression.getType() != BuiltInType.STRING) {
-                String descriptor = "(" + expression.getType().getDescriptor() + ")Ljava/lang/String;";
-                methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/String", "valueOf", descriptor, false);
-            }
-            methodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, type.getInternalName(), "<init>",
-                                            "(Ljava/lang/String;)V", false);
+        if (type.equals(ClassType.BIG_INTEGER) && !expression.getType().equals(ClassType.BIG_INTEGER)) {
+            TypeUtil.cast2BigInteger(methodVisitor, expressionGenerator, expression);
         } else {
             expression.accept(expressionGenerator);
             castIfRequired(expression, type);
@@ -142,11 +135,9 @@ public class RelationalExpressionGenerator {
         if (expression.getType().equals(BuiltInType.INT)) {
             if (type.equals(BuiltInType.DOUBLE)) {
                 methodVisitor.visitInsn(Opcodes.I2D);
-            }
-            if (type.equals(BuiltInType.LONG)) {
+            } else if (type.equals(BuiltInType.LONG)) {
                 methodVisitor.visitInsn(Opcodes.I2L);
-            }
-            if (!type.getTypeClass().isPrimitive()) {
+            } else if (!TypeUtil.isPrimitive(type)) {
                 String descriptor = "(" + expression.getType().getDescriptor() + ")Ljava/lang/Integer;";
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Integer", "valueOf", descriptor, false);
             }
@@ -155,15 +146,14 @@ public class RelationalExpressionGenerator {
         if (expression.getType().equals(BuiltInType.LONG)) {
             if (type.equals(BuiltInType.DOUBLE)) {
                 methodVisitor.visitInsn(Opcodes.L2D);
-            }
-            if (!type.getTypeClass().isPrimitive()) {
+            } else if (!TypeUtil.isPrimitive(type)) {
                 String descriptor = "(" + expression.getType().getDescriptor() + ")Ljava/lang/Long;";
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Long", "valueOf", descriptor, false);
             }
         }
 
         if (expression.getType().equals(BuiltInType.DOUBLE)) {
-            if (!type.getTypeClass().isPrimitive()) {
+            if (!TypeUtil.isPrimitive(type)) {
                 String descriptor = "(" + expression.getType().getDescriptor() + ")Ljava/lang/Double;";
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Double", "valueOf", descriptor, false);
             }

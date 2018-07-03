@@ -14,6 +14,7 @@ import com.har01d.lang.compiler.domain.statement.expression.Subtraction;
 import com.har01d.lang.compiler.domain.type.BuiltInType;
 import com.har01d.lang.compiler.domain.type.ClassType;
 import com.har01d.lang.compiler.domain.type.Type;
+import com.har01d.lang.compiler.util.TypeUtil;
 
 public class ArithmeticExpressionGenerator {
 
@@ -32,108 +33,86 @@ public class ArithmeticExpressionGenerator {
             return;
         }
 
-        if (expression.getType() == ClassType.BIG_INTEGER) {
+        if (expression.getType().equals(ClassType.BIG_INTEGER)) {
             generateBigInteger(expression, "add");
             return;
         }
 
         expression.getLeftExpression().accept(expressionGenerator);
-        castIfRequired(expression.getLeftExpression(), expression.getType());
+        TypeUtil.castIfRequired(methodVisitor, expression.getLeftExpression(), expression.getType());
         expression.getRightExpression().accept(expressionGenerator);
-        castIfRequired(expression.getRightExpression(), expression.getType());
+        TypeUtil.castIfRequired(methodVisitor, expression.getRightExpression(), expression.getType());
         Type type = expression.getType();
         methodVisitor.visitInsn(type.getAddOpcode());
     }
 
     public void generate(Subtraction expression) {
-        if (expression.getType() == ClassType.BIG_INTEGER) {
+        if (expression.getType().equals(ClassType.BIG_INTEGER)) {
             generateBigInteger(expression, "subtract");
             return;
         }
 
         expression.getLeftExpression().accept(expressionGenerator);
-        castIfRequired(expression.getLeftExpression(), expression.getType());
+        TypeUtil.castIfRequired(methodVisitor, expression.getLeftExpression(), expression.getType());
         expression.getRightExpression().accept(expressionGenerator);
-        castIfRequired(expression.getRightExpression(), expression.getType());
+        TypeUtil.castIfRequired(methodVisitor, expression.getRightExpression(), expression.getType());
         Type type = expression.getType();
         methodVisitor.visitInsn(type.getSubtractOpcode());
     }
 
     public void generate(Multiplication expression) {
-        if (expression.getType() == ClassType.BIG_INTEGER) {
+        if (expression.getType().equals(ClassType.BIG_INTEGER)) {
             generateBigInteger(expression, "multiply");
             return;
         }
 
         expression.getLeftExpression().accept(expressionGenerator);
-        castIfRequired(expression.getLeftExpression(), expression.getType());
+        TypeUtil.castIfRequired(methodVisitor, expression.getLeftExpression(), expression.getType());
         expression.getRightExpression().accept(expressionGenerator);
-        castIfRequired(expression.getRightExpression(), expression.getType());
+        TypeUtil.castIfRequired(methodVisitor, expression.getRightExpression(), expression.getType());
         Type type = expression.getType();
         methodVisitor.visitInsn(type.getMultiplyOpcode());
     }
 
     public void generate(Division expression) {
-        if (expression.getType() == ClassType.BIG_INTEGER) {
+        if (expression.getType().equals(ClassType.BIG_INTEGER)) {
             generateBigInteger(expression, "divide");
             return;
         }
 
         expression.getLeftExpression().accept(expressionGenerator);
-        castIfRequired(expression.getLeftExpression(), expression.getType());
+        TypeUtil.castIfRequired(methodVisitor, expression.getLeftExpression(), expression.getType());
         expression.getRightExpression().accept(expressionGenerator);
-        castIfRequired(expression.getRightExpression(), expression.getType());
+        TypeUtil.castIfRequired(methodVisitor, expression.getRightExpression(), expression.getType());
         Type type = expression.getType();
         methodVisitor.visitInsn(type.getDivideOpcode());
     }
 
     public void generate(Remainder expression) {
-        if (expression.getType() == ClassType.BIG_INTEGER) {
+        if (expression.getType().equals(ClassType.BIG_INTEGER)) {
             generateBigInteger(expression, "remainder");
             return;
         }
 
         expression.getLeftExpression().accept(expressionGenerator);
-        castIfRequired(expression.getLeftExpression(), expression.getType());
+        TypeUtil.castIfRequired(methodVisitor, expression.getLeftExpression(), expression.getType());
         expression.getRightExpression().accept(expressionGenerator);
-        castIfRequired(expression.getRightExpression(), expression.getType());
+        TypeUtil.castIfRequired(methodVisitor, expression.getRightExpression(), expression.getType());
         Type type = expression.getType();
         methodVisitor.visitInsn(type.getRemainderOpcode());
     }
 
     public void generate(Power expression) {
-        if (expression.getType() == ClassType.BIG_INTEGER) {
+        if (expression.getType().equals(ClassType.BIG_INTEGER)) {
             generateBigIntegerPower(expression);
             return;
         }
 
         expression.getLeftExpression().accept(expressionGenerator);
-        castIfRequired(expression.getLeftExpression(), expression.getType());
+        TypeUtil.castIfRequired(methodVisitor, expression.getLeftExpression(), expression.getType());
         expression.getRightExpression().accept(expressionGenerator);
-        castIfRequired(expression.getRightExpression(), expression.getType());
+        TypeUtil.castIfRequired(methodVisitor, expression.getRightExpression(), expression.getType());
         methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Math", "pow", "(DD)D", false);
-    }
-
-    private void castIfRequired(Expression expression, Type type) {
-        if (expression.getType().equals(type)) {
-            return;
-        }
-
-        if (expression.getType().equals(BuiltInType.INT)) {
-            if (type.equals(BuiltInType.DOUBLE)) {
-                methodVisitor.visitInsn(Opcodes.I2D);
-            }
-            if (type.equals(BuiltInType.LONG)) {
-                methodVisitor.visitInsn(Opcodes.I2L);
-            }
-        }
-
-        if (expression.getType() == ClassType.BIG_INTEGER) {
-            if (type.equals(BuiltInType.DOUBLE)) {
-                methodVisitor
-                    .visitMethodInsn(Opcodes.INVOKEVIRTUAL, "Ljava/math/BigInteger;", "doubleValue", "()D", false);
-            }
-        }
     }
 
     private void generateBigInteger(ArithmeticExpression expression, String operator) {
@@ -159,16 +138,7 @@ public class ArithmeticExpressionGenerator {
         if (expression.getType().equals(type)) {
             expression.accept(expressionGenerator);
         } else {
-            methodVisitor.visitTypeInsn(Opcodes.NEW, type.getInternalName());
-            methodVisitor.visitInsn(Opcodes.DUP);
-            expression.accept(expressionGenerator);
-            if (expression.getType() != BuiltInType.STRING) {
-                String descriptor = "(" + expression.getType().getDescriptor() + ")Ljava/lang/String;";
-                methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/String", "valueOf", descriptor, false);
-            }
-            methodVisitor
-                .visitMethodInsn(Opcodes.INVOKESPECIAL, type.getInternalName(), "<init>", "(Ljava/lang/String;)V",
-                    false);
+            TypeUtil.cast2BigInteger(methodVisitor, expressionGenerator, expression);
         }
     }
 
