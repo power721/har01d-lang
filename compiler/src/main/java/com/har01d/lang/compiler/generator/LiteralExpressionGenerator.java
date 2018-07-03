@@ -4,6 +4,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import com.har01d.lang.compiler.domain.Literal;
+import com.har01d.lang.compiler.domain.type.BuiltInType;
 import com.har01d.lang.compiler.domain.type.ClassType;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.util.TypeResolver;
@@ -27,7 +28,11 @@ public class LiteralExpressionGenerator {
                 .visitMethodInsn(Opcodes.INVOKESPECIAL, type.getInternalName(), "<init>", "(Ljava/lang/String;)V",
                     false);
         } else {
-            methodVisitor.visitLdcInsn(TypeResolver.getValue(type, value));
+            if (type == BuiltInType.BOOLEAN) {
+                methodVisitor.visitInsn("true".equals(value) ? Opcodes.ICONST_1 : Opcodes.ICONST_0);
+            } else {
+                methodVisitor.visitLdcInsn(TypeResolver.getValue(type, value));
+            }
         }
     }
 

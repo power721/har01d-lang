@@ -9,7 +9,7 @@
     string append
     unicode
 */
-var x = 5
+var x: long = 5
 print x
 
 var s = "hello world!"
