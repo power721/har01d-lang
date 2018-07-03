@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.har01d.lang.compiler.domain.CompilationUnit;
@@ -31,7 +32,17 @@ public class Compiler {
                     i++;
                 }
             } else {
-                files.add(new File(arg));
+                if (arg.endsWith("*.hd")) {
+                    File dir = new File(arg.substring(0, arg.length() - 4));
+                    if (dir.isDirectory()) {
+                        File[] flist = dir.listFiles((dir1, name) -> name.endsWith(".hd"));
+                        if (flist != null) {
+                            files.addAll(Arrays.asList(flist));
+                        }
+                    }
+                } else {
+                    files.add(new File(arg));
+                }
             }
         }
 
