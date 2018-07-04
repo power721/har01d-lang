@@ -87,7 +87,34 @@ IntegerLiteral: ('+'|'-')?'0' | ('+'|'-')?[1-9][0-9]* | HexLiteral;
 HexLiteral: '0' [xX] HexDigit (HexDigit | '_')* ;
 fragment HexDigit: [0-9a-fA-F] ;
 BOOL : 'true' | 'false' ;
-STRING : '"'.*?'"' | '\''.*?'\'' ;
+STRING  :   '"' ( ESC | ~('"'|'\\'|'\n'|'\r') )* '"' {
+            setText(
+                CharSupport.getStringFromGrammarStringLiteral(
+                    getText()
+                )
+            );
+        }
+       |
+        '\'' ( ESC | ~('"'|'\\'|'\n'|'\r') )* '\'' {
+             setText(
+                 CharSupport.getStringFromGrammarStringLiteral(
+                     getText()
+                 )
+             );
+         }
+        ;
+fragment ESC :   '\\'
+        (   'n'
+        |   'r'
+        |   't'
+        |   'b'
+        |   'f'
+        |   '"'
+        |   '\''
+        |   '/'
+        |   '\\'
+        |   ('u')+ HexDigit HexDigit HexDigit HexDigit
+        );
 ID: NameStartChar NameChar* ;
 fragment
 NameChar

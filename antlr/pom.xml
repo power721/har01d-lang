@@ -32,11 +32,10 @@
                         </goals>
                         <configuration>
                             <visitor>true</visitor>
-                            <!--<listener>false</listener>-->
+                            <listener>false</listener>
                         </configuration>
                     </execution>
                 </executions>
-
             </plugin>
         </plugins>
     </build>

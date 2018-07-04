@@ -25,7 +25,7 @@ print 2147483648L
 x = 1
 print x
 
-s='//Hi//'
+s='\t//Hi//\t'
 print s
 
 print "#YES#"

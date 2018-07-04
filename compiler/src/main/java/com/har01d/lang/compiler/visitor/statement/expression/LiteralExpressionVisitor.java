@@ -23,12 +23,14 @@ public class LiteralExpressionVisitor extends Har01dBaseVisitor<Literal> {
             return value;
         }
 
-        if (value.charAt(0) == '\'' && value.charAt(value.length() - 1) == '\'') {
-            return value.substring(1, value.length() - 1);
-        }
+        if (type == BuiltInType.STRING) {
+            if (value.charAt(0) == '\'' && value.charAt(value.length() - 1) == '\'') {
+                return value.substring(1, value.length() - 1);
+            }
 
-        if (value.charAt(0) == '"' && value.charAt(value.length() - 1) == '"') {
-            return value.substring(1, value.length() - 1);
+            if (value.charAt(0) == '"' && value.charAt(value.length() - 1) == '"') {
+                return value.substring(1, value.length() - 1);
+            }
         }
 
         return value;

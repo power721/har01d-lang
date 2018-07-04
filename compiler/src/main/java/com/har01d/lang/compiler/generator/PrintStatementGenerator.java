@@ -47,11 +47,19 @@ public class PrintStatementGenerator {
         methodVisitor.visitInsn(Opcodes.DUP);
         methodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "()V", false);
 
+        boolean first = true;
         for (Expression expression : expressions) {
+            if (!first) {
+                methodVisitor.visitLdcInsn(" ");
+                String descriptor = "(Ljava/lang/String;)Ljava/lang/StringBuilder;";
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/StringBuilder", "append", descriptor,
+                                                false);
+            }
             expression.accept(expressionGenerator);
             String descriptor = "(" + expression.getType().getDescriptor() + ")Ljava/lang/StringBuilder;";
             methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/StringBuilder", "append", descriptor,
                                             false);
+            first = false;
         }
 
         methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/StringBuilder", "toString",
