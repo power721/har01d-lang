@@ -1,6 +1,7 @@
 package com.har01d.lang.compiler.visitor.statement.expression;
 
 import com.har01d.lang.antlr.Har01dBaseVisitor;
+import com.har01d.lang.antlr.Har01dParser;
 import com.har01d.lang.antlr.Har01dParser.AddContext;
 import com.har01d.lang.antlr.Har01dParser.FunctionCallContext;
 import com.har01d.lang.antlr.Har01dParser.LiteralContext;
@@ -17,6 +18,7 @@ public class ExpressionVisitor extends Har01dBaseVisitor<Expression> {
 
     private final CallExpressionVisitor callExpressionVisitor;
     private final LiteralExpressionVisitor literalExpressionVisitor;
+    private final LogicalExpressionVisitor logicalExpressionVisitor;
     private final ArithmeticExpressionVisitor arithmeticExpressionVisitor;
     private final RelationalExpressionVisitor relationalExpressionVisitor;
     private final VariableReferenceExpressionVisitor variableReferenceExpressionVisitor;
@@ -26,6 +28,7 @@ public class ExpressionVisitor extends Har01dBaseVisitor<Expression> {
         arithmeticExpressionVisitor = new ArithmeticExpressionVisitor(this);
         relationalExpressionVisitor = new RelationalExpressionVisitor(this);
         variableReferenceExpressionVisitor = new VariableReferenceExpressionVisitor(scope);
+        logicalExpressionVisitor = new LogicalExpressionVisitor(this);
         literalExpressionVisitor = new LiteralExpressionVisitor();
     }
 
@@ -62,6 +65,11 @@ public class ExpressionVisitor extends Har01dBaseVisitor<Expression> {
     @Override
     public Expression visitRelationalExpression(RelationalExpressionContext ctx) {
         return relationalExpressionVisitor.visitRelationalExpression(ctx);
+    }
+
+    @Override
+    public Expression visitLogicalExpression(Har01dParser.LogicalExpressionContext ctx) {
+        return logicalExpressionVisitor.visitLogicalExpression(ctx);
     }
 
 }

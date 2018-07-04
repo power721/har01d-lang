@@ -89,6 +89,11 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     }
 
     @Override
+    public Statement visitLogicalExpression(Har01dParser.LogicalExpressionContext ctx) {
+        return expressionVisitor.visitLogicalExpression(ctx);
+    }
+
+    @Override
     public Statement visitIfStatement(Har01dParser.IfStatementContext ctx) {
         return ifStatementVisitor.visitIfStatement(ctx);
     }

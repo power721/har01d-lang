@@ -1,0 +1,17 @@
+var x = false
+print not x, " = true"
+
+x = not x
+print not true, " = false"
+
+print not (1==1), " = false"
+print 1==1 and 2==2, " = true"
+print true and false, " = false"
+print false and false, " = false"
+
+print not (1!=1), " = true"
+print 1==1 or 2==2, " = true"
+print true or false, " = true"
+print false or false, " = false"
+
+print not x and true, " = false"

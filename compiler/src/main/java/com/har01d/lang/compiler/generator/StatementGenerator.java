@@ -14,6 +14,7 @@ import com.har01d.lang.compiler.domain.statement.ReturnStatement;
 import com.har01d.lang.compiler.domain.statement.VariableDeclaration;
 import com.har01d.lang.compiler.domain.statement.expression.Addition;
 import com.har01d.lang.compiler.domain.statement.expression.Division;
+import com.har01d.lang.compiler.domain.statement.expression.LogicalExpression;
 import com.har01d.lang.compiler.domain.statement.expression.Multiplication;
 import com.har01d.lang.compiler.domain.statement.expression.Power;
 import com.har01d.lang.compiler.domain.statement.expression.RelationalExpression;
@@ -109,6 +110,10 @@ public class StatementGenerator {
 
     public void generate(IfStatement ifStatement) {
         ifStatementGenerator.generate(ifStatement);
+    }
+
+    public void generate(LogicalExpression logicalExpression) {
+        expressionGenerator.generate(logicalExpression);
     }
 
 }

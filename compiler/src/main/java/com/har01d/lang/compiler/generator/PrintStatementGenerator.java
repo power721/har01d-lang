@@ -1,11 +1,14 @@
 package com.har01d.lang.compiler.generator;
 
+import java.util.List;
+
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+
 import com.har01d.lang.compiler.domain.statement.PrintStatement;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.domain.type.ClassType;
 import com.har01d.lang.compiler.domain.type.Type;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
 
 public class PrintStatementGenerator {
 
@@ -18,15 +21,41 @@ public class PrintStatementGenerator {
     }
 
     public void generate(PrintStatement printStatement) {
-        Expression expression = printStatement.getExpression();
+        List<Expression> expressions = printStatement.getExpressions();
         methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-        expression.accept(expressionGenerator);
-        Type type = expression.getType();
-        String descriptor = "(" + type.getDescriptor() + ")V";
-        if (type instanceof ClassType) {
-            descriptor = "(Ljava/lang/Object;)V";
+
+        String descriptor;
+        if (expressions.size() == 1) {
+            Expression expression = expressions.get(0);
+            expression.accept(expressionGenerator);
+            Type type = expression.getType();
+            if (type instanceof ClassType) {
+                descriptor = "(Ljava/lang/Object;)V";
+            } else {
+                descriptor = "(" + type.getDescriptor() + ")V";
+            }
+        } else {
+            generateStringAppend(expressions);
+            descriptor = "(Ljava/lang/String;)V";
         }
+
         methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", descriptor, false);
+    }
+
+    private void generateStringAppend(List<Expression> expressions) {
+        methodVisitor.visitTypeInsn(Opcodes.NEW, "java/lang/StringBuilder");
+        methodVisitor.visitInsn(Opcodes.DUP);
+        methodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "()V", false);
+
+        for (Expression expression : expressions) {
+            expression.accept(expressionGenerator);
+            String descriptor = "(" + expression.getType().getDescriptor() + ")Ljava/lang/StringBuilder;";
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/StringBuilder", "append", descriptor,
+                                            false);
+        }
+
+        methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/StringBuilder", "toString",
+                                        "()Ljava/lang/String;", false);
     }
 
 }

@@ -1,5 +1,8 @@
 package com.har01d.lang.compiler.visitor.statement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser.PrintContext;
 import com.har01d.lang.compiler.domain.statement.PrintStatement;
@@ -16,8 +19,9 @@ public class PrintStatementVisitor extends Har01dBaseVisitor<PrintStatement> {
 
     @Override
     public PrintStatement visitPrint(PrintContext ctx) {
-        Expression expression = ctx.expression().accept(expressionVisitor);
-        return new PrintStatement(expression);
+        List<Expression> expressions = new ArrayList<>();
+        ctx.expression().forEach(e -> expressions.add(e.accept(expressionVisitor)));
+        return new PrintStatement(expressions);
     }
 
 }

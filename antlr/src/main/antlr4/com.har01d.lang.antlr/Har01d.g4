@@ -15,7 +15,7 @@ classBody : field* function* ;
 field : type name ;
 variableDeclaration : c=(VARIABLE | VALUE) name ':' type | c=(VARIABLE | VALUE) name (':' type)? EQUALS expression ;
 assignment : name EQUALS expression ;
-print : PRINT expression ;
+print : PRINT expression (',' expression)* ;
 expression : variableReference #varReference
              | literal #literalExpr
              | functionName '(' argumentList ')' #FunctionCall
@@ -25,8 +25,14 @@ expression : variableReference #varReference
              | expression op=('*' | '/' | '%') expression  #Multiply
              | '(' expression op=('+' | '-') expression ')' #Add
              | expression op=('+' | '-') expression #Add
+             | '(' op='not' expression ')' #LogicalExpression
+             | op='not' expression #LogicalExpression
+             | '(' expression cmp=('>' | '<' | '>=' | '<=') expression ')' #RelationalExpression
              | expression cmp=('>' | '<' | '>=' | '<=') expression #RelationalExpression
+             | '(' expression cmp=('==' | '!=') expression ')' #RelationalExpression
              | expression cmp=('==' | '!=') expression #RelationalExpression
+             | '(' expression op=('and' | 'or') expression ')' #LogicalExpression
+             | expression op=('and' | 'or') expression #LogicalExpression
              ;
 
 literal : NUMBER | BOOL | STRING ;

@@ -1,23 +1,26 @@
 package com.har01d.lang.compiler.generator;
 
+import org.objectweb.asm.MethodVisitor;
+
 import com.har01d.lang.compiler.domain.Literal;
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.function.FunctionCall;
 import com.har01d.lang.compiler.domain.function.FunctionParameter;
 import com.har01d.lang.compiler.domain.statement.expression.Addition;
 import com.har01d.lang.compiler.domain.statement.expression.Division;
+import com.har01d.lang.compiler.domain.statement.expression.LogicalExpression;
 import com.har01d.lang.compiler.domain.statement.expression.Multiplication;
 import com.har01d.lang.compiler.domain.statement.expression.Power;
 import com.har01d.lang.compiler.domain.statement.expression.RelationalExpression;
 import com.har01d.lang.compiler.domain.statement.expression.Remainder;
 import com.har01d.lang.compiler.domain.statement.expression.Subtraction;
 import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
-import org.objectweb.asm.MethodVisitor;
 
 public class ExpressionGenerator {
 
     private final CallExpressionGenerator callExpressionGenerator;
     private final LiteralExpressionGenerator literalExpressionGenerator;
+    private final LogicalExpressionGenerator logicalExpressionGenerator;
     private final ParameterExpressionGenerator parameterExpressionGenerator;
     private final ReferenceExpressionGenerator referenceExpressionGenerator;
     private final ArithmeticExpressionGenerator arithmeticExpressionGenerator;
@@ -27,6 +30,7 @@ public class ExpressionGenerator {
         literalExpressionGenerator = new LiteralExpressionGenerator(methodVisitor);
         parameterExpressionGenerator = new ParameterExpressionGenerator(methodVisitor, scope);
         referenceExpressionGenerator = new ReferenceExpressionGenerator(methodVisitor, scope);
+        logicalExpressionGenerator = new LogicalExpressionGenerator(this, methodVisitor);
         callExpressionGenerator = new CallExpressionGenerator(this, methodVisitor, scope);
         arithmeticExpressionGenerator = new ArithmeticExpressionGenerator(this, methodVisitor);
         relationalExpressionGenerator = new RelationalExpressionGenerator(this, methodVisitor);
@@ -74,6 +78,10 @@ public class ExpressionGenerator {
 
     public void generate(RelationalExpression relationalExpression) {
         relationalExpressionGenerator.generate(relationalExpression);
+    }
+
+    public void generate(LogicalExpression logicalExpression) {
+        logicalExpressionGenerator.generate(logicalExpression);
     }
 
 }
