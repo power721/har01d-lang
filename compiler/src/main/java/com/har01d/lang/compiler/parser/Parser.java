@@ -17,8 +17,8 @@ import com.har01d.lang.compiler.visitor.CompilationUnitVisitor;
 
 public class Parser {
 
-    public CompilationUnit getCompilationUnit(String fileName) throws IOException {
-        CharStream charStream = CharStreams.fromFileName(fileName);
+    public CompilationUnit getCompilationUnit(File file) throws IOException {
+        CharStream charStream = CharStreams.fromFileName(file.getAbsolutePath());
         Har01dLexer lexer = new Har01dLexer(charStream);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         Har01dParser parser = new Har01dParser(tokenStream);
@@ -26,7 +26,6 @@ public class Parser {
         BaseErrorListener errorListener = new Har01dTreeWalkErrorListener();
 
         parser.addErrorListener(errorListener);
-        File file = new File(fileName);
         MetaData metaData = new MetaData(file.getName().replace(".hd", ""));
         CompilationUnitVisitor compilationUnitVisitor = new CompilationUnitVisitor(metaData);
 

@@ -1,9 +1,9 @@
 class Test {
-    fun main(args: string[]) {
+    fun test() {
         print sum(1, 2)
     }
 
     fun sum(x: int, y: int): int {
-        x + y
+        return x + y
     }
 }

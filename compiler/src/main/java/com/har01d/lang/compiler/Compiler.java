@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.har01d.lang.compiler.domain.ClassDeclaration;
 import com.har01d.lang.compiler.domain.CompilationUnit;
 import com.har01d.lang.compiler.exception.InvalidSyntaxException;
 import com.har01d.lang.compiler.generator.ByteCodeGenerator;
@@ -59,21 +60,16 @@ public class Compiler {
     }
 
     public void compile(File directory, File file) throws Exception {
-        String fileName = file.getName();
-        String path = file.getAbsolutePath();
-        String className = getClassName(fileName);
+        CompilationUnit compilationUnit = new Parser().getCompilationUnit(file);
 
-        CompilationUnit compilationUnit = new Parser().getCompilationUnit(path);
+        ByteCodeGenerator generator = new ByteCodeGenerator();
+        byte[] byteCode = generator.generateByteCode(compilationUnit, compilationUnit.getName());
+        saveByteCodeToClassFile(directory, compilationUnit.getName(), byteCode);
 
-        byte[] byteCode = new ByteCodeGenerator().generateByteCode(compilationUnit, className);
-        saveByteCodeToClassFile(directory, className, byteCode);
-    }
-
-    private String getClassName(String fileName) {
-        if (fileName.endsWith(".hd")) {
-            return fileName.substring(0, fileName.length() - 3);
+        for (ClassDeclaration classDeclaration : compilationUnit.getClassDeclarations()) {
+            byteCode = generator.generateByteCode(classDeclaration);
+            saveByteCodeToClassFile(directory, classDeclaration.getName(), byteCode);
         }
-        return fileName;
     }
 
     private void saveByteCodeToClassFile(File directory, String className, byte[] byteCode) throws IOException {

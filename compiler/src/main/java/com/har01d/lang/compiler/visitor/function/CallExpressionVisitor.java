@@ -11,6 +11,10 @@ import com.har01d.lang.compiler.domain.function.Argument;
 import com.har01d.lang.compiler.domain.function.Call;
 import com.har01d.lang.compiler.domain.function.FunctionCall;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
+import com.har01d.lang.compiler.domain.statement.expression.Expression;
+import com.har01d.lang.compiler.domain.type.ClassType;
+import com.har01d.lang.compiler.domain.variable.LocalVariable;
+import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
 import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
 
 public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
@@ -18,8 +22,7 @@ public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
     private final ExpressionVisitor expressionVisitor;
     private final Scope scope;
 
-    public CallExpressionVisitor(
-        ExpressionVisitor expressionVisitor, Scope scope) {
+    public CallExpressionVisitor(ExpressionVisitor expressionVisitor, Scope scope) {
         this.expressionVisitor = expressionVisitor;
         this.scope = scope;
     }
@@ -35,10 +38,18 @@ public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
         } else {
             arguments = Collections.emptyList();
         }
-        FunctionSignature signature = scope.getSignature(name, arguments);
-        // TODO
 
-        return new FunctionCall(null, signature, signature.getArguments(arguments));
+        // TODO: get FunctionSignature from class path
+        FunctionSignature signature = scope.getSignature(name, arguments);
+        Expression owner = null;
+        if (ctx.owner != null) {
+            owner = ctx.owner.accept(expressionVisitor);
+        } else if (scope.isClassDeclaration()) {
+            LocalVariable thisVariable = new LocalVariable("this", new ClassType(scope.getClassName()), true, true);
+            owner = new LocalVariableReference(thisVariable);
+        }
+
+        return new FunctionCall(owner, signature, signature.getArguments(arguments));
     }
 
 }

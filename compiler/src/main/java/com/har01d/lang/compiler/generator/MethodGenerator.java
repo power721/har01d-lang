@@ -1,14 +1,16 @@
 package com.har01d.lang.compiler.generator;
 
+import java.util.stream.Collectors;
+
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+
 import com.har01d.lang.compiler.domain.function.Function;
 import com.har01d.lang.compiler.domain.statement.Block;
 import com.har01d.lang.compiler.domain.statement.ReturnStatement;
 import com.har01d.lang.compiler.domain.statement.Statement;
 import com.har01d.lang.compiler.domain.statement.expression.EmptyExpression;
-import java.util.stream.Collectors;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
 
 public class MethodGenerator {
 
@@ -20,9 +22,9 @@ public class MethodGenerator {
 
     public void generate(Function function) {
         String name = function.getName();
-        int flag = Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC;
         String descriptor = getDescriptor(function);
         Block block = (Block) function.getBlock();
+        int flag = Opcodes.ACC_PUBLIC + (block.getScope().isClassDeclaration() ? 0 : Opcodes.ACC_STATIC);
 
         MethodVisitor mv = classWriter.visitMethod(flag, name, descriptor, null, null);
         mv.visitCode();

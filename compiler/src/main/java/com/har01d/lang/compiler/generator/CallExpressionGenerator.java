@@ -43,7 +43,13 @@ public class CallExpressionGenerator {
 
         String name = functionCall.getIdentifier();
         String descriptor = getDescriptor(signature);
-        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, owner, name, descriptor, false);
+
+        // TODO: check static method
+        if (scope.isClassDeclaration()) {
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, owner, name, descriptor, false);
+        } else {
+            methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, owner, name, descriptor, false);
+        }
     }
 
     private String getDescriptor(FunctionSignature signature) {

@@ -2,8 +2,10 @@ package com.har01d.lang.compiler.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -21,12 +23,14 @@ public class Scope {
     private final Map<String, LocalVariable> localVariables;
     private final List<String> localVariablesIndex;
     private final List<FunctionSignature> functionSignatures;
+    private final Set<String> classes;
 
     public Scope(MetaData metaData) {
         this.metaData = metaData;
         localVariables = new HashMap<>();
         localVariablesIndex = new ArrayList<>();
         functionSignatures = new ArrayList<>();
+        classes = new HashSet<>();
     }
 
     public Scope(Scope scope) {
@@ -34,6 +38,15 @@ public class Scope {
         localVariables = new HashMap<>(scope.localVariables);
         localVariablesIndex = new ArrayList<>(scope.localVariablesIndex);
         functionSignatures = new ArrayList<>(scope.functionSignatures);
+        classes = new HashSet<>(scope.classes);
+    }
+
+    public void addClass(String name) {
+        classes.add(name);
+    }
+
+    public boolean isClassExist(String name) {
+        return classes.contains(name);
     }
 
     public void addSignature(FunctionSignature functionSignature) {

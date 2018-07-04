@@ -1,22 +1,25 @@
 package com.har01d.lang.compiler.domain;
 
+import java.util.List;
+
 import com.har01d.lang.compiler.domain.function.Function;
 import com.har01d.lang.compiler.domain.statement.Statement;
-import java.util.List;
 
 public class CompilationUnit {
 
     private final List<Statement> statements;
     private final List<Function> functions;
-    private final ClassDeclaration classDeclaration;
+    private final List<ClassDeclaration> classDeclarations;
     private final Scope scope;
+    private final String name;
 
-    public CompilationUnit(List<Statement> statements,
-        List<Function> functions, ClassDeclaration classDeclaration, Scope scope) {
+    public CompilationUnit(List<Statement> statements, List<Function> functions,
+                                    List<ClassDeclaration> classDeclarations, Scope scope, String name) {
         this.statements = statements;
         this.functions = functions;
-        this.classDeclaration = classDeclaration;
+        this.classDeclarations = classDeclarations;
         this.scope = scope;
+        this.name = name;
     }
 
     public List<Statement> getStatements() {
@@ -27,12 +30,16 @@ public class CompilationUnit {
         return functions;
     }
 
-    public ClassDeclaration getClassDeclaration() {
-        return classDeclaration;
+    public List<ClassDeclaration> getClassDeclarations() {
+        return classDeclarations;
     }
 
     public Scope getScope() {
         return scope;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

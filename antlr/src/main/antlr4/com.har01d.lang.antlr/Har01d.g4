@@ -18,6 +18,7 @@ assignment : name EQUALS expression ;
 print : PRINT expression (',' expression)* ;
 expression : variableReference #varReference
              | literal #literalExpr
+             | owner=expression '.' functionName '(' argumentList ')' #FunctionCall
              | functionName '(' argumentList ')' #FunctionCall
              |  '('expression '^' expression')' #Power
              | expression '^' expression  #Power
