@@ -44,7 +44,7 @@ forStatement : 'for' ('(')? forConditions (')')? statement ;
 forConditions : iterator=variableReference  'from' startExpr=expression range='to' endExpr=expression ;
 
 variableReference: ID ;
-function : functionDeclaration block ;
+function : functionDeclaration block | functionDeclaration '=' expression ;
 functionDeclaration : 'fun' functionName '(' parametersList? ')' (':' type)? ;
 parametersList:  parameter (',' parameter)* (',' parameterWithDefaultValue)*
           |  parameterWithDefaultValue (',' parameterWithDefaultValue)* ;

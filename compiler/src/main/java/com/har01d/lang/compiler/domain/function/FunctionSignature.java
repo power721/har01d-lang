@@ -11,7 +11,7 @@ public class FunctionSignature {
 
     private final String name;
     private final List<FunctionParameter> parameters;
-    private final Type returnType;
+    private Type returnType;
 
     public FunctionSignature(String name, List<FunctionParameter> parameters, Type returnType) {
         this.name = name;
@@ -29,6 +29,10 @@ public class FunctionSignature {
 
     public Type getReturnType() {
         return returnType;
+    }
+
+    public void setReturnType(Type returnType) {
+        this.returnType = returnType;
     }
 
     public boolean matches(String otherSignatureName, List<Argument> arguments) {

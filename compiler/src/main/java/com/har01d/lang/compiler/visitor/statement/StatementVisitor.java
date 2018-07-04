@@ -38,6 +38,10 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
         variableDeclarationStatementVisitor = new VariableDeclarationStatementVisitor(expressionVisitor, scope);
     }
 
+    public ExpressionVisitor getExpressionVisitor() {
+        return expressionVisitor;
+    }
+
     @Override
     public Statement visitPrint(PrintContext ctx) {
         return printStatementVisitor.visitPrint(ctx);
