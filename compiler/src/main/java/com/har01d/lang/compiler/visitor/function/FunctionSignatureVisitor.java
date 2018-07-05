@@ -1,6 +1,6 @@
 package com.har01d.lang.compiler.visitor.function;
 
-import java.util.Collections;
+import java.util.ArrayList;
 
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser.FunctionDeclarationContext;
@@ -35,7 +35,7 @@ public class FunctionSignatureVisitor extends Har01dBaseVisitor<FunctionSignatur
             ParameterExpressionListVisitor visitor = new ParameterExpressionListVisitor(expressionVisitor);
             return new FunctionSignature(name, internalName, parametersListContext.accept(visitor), type);
         }
-        return new FunctionSignature(name, internalName, Collections.emptyList(), type);
+        return new FunctionSignature(name, internalName, new ArrayList<>(), type);
     }
 
 }

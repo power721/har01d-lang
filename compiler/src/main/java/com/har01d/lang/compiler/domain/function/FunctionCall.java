@@ -12,14 +12,12 @@ public class FunctionCall implements Call {
     private final Expression owner;
     private final FunctionSignature signature;
     private final List<Argument> arguments;
-    private final Type type;
 
     public FunctionCall(Expression owner, FunctionSignature signature,
         List<Argument> arguments) {
         this.owner = owner;
         this.signature = signature;
         this.arguments = arguments;
-        this.type = signature.getReturnType();
     }
 
     public Expression getOwner() {
@@ -37,7 +35,7 @@ public class FunctionCall implements Call {
 
     @Override
     public Type getType() {
-        return type;
+        return signature.getReturnType();
     }
 
     @Override

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.har01d.lang.compiler.domain.type.Type;
+import com.har01d.lang.compiler.domain.variable.LocalVariable;
+import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
 
 public class FunctionSignature {
 
@@ -27,6 +29,11 @@ public class FunctionSignature {
 
     public List<FunctionParameter> getParameters() {
         return Collections.unmodifiableList(parameters);
+    }
+
+    public void addImplicitParameters(LocalVariable variable) {
+        parameters.add(new FunctionParameter(variable.getName(), variable.getType(),
+                                        Optional.of(new LocalVariableReference(variable))));
     }
 
     public Type getReturnType() {

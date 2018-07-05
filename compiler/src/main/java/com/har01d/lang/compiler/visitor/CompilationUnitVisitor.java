@@ -28,8 +28,7 @@ public class CompilationUnitVisitor extends Har01dBaseVisitor<CompilationUnit> {
     @Override
     public CompilationUnit visitCompilationUnit(CompilationUnitContext ctx) {
         Scope scope = new Scope(metaData);
-        FunctionVisitor functionVisitor = new FunctionVisitor(scope);
-        List<Function> functions = ctx.function().stream().map(e -> e.accept(functionVisitor))
+        List<Function> functions = ctx.function().stream().map(e -> e.accept(new FunctionVisitor(scope, null)))
                                         .peek(e -> scope.addSignature(e.getFunctionSignature()))
                                         .collect(Collectors.toList());
 

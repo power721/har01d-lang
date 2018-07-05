@@ -22,6 +22,7 @@ public class Scope {
     private final MetaData metaData;
     private final Map<String, LocalVariable> localVariables;
     private final List<String> localVariablesIndex;
+    private final Set<LocalVariable> implicitVariables = new HashSet<>();
     private final List<FunctionSignature> functionSignatures;
     private final Set<String> classes;
     private String functionName;
@@ -36,10 +37,19 @@ public class Scope {
     }
 
     public Scope(Scope scope) {
+        this(scope, false);
+    }
+
+    public Scope(Scope scope, boolean isFunction) {
         this.metaData = scope.metaData;
         parent = scope;
-        localVariables = new HashMap<>(scope.localVariables);
-        localVariablesIndex = new ArrayList<>(scope.localVariablesIndex);
+        if (!isFunction) {
+            localVariables = new HashMap<>(scope.localVariables);
+            localVariablesIndex = new ArrayList<>(scope.localVariablesIndex);
+        } else {
+            localVariables = new HashMap<>();
+            localVariablesIndex = new ArrayList<>();
+        }
         functionSignatures = new ArrayList<>(scope.functionSignatures);
         classes = new HashSet<>(scope.classes);
         functionName = scope.functionName;
@@ -71,10 +81,12 @@ public class Scope {
             if (signature.matches(identifier, arguments)) {
                 return signature;
             }
-            if (parent != null) {
-                return parent.getSignature(identifier, arguments);
-            }
         }
+
+        if (parent != null) {
+            return parent.getSignature(identifier, arguments);
+        }
+
         return null;
     }
 
@@ -84,6 +96,17 @@ public class Scope {
 
     public LocalVariable getLocalVariable(String varName) {
         return localVariables.get(varName);
+    }
+
+    public LocalVariable getVariable(String varName) {
+        if (localVariables.containsKey(varName)) {
+            return localVariables.get(varName);
+        }
+
+        if (parent != null) {
+            return parent.getVariable(varName);
+        }
+        return null;
     }
 
     public int getLocalVariableIndex(String varName) {
@@ -106,6 +129,14 @@ public class Scope {
         } else {
             throw new InvalidSyntaxException("variable '" + name + "' already declared!", ctx);
         }
+    }
+
+    public void addImplicitVariable(LocalVariable variable) {
+        implicitVariables.add(variable);
+    }
+
+    public Set<LocalVariable> getImplicitVariables() {
+        return implicitVariables;
     }
 
     public Type getClassType() {

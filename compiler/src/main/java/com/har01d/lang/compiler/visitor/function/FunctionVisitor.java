@@ -12,39 +12,49 @@ import com.har01d.lang.compiler.domain.function.FunctionSignature;
 import com.har01d.lang.compiler.domain.statement.Block;
 import com.har01d.lang.compiler.domain.statement.Statement;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
-import com.har01d.lang.compiler.visitor.statement.StatementVisitor;
+import com.har01d.lang.compiler.visitor.statement.BlockStatementVisitor;
+import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
 
 public class FunctionVisitor extends Har01dBaseVisitor<Function> {
 
     private final Scope scope;
+    private FunctionSignature functionSignature;
 
-    public FunctionVisitor(Scope scope) {
+    public FunctionVisitor(Scope scope, FunctionSignature functionSignature) {
         this.scope = scope;
+        this.functionSignature = functionSignature;
     }
 
     @Override
     public Function visitFunction(FunctionContext ctx) {
-        Scope scope = new Scope(this.scope);
-        FunctionSignature functionSignature = ctx.functionDeclaration().accept(new FunctionSignatureVisitor(scope));
+        Scope scope = new Scope(this.scope, true);
+        if (functionSignature == null) {
+            functionSignature = ctx.functionDeclaration().accept(new FunctionSignatureVisitor(scope));
+        }
 
         if (scope.isClassDeclaration()) {
             scope.addLocalValue("this", scope.getClassType(), true, ctx);
         }
 
         scope.setFunctionName(functionSignature.getInternalName());
-        StatementVisitor statementVisitor = new StatementVisitor(scope);
         functionSignature.getParameters().forEach(e -> scope.addLocalValue(e.getName(), e.getType(), true, ctx));
-        Statement block = null;
+        Block block = null;
         if (ctx.block() != null) {
-            block = ctx.block().accept(statementVisitor);
+            BlockStatementVisitor blockStatementVisitor = new BlockStatementVisitor(scope);
+            block = ctx.block().accept(blockStatementVisitor);
         } else if (ctx.expression() != null) {
             List<Statement> statements = new ArrayList<>();
-            Expression expression = ctx.expression().accept(statementVisitor.getExpressionVisitor());
+            ExpressionVisitor expressionVisitor = new ExpressionVisitor(scope);
+            Expression expression = ctx.expression().accept(expressionVisitor);
             statements.add(expression);
             if (ctx.functionDeclaration().type() == null) {
                 functionSignature.setReturnType(expression.getType());
             }
             block = new Block(scope, Collections.emptyList(), statements);
+        }
+
+        if (block != null) {
+            block.getScope().getImplicitVariables().forEach(e -> functionSignature.addImplicitParameters(e));
         }
 
         // TODO: constructor

@@ -21,6 +21,14 @@ public class VariableReferenceExpressionVisitor extends Har01dBaseVisitor<Refere
         // TODO: filed
         LocalVariable variable = scope.getLocalVariable(ctx.getText());
         if (variable == null) {
+            variable = scope.getVariable(ctx.getText());
+            if (variable != null) {
+                scope.addImplicitVariable(variable);
+                scope.addLocalValue(variable.getName(), variable.getType(), true, ctx);
+            }
+        }
+
+        if (variable == null) {
             throw new InvalidSyntaxException("variable '" + ctx.getText() + "' doesn't declared!", ctx);
         }
 

@@ -1,7 +1,7 @@
 package com.har01d.lang.compiler.visitor;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser;
@@ -21,14 +21,18 @@ public class ClassVisitor extends Har01dBaseVisitor<ClassDeclaration> {
         Scope scope = new Scope(new MetaData(className, true));
         FunctionSignatureVisitor functionSignatureVisitor = new FunctionSignatureVisitor(scope);
 
-        List<Har01dParser.FunctionContext> contexts = ctx.classBody().function();
-        for (Har01dParser.FunctionContext functionContext : contexts) {
+        List<FunctionSignature> signatures = new ArrayList<>();
+        for (Har01dParser.FunctionContext functionContext : ctx.classBody().function()) {
             FunctionSignature signature = functionContext.functionDeclaration().accept(functionSignatureVisitor);
             scope.addSignature(signature);
+            signatures.add(signature);
         }
 
-        List<Function> functions = contexts.stream().map(e -> e.accept(new FunctionVisitor(scope)))
-                                        .collect(Collectors.toList());
+        int i = 0;
+        List<Function> functions = new ArrayList<>();
+        for (Har01dParser.FunctionContext functionContext : ctx.classBody().function()) {
+            functions.add(functionContext.accept(new FunctionVisitor(scope, signatures.get(i++))));
+        }
 
         return new ClassDeclaration(className, functions);
     }

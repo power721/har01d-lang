@@ -1,9 +1,10 @@
 package com.har01d.lang.compiler.generator;
 
+import org.objectweb.asm.MethodVisitor;
+
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
-import org.objectweb.asm.MethodVisitor;
 
 public class ReferenceExpressionGenerator {
 
@@ -23,4 +24,3 @@ public class ReferenceExpressionGenerator {
     }
 
 }
-
