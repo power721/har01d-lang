@@ -1,10 +1,11 @@
 package com.har01d.lang.compiler.domain.function;
 
+import java.util.List;
+
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.generator.ExpressionGenerator;
 import com.har01d.lang.compiler.generator.StatementGenerator;
-import java.util.List;
 
 public class FunctionCall implements Call {
 
@@ -41,7 +42,7 @@ public class FunctionCall implements Call {
 
     @Override
     public String getIdentifier() {
-        return signature.getName();
+        return signature.getInternalName();
     }
 
     @Override

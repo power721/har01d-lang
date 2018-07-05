@@ -48,4 +48,25 @@ public class FunctionParameter implements Expression {
         generator.generate(this);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        FunctionParameter parameter = (FunctionParameter) o;
+
+        if (!name.equals(parameter.name))
+            return false;
+        return type.equals(parameter.type);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
+    }
+
 }

@@ -1,0 +1,19 @@
+fun outerFunction() {
+  fun localFunction() {
+    fun hi() {
+        print "hi"
+    }
+
+    hi()
+    print "I'm local function!"
+  }
+
+  localFunction()
+}
+
+fun hi() {
+    print "Hello world!"
+}
+
+hi()
+outerFunction()

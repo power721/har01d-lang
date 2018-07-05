@@ -10,17 +10,19 @@ import com.har01d.lang.compiler.domain.type.Type;
 public class FunctionSignature {
 
     private final String name;
+    private final String internalName;
     private final List<FunctionParameter> parameters;
     private Type returnType;
 
-    public FunctionSignature(String name, List<FunctionParameter> parameters, Type returnType) {
+    public FunctionSignature(String name, String internalName, List<FunctionParameter> parameters, Type returnType) {
         this.name = name;
+        this.internalName = internalName;
         this.parameters = parameters;
         this.returnType = returnType;
     }
 
-    public String getName() {
-        return name;
+    public String getInternalName() {
+        return internalName;
     }
 
     public List<FunctionParameter> getParameters() {
@@ -103,6 +105,27 @@ public class FunctionSignature {
             }
         }
         return n == arguments.size();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        FunctionSignature signature = (FunctionSignature) o;
+
+        if (!internalName.equals(signature.internalName))
+            return false;
+        return parameters.equals(signature.parameters);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = internalName.hashCode();
+        result = 31 * result + parameters.hashCode();
+        return result;
     }
 
 }

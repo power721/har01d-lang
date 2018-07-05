@@ -1,9 +1,10 @@
 package com.har01d.lang.compiler.domain.function;
 
+import java.util.List;
+
 import com.har01d.lang.compiler.domain.statement.Statement;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.generator.MethodGenerator;
-import java.util.List;
 
 public class Function {
 
@@ -15,8 +16,8 @@ public class Function {
         this.block = block;
     }
 
-    public String getName() {
-        return functionSignature.getName();
+    public String getInternalName() {
+        return functionSignature.getInternalName();
     }
 
     public List<FunctionParameter> getParameters() {

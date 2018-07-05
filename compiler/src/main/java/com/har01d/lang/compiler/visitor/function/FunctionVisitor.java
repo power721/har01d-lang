@@ -1,6 +1,7 @@
 package com.har01d.lang.compiler.visitor.function;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.har01d.lang.antlr.Har01dBaseVisitor;
@@ -30,6 +31,7 @@ public class FunctionVisitor extends Har01dBaseVisitor<Function> {
             scope.addLocalValue("this", scope.getClassType(), true, ctx);
         }
 
+        scope.setFunctionName(functionSignature.getInternalName());
         StatementVisitor statementVisitor = new StatementVisitor(scope);
         functionSignature.getParameters().forEach(e -> scope.addLocalValue(e.getName(), e.getType(), true, ctx));
         Statement block = null;
@@ -42,7 +44,7 @@ public class FunctionVisitor extends Har01dBaseVisitor<Function> {
             if (ctx.functionDeclaration().type() == null) {
                 functionSignature.setReturnType(expression.getType());
             }
-            block = new Block(scope, statements);
+            block = new Block(scope, Collections.emptyList(), statements);
         }
 
         // TODO: constructor

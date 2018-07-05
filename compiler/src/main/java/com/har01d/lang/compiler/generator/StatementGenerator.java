@@ -1,5 +1,6 @@
 package com.har01d.lang.compiler.generator;
 
+import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 
 import com.har01d.lang.compiler.domain.Literal;
@@ -24,6 +25,7 @@ import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
 
 public class StatementGenerator {
 
+    private final ClassWriter classWriter;
     private final ExpressionGenerator expressionGenerator;
     private final IfStatementGenerator ifStatementGenerator;
     private final BlockStatementGenerator blockStatementGenerator;
@@ -33,9 +35,10 @@ public class StatementGenerator {
     private final AssignmentStatementGenerator assignmentStatementGenerator;
     private final VariableDeclarationStatementGenerator variableDeclarationStatementGenerator;
 
-    public StatementGenerator(MethodVisitor methodVisitor, Scope scope) {
+    public StatementGenerator(ClassWriter classWriter, MethodVisitor methodVisitor, Scope scope) {
+        this.classWriter = classWriter;
         expressionGenerator = new ExpressionGenerator(methodVisitor, scope);
-        blockStatementGenerator = new BlockStatementGenerator(methodVisitor);
+        blockStatementGenerator = new BlockStatementGenerator(classWriter, methodVisitor);
         referenceExpressionGenerator = new ReferenceExpressionGenerator(methodVisitor, scope);
         printStatementGenerator = new PrintStatementGenerator(methodVisitor, expressionGenerator);
         returnStatementGenerator = new ReturnStatementGenerator(methodVisitor, expressionGenerator);

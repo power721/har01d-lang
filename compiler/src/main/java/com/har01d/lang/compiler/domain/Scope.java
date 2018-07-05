@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 
@@ -19,14 +18,17 @@ import com.har01d.lang.compiler.exception.InvalidSyntaxException;
 
 public class Scope {
 
+    private final Scope parent;
     private final MetaData metaData;
     private final Map<String, LocalVariable> localVariables;
     private final List<String> localVariablesIndex;
     private final List<FunctionSignature> functionSignatures;
     private final Set<String> classes;
+    private String functionName;
 
     public Scope(MetaData metaData) {
         this.metaData = metaData;
+        parent = null;
         localVariables = new HashMap<>();
         localVariablesIndex = new ArrayList<>();
         functionSignatures = new ArrayList<>();
@@ -35,10 +37,20 @@ public class Scope {
 
     public Scope(Scope scope) {
         this.metaData = scope.metaData;
+        parent = scope;
         localVariables = new HashMap<>(scope.localVariables);
         localVariablesIndex = new ArrayList<>(scope.localVariablesIndex);
         functionSignatures = new ArrayList<>(scope.functionSignatures);
         classes = new HashSet<>(scope.classes);
+        functionName = scope.functionName;
+    }
+
+    public String getFunctionName() {
+        return functionName;
+    }
+
+    public void setFunctionName(String functionName) {
+        this.functionName = functionName;
     }
 
     public void addClass(String name) {
@@ -55,10 +67,15 @@ public class Scope {
     }
 
     public FunctionSignature getSignature(String identifier, List<Argument> arguments) {
-        return functionSignatures.stream().filter(e -> e.matches(identifier, arguments)).findFirst().orElseThrow(
-                                        () -> new RuntimeException("Cannot find function " + identifier + arguments
-                                                                        .stream().map(e -> e.getType().getName())
-                                                                        .collect(Collectors.joining(", ", "(", ")"))));
+        for (FunctionSignature signature : functionSignatures) {
+            if (signature.matches(identifier, arguments)) {
+                return signature;
+            }
+            if (parent != null) {
+                return parent.getSignature(identifier, arguments);
+            }
+        }
+        return null;
     }
 
     public boolean isLocalVariableExists(String varName) {

@@ -2,6 +2,7 @@ package com.har01d.lang.compiler.visitor.function;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser.ArgumentListContext;
@@ -15,6 +16,7 @@ import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.domain.type.ClassType;
 import com.har01d.lang.compiler.domain.variable.LocalVariable;
 import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
+import com.har01d.lang.compiler.exception.InvalidSyntaxException;
 import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
 
 public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
@@ -41,6 +43,13 @@ public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
 
         // TODO: get FunctionSignature from class path
         FunctionSignature signature = scope.getSignature(name, arguments);
+        if (signature == null) {
+            throw new InvalidSyntaxException("Cannot find function " + name
+                                            + arguments.stream().map(e -> e.getType().getName()).collect(
+                                                                            Collectors.joining(", ", "(", ")")),
+                                            ctx);
+        }
+
         Expression owner = null;
         if (ctx.owner != null) {
             owner = ctx.owner.accept(expressionVisitor);

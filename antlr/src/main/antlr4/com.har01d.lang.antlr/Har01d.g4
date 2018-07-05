@@ -72,7 +72,7 @@ primitiveType :  'boolean' ('[' ']')*
                 | 'void' ('[' ']')* ;
 classType : qualifiedName ('[' ']')* ;
 
-block : '{' statement* '}' ;
+block : '{' (statement | function)* '}' ;
 
 qualifiedName : ID ('.' ID)* ;
 name : ID ;

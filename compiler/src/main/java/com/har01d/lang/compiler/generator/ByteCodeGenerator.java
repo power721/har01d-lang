@@ -24,7 +24,7 @@ public class ByteCodeGenerator implements Opcodes {
         long count = compilationUnit.getStatements().stream().filter(e -> e instanceof VariableDeclaration).count();
         int maxStack = 100;
 
-        StatementGenerator statementGenerator = new StatementGenerator(mv, compilationUnit.getScope());
+        StatementGenerator statementGenerator = new StatementGenerator(classWriter, mv, compilationUnit.getScope());
         for (Statement statement : compilationUnit.getStatements()) {
             statement.accept(statementGenerator);
         }
