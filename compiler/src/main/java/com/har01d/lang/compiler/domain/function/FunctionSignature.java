@@ -35,7 +35,7 @@ public class FunctionSignature {
         return Collections.unmodifiableList(parameters);
     }
 
-    public void addImplicitParameters(LocalVariable variable) {
+    public void addImplicitParameter(LocalVariable variable) {
         parameters.add(new FunctionParameter(variable.getName(), variable.getType(),
                                         Optional.of(new LocalVariableReference(variable))));
     }

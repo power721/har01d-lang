@@ -33,8 +33,8 @@ public class BlockStatementVisitor extends Har01dBaseVisitor<Block> {
         List<Statement> statements = ctx.statement().stream().map(e -> e.accept(statementVisitor))
                                         .collect(Collectors.toList());
 
-        List<Function> functions = new ArrayList<>();
         int i = 0;
+        List<Function> functions = new ArrayList<>();
         for (Har01dParser.FunctionContext functionContext : ctx.function()) {
             functions.add(functionContext.accept(new FunctionVisitor(scope, signatures.get(i++))));
         }

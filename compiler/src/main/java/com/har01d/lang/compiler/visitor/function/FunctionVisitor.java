@@ -49,7 +49,7 @@ public class FunctionVisitor extends Har01dBaseVisitor<Function> {
         }
 
         if (block != null) {
-            block.getScope().getImplicitVariables().forEach(e -> functionSignature.addImplicitParameters(e));
+            block.getScope().getImplicitVariables().forEach(e -> functionSignature.addImplicitParameter(e));
         }
 
         // TODO: constructor
