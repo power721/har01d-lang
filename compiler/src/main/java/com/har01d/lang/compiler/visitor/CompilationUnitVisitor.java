@@ -14,7 +14,7 @@ import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.function.Function;
 import com.har01d.lang.compiler.domain.statement.Statement;
 import com.har01d.lang.compiler.exception.InvalidSyntaxException;
-import com.har01d.lang.compiler.visitor.function.FunctionVisitor;
+import com.har01d.lang.compiler.util.FunctionUtil;
 import com.har01d.lang.compiler.visitor.statement.StatementVisitor;
 
 public class CompilationUnitVisitor extends Har01dBaseVisitor<CompilationUnit> {
@@ -28,9 +28,8 @@ public class CompilationUnitVisitor extends Har01dBaseVisitor<CompilationUnit> {
     @Override
     public CompilationUnit visitCompilationUnit(CompilationUnitContext ctx) {
         Scope scope = new Scope(metaData);
-        List<Function> functions = ctx.function().stream().map(e -> e.accept(new FunctionVisitor(scope, null)))
-                                        .peek(e -> scope.addSignature(e.getFunctionSignature()))
-                                        .collect(Collectors.toList());
+
+        List<Function> functions = FunctionUtil.getFunctions(ctx.function(), scope);
 
         StatementVisitor statementVisitor = new StatementVisitor(scope);
         List<Statement> statements = ctx.statement().stream().map(e -> e.accept(statementVisitor))

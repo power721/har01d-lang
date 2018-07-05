@@ -23,6 +23,10 @@ public class FunctionSignature {
         this.returnType = returnType;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String getInternalName() {
         return internalName;
     }

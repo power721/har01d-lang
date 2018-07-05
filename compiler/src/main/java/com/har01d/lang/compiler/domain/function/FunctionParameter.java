@@ -57,16 +57,12 @@ public class FunctionParameter implements Expression {
 
         FunctionParameter parameter = (FunctionParameter) o;
 
-        if (!name.equals(parameter.name))
-            return false;
         return type.equals(parameter.type);
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + type.hashCode();
-        return result;
+        return type.hashCode();
     }
 
 }

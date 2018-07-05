@@ -12,7 +12,7 @@ import com.har01d.lang.compiler.domain.function.Function;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
 import com.har01d.lang.compiler.domain.statement.Block;
 import com.har01d.lang.compiler.domain.statement.Statement;
-import com.har01d.lang.compiler.visitor.function.FunctionSignatureVisitor;
+import com.har01d.lang.compiler.util.FunctionUtil;
 import com.har01d.lang.compiler.visitor.function.FunctionVisitor;
 
 public class BlockStatementVisitor extends Har01dBaseVisitor<Block> {
@@ -28,13 +28,7 @@ public class BlockStatementVisitor extends Har01dBaseVisitor<Block> {
         Scope scope = new Scope(this.scope);
         StatementVisitor statementVisitor = new StatementVisitor(scope);
 
-        FunctionSignatureVisitor functionSignatureVisitor = new FunctionSignatureVisitor(scope);
-        List<FunctionSignature> signatures = new ArrayList<>();
-        for (Har01dParser.FunctionContext functionContext : ctx.function()) {
-            FunctionSignature signature = functionContext.functionDeclaration().accept(functionSignatureVisitor);
-            scope.addSignature(signature);
-            signatures.add(signature);
-        }
+        List<FunctionSignature> signatures = FunctionUtil.getFunctionSignatures(ctx.function(), scope);
 
         List<Statement> statements = ctx.statement().stream().map(e -> e.accept(statementVisitor))
                                         .collect(Collectors.toList());

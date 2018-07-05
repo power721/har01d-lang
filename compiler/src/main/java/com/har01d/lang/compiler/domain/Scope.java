@@ -23,7 +23,7 @@ public class Scope {
     private final Map<String, LocalVariable> localVariables;
     private final List<String> localVariablesIndex;
     private final Set<LocalVariable> implicitVariables = new HashSet<>();
-    private final List<FunctionSignature> functionSignatures;
+    private final Set<FunctionSignature> functionSignatures;
     private final Set<String> classes;
     private String functionName;
 
@@ -32,7 +32,7 @@ public class Scope {
         parent = null;
         localVariables = new HashMap<>();
         localVariablesIndex = new ArrayList<>();
-        functionSignatures = new ArrayList<>();
+        functionSignatures = new HashSet<>();
         classes = new HashSet<>();
     }
 
@@ -46,11 +46,12 @@ public class Scope {
         if (!isFunction) {
             localVariables = new HashMap<>(scope.localVariables);
             localVariablesIndex = new ArrayList<>(scope.localVariablesIndex);
+            functionSignatures = new HashSet<>(scope.functionSignatures);
         } else {
             localVariables = new HashMap<>();
             localVariablesIndex = new ArrayList<>();
+            functionSignatures = new HashSet<>();
         }
-        functionSignatures = new ArrayList<>(scope.functionSignatures);
         classes = new HashSet<>(scope.classes);
         functionName = scope.functionName;
     }
@@ -72,8 +73,11 @@ public class Scope {
     }
 
     public void addSignature(FunctionSignature functionSignature) {
-        // TODO: check duplicate
         functionSignatures.add(functionSignature);
+    }
+
+    public boolean isSignatureExist(FunctionSignature signature) {
+        return functionSignatures.contains(signature);
     }
 
     public FunctionSignature getSignature(String identifier, List<Argument> arguments) {
