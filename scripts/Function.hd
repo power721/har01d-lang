@@ -18,7 +18,7 @@ fun testParameter(x: int) {
   print x
 }
 
-fun func(x: int = 2, y: int = 3): int {
+fun func(x: int = 2, y: int = 3): long {
   return x * y  // a comment here
 }
 

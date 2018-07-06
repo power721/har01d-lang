@@ -18,7 +18,7 @@ assignment : name EQUALS expression ;
 print : PRINT expression (',' expression)* ;
 expression : variableReference #varReference
              | literal #literalExpr
-             | owner=expression '\\.' functionName '(' argumentList ')' #FunctionCall
+             | owner=expression '.' functionName '(' argumentList ')' #FunctionCall
              | functionName '(' argumentList ')' #FunctionCall
              |  '('expression '^' expression')' #Power
              | expression '^' expression  #Power
@@ -77,7 +77,7 @@ classType : qualifiedName ('[' ']')* ;
 
 block : '{' (statement | function)* '}' ;
 
-qualifiedName : ID ('\\.' ID)* ;
+qualifiedName : ID ('.' ID)* ;
 name : ID ;
 
 VARIABLE : 'var' ;
@@ -85,7 +85,7 @@ VALUE : 'val' ;
 PRINT : 'print' ;
 EQUALS : '=' ;
 NUMBER : DoubleLiteral | LongLiteral | IntegerLiteral ;
-DoubleLiteral: IntegerLiteral '\\.' [0-9]+ ;
+DoubleLiteral: IntegerLiteral '.' [0-9]+ ;
 LongLiteral: IntegerLiteral 'L' ;
 IntegerLiteral: ('+'|'-')?'0' | ('+'|'-')?[1-9][0-9]* | HexLiteral;
 HexLiteral: '0' [xX] HexDigit (HexDigit | '_')* ;
