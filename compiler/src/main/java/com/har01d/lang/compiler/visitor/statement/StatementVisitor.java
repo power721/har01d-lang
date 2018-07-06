@@ -88,6 +88,11 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     }
 
     @Override
+    public Statement visitPower(Har01dParser.PowerContext ctx) {
+        return expressionVisitor.visitPower(ctx);
+    }
+
+    @Override
     public Expression visitRelationalExpression(RelationalExpressionContext ctx) {
         return expressionVisitor.visitRelationalExpression(ctx);
     }
@@ -95,6 +100,16 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     @Override
     public Statement visitLogicalExpression(Har01dParser.LogicalExpressionContext ctx) {
         return expressionVisitor.visitLogicalExpression(ctx);
+    }
+
+    @Override
+    public Statement visitVariableReference(Har01dParser.VariableReferenceContext ctx) {
+        return expressionVisitor.visitVariableReference(ctx);
+    }
+
+    @Override
+    public Statement visitLiteral(Har01dParser.LiteralContext ctx) {
+        return expressionVisitor.visitLiteral(ctx);
     }
 
     @Override

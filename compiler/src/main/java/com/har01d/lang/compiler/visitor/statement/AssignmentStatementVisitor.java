@@ -22,7 +22,7 @@ public class AssignmentStatementVisitor extends Har01dBaseVisitor<Assignment> {
     @Override
     public Assignment visitAssignment(AssignmentContext ctx) {
         String varName = ctx.name().getText();
-        LocalVariable variable = scope.getLocalVariable(varName);
+        LocalVariable variable = scope.getVariable(varName);
         if (variable.isInitialized() && variable.isReadonly()) {
             throw new InvalidSyntaxException("variable '" + varName + "' is readonly!", ctx);
         }

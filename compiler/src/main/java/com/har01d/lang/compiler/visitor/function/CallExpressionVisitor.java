@@ -43,6 +43,14 @@ public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
 
         // TODO: get FunctionSignature from class path
         FunctionSignature signature = scope.getSignature(name, arguments);
+
+        //        if (signature == null) {
+        //            FunctionReference functionReference = scope.getFunctionReference(name);
+        //            if (functionReference != null) {
+        //                return new FunctionCall(functionReference, functionReference.getFunctionSignature(), arguments);
+        //            }
+        //        }
+
         if (signature == null) {
             throw new InvalidSyntaxException("Cannot find function " + name
                                             + arguments.stream().map(e -> e.getType().getName()).collect(

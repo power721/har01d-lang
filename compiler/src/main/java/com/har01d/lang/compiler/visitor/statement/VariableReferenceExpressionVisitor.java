@@ -19,21 +19,29 @@ public class VariableReferenceExpressionVisitor extends Har01dBaseVisitor<Refere
     @Override
     public Reference visitVariableReference(VariableReferenceContext ctx) {
         // TODO: filed
-        LocalVariable variable = scope.getLocalVariable(ctx.getText());
+        String name = ctx.getText();
+        LocalVariable variable = scope.getLocalVariable(name);
         if (variable == null) {
-            variable = scope.getVariable(ctx.getText());
+            variable = scope.getVariable(name);
             if (variable != null) {
                 scope.addImplicitVariable(variable);
                 scope.addLocalValue(variable.getName(), variable.getType(), true, ctx);
             }
         }
 
+        //        if (variable == null) {
+        //            FunctionReference functionReference = scope.getFunctionReference(name);
+        //            if (functionReference != null) {
+        //                return functionReference;
+        //            }
+        //        }
+
         if (variable == null) {
-            throw new InvalidSyntaxException("variable '" + ctx.getText() + "' doesn't declared!", ctx);
+            throw new InvalidSyntaxException("variable '" + name + "' doesn't declared!", ctx);
         }
 
         if (!variable.isInitialized()) {
-            throw new InvalidSyntaxException("variable '" + ctx.getText() + "' doesn't initialized!", ctx);
+            throw new InvalidSyntaxException("variable '" + name + "' doesn't initialized!", ctx);
         }
 
         return new LocalVariableReference(variable);

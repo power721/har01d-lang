@@ -1,19 +1,24 @@
 package com.har01d.lang.compiler.util;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.har01d.lang.antlr.Har01dParser.LiteralContext;
 import com.har01d.lang.antlr.Har01dParser.TypeContext;
 import com.har01d.lang.compiler.domain.type.BuiltInType;
 import com.har01d.lang.compiler.domain.type.ClassType;
+import com.har01d.lang.compiler.domain.type.FunctionType;
 import com.har01d.lang.compiler.domain.type.Type;
 
 public class TypeResolver {
 
     private static final Pattern FLOATING_POINT_PATTERN = fpPattern();
+    private static final Pattern FUNCTION = Pattern.compile("\\((.*)\\)\\s*->\\s*(.*)");
 
     private static Pattern fpPattern() {
         String decimal = "(?:\\d++(?:\\.\\d*+)?|\\.\\d++)";
@@ -113,7 +118,35 @@ public class TypeResolver {
         }
 
         Optional<BuiltInType> type = Arrays.stream(BuiltInType.values()).filter(e -> e.getName().equals(typeName))
-            .findFirst();
+                                        .findFirst();
+        if (type.isPresent()) {
+            return type.get();
+        }
+
+        Matcher m = FUNCTION.matcher(typeName);
+        if (m.matches()) {
+            List<Type> parameters = new ArrayList<>();
+            for (String p : m.group(1).split(",")) {
+                parameters.add(resolve(p));
+            }
+            Type returnType = resolve(m.group(2));
+            return new FunctionType(parameters, returnType);
+        }
+
+        return new ClassType(typeName);
+    }
+
+    public static Type resolve(String typeName) {
+        if ("void".equals(typeName)) {
+            return BuiltInType.VOID;
+        }
+
+        if ("java.lang.String".equals(typeName)) {
+            return BuiltInType.STRING;
+        }
+
+        Optional<BuiltInType> type = Arrays.stream(BuiltInType.values()).filter(e -> e.getName().equals(typeName))
+                                        .findFirst();
         if (type.isPresent()) {
             return type.get();
         }

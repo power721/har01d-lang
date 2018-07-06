@@ -33,7 +33,7 @@ public class FunctionVisitor extends Har01dBaseVisitor<Function> {
             scope.addLocalValue("this", scope.getClassType(), true, ctx);
         }
 
-        scope.setFunctionName(functionSignature.getInternalName());
+        scope.setFunctionSignature(functionSignature);
         functionSignature.getParameters().forEach(e -> scope.addLocalValue(e.getName(), e.getType(), true, ctx));
         Block block = null;
         if (ctx.block() != null) {

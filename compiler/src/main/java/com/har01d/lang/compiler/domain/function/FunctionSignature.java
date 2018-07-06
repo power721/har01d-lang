@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import com.har01d.lang.compiler.domain.type.FunctionType;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.domain.variable.LocalVariable;
 import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
@@ -42,6 +44,11 @@ public class FunctionSignature {
 
     public Type getReturnType() {
         return returnType;
+    }
+
+    public FunctionType getFunctionType() {
+        return new FunctionType(parameters.stream().map(FunctionParameter::getType).collect(Collectors.toList()),
+                                        returnType);
     }
 
     public void setReturnType(Type returnType) {

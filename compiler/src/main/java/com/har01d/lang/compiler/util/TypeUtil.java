@@ -74,7 +74,11 @@ public final class TypeUtil {
         }
 
         if (expression.getType().equals(BuiltInType.DOUBLE)) {
-            if (type.equals(ClassType.Double())) {
+            if (type.equals(BuiltInType.INT)) {
+                methodVisitor.visitInsn(Opcodes.D2I);
+            } else if (type.equals(BuiltInType.LONG)) {
+                methodVisitor.visitInsn(Opcodes.D2L);
+            } else if (type.equals(ClassType.Double())) {
                 String descriptor = "(" + expression.getType().getDescriptor() + ")Ljava/lang/Double;";
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Double", "valueOf", descriptor, false);
             }
