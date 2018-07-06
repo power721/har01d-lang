@@ -1,11 +1,10 @@
 package com.har01d.lang.compiler.domain.function;
 
-import java.util.List;
-
 import com.har01d.lang.compiler.domain.type.BuiltInType;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.generator.ExpressionGenerator;
 import com.har01d.lang.compiler.generator.StatementGenerator;
+import java.util.List;
 
 public class ConstructorCall implements Call {
 
@@ -24,6 +23,10 @@ public class ConstructorCall implements Call {
 
     public FunctionSignature getSignature() {
         return signature;
+    }
+
+    public String getName() {
+        return signature.getName();
     }
 
     @Override

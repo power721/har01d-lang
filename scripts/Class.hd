@@ -1,4 +1,8 @@
 class Test {
+    constructor() {
+      test()
+    }
+
     fun test() {
         print sum(1, 2)
     }
@@ -7,3 +11,5 @@ class Test {
         return x + y
     }
 }
+
+new Test()

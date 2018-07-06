@@ -1,11 +1,5 @@
 package com.har01d.lang.compiler.generator;
 
-import java.util.stream.Collectors;
-
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
-
 import com.har01d.lang.compiler.domain.function.Constructor;
 import com.har01d.lang.compiler.domain.function.Function;
 import com.har01d.lang.compiler.domain.statement.Block;
@@ -15,6 +9,10 @@ import com.har01d.lang.compiler.domain.statement.expression.EmptyExpression;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.domain.type.BuiltInType;
 import com.har01d.lang.compiler.domain.type.Type;
+import java.util.stream.Collectors;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 public class MethodGenerator {
 
@@ -32,6 +30,7 @@ public class MethodGenerator {
         MethodVisitor mv = classWriter.visitMethod(flag, "<init>", descriptor, null, null);
         mv.visitCode();
         StatementGenerator statementGenerator = new StatementGenerator(classWriter, mv, block.getScope());
+        mv.visitVarInsn(Opcodes.ALOAD, 0);
         mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
         block.accept(statementGenerator);
 

@@ -1,16 +1,14 @@
 package com.har01d.lang.compiler.generator;
 
-import java.util.stream.Collectors;
-
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
-
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.function.ConstructorCall;
 import com.har01d.lang.compiler.domain.function.FunctionCall;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.domain.type.ClassType;
+import java.util.stream.Collectors;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 public class CallExpressionGenerator {
 
@@ -25,7 +23,7 @@ public class CallExpressionGenerator {
     }
 
     public void generate(ConstructorCall call) {
-        ClassType type = new ClassType(call.getIdentifier());
+        ClassType type = new ClassType(call.getName());
         methodVisitor.visitTypeInsn(Opcodes.NEW, type.getInternalName());
         methodVisitor.visitInsn(Opcodes.DUP);
 
