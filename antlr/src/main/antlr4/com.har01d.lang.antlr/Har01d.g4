@@ -7,7 +7,9 @@ statement : variableDeclaration
             | block
             | ifStatement
             | forStatement
+            | whileStatement
             | expression
+            | breakStatement
             | returnStatement ;
 classDeclaration : 'class' className '{' classBody '}' ;
 className : ID ;
@@ -37,11 +39,13 @@ expression : variableReference #varReference
              ;
 
 literal : NUMBER | BOOL | STRING ;
+breakStatement: BREAK ;
 returnStatement : 'return' expression #ReturnWithValue
                 | 'return' #ReturnVoid ;
 ifStatement :  'if'  ('(')? expression (')')? trueStatement=statement ('else' falseStatement=statement)?;
 forStatement : 'for' ('(')? forConditions (')')? statement ;
 forConditions : iterator=variableReference  'from' startExpr=expression range='to' endExpr=expression ('step' step=literal)? ;
+whileStatement : 'while' ('(')? expression (')')? statement | 'do' statement 'while' ('(')? expression (')')? ;
 
 variableReference: ID ;
 function : functionDeclaration block | functionDeclaration '=' expression ;
@@ -83,6 +87,7 @@ name : ID ;
 VARIABLE : 'var' ;
 VALUE : 'val' ;
 PRINT : 'print' ;
+BREAK : 'break' ;
 EQUALS : '=' ;
 NUMBER : DoubleLiteral | LongLiteral | IntegerLiteral ;
 DoubleLiteral: IntegerLiteral '.' [0-9]+ ;

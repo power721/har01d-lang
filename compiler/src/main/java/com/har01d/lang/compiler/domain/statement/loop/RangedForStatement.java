@@ -1,5 +1,6 @@
-package com.har01d.lang.compiler.domain.statement;
+package com.har01d.lang.compiler.domain.statement.loop;
 
+import com.har01d.lang.compiler.domain.statement.Statement;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.domain.variable.LocalVariable;
 import com.har01d.lang.compiler.generator.StatementGenerator;

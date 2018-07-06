@@ -1,17 +1,18 @@
-package com.har01d.lang.compiler.visitor.statement;
+package com.har01d.lang.compiler.visitor.statement.loop;
 
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser;
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.statement.Assignment;
-import com.har01d.lang.compiler.domain.statement.RangedForStatement;
 import com.har01d.lang.compiler.domain.statement.Statement;
 import com.har01d.lang.compiler.domain.statement.VariableDeclaration;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
+import com.har01d.lang.compiler.domain.statement.loop.RangedForStatement;
 import com.har01d.lang.compiler.domain.type.BuiltInType;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.exception.InvalidSyntaxException;
 import com.har01d.lang.compiler.util.TypeResolver;
+import com.har01d.lang.compiler.visitor.statement.StatementVisitor;
 import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
 
 public class ForStatementVisitor extends Har01dBaseVisitor<RangedForStatement> {

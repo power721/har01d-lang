@@ -17,13 +17,18 @@ import com.har01d.lang.compiler.domain.statement.Statement;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.visitor.function.ReturnStatementVisitor;
 import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
+import com.har01d.lang.compiler.visitor.statement.loop.BreakStatementVisitor;
+import com.har01d.lang.compiler.visitor.statement.loop.ForStatementVisitor;
+import com.har01d.lang.compiler.visitor.statement.loop.WhileStatementVisitor;
 
 public class StatementVisitor extends Har01dBaseVisitor<Statement> {
 
     private final IfStatementVisitor ifStatementVisitor;
     private final ForStatementVisitor forStatementVisitor;
+    private final WhileStatementVisitor whileStatementVisitor;
     private final PrintStatementVisitor printStatementVisitor;
     private final BlockStatementVisitor blockStatementVisitor;
+    private final BreakStatementVisitor breakStatementVisitor;
     private final ReturnStatementVisitor returnStatementVisitor;
     private final AssignmentStatementVisitor assignmentStatementVisitor;
     private final VariableDeclarationStatementVisitor variableDeclarationStatementVisitor;
@@ -31,12 +36,14 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
 
     public StatementVisitor(Scope scope) {
         expressionVisitor = new ExpressionVisitor(scope);
-        printStatementVisitor = new PrintStatementVisitor(expressionVisitor);
+        breakStatementVisitor = new BreakStatementVisitor(scope);
         blockStatementVisitor = new BlockStatementVisitor(scope);
+        printStatementVisitor = new PrintStatementVisitor(expressionVisitor);
+        forStatementVisitor = new ForStatementVisitor(expressionVisitor, scope);
         returnStatementVisitor = new ReturnStatementVisitor(expressionVisitor, scope);
         ifStatementVisitor = new IfStatementVisitor(expressionVisitor, this);
         assignmentStatementVisitor = new AssignmentStatementVisitor(expressionVisitor, scope);
-        forStatementVisitor = new ForStatementVisitor(expressionVisitor, scope);
+        whileStatementVisitor = new WhileStatementVisitor(expressionVisitor, this);
         variableDeclarationStatementVisitor = new VariableDeclarationStatementVisitor(expressionVisitor, scope);
     }
 
@@ -122,6 +129,16 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     @Override
     public Statement visitForStatement(Har01dParser.ForStatementContext ctx) {
         return forStatementVisitor.visitForStatement(ctx);
+    }
+
+    @Override
+    public Statement visitWhileStatement(Har01dParser.WhileStatementContext ctx) {
+        return whileStatementVisitor.visitWhileStatement(ctx);
+    }
+
+    @Override
+    public Statement visitBreakStatement(Har01dParser.BreakStatementContext ctx) {
+        return breakStatementVisitor.visitBreakStatement(ctx);
     }
 
 }
