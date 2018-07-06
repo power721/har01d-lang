@@ -28,8 +28,6 @@ import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
 
 public class StatementGenerator {
 
-    private final ClassWriter classWriter;
-    private final MethodVisitor methodVisitor;
     private final ExpressionGenerator expressionGenerator;
     private final IfStatementGenerator ifStatementGenerator;
     private final LoopStatementGenerator loopStatementGenerator;
@@ -41,29 +39,12 @@ public class StatementGenerator {
     private final VariableDeclarationStatementGenerator variableDeclarationStatementGenerator;
 
     public StatementGenerator(ClassWriter classWriter, MethodVisitor methodVisitor, Scope scope) {
-        this.classWriter = classWriter;
-        this.methodVisitor = methodVisitor;
         expressionGenerator = new ExpressionGenerator(methodVisitor, scope);
-        blockStatementGenerator = new BlockStatementGenerator(classWriter, methodVisitor);
-        referenceExpressionGenerator = new ReferenceExpressionGenerator(methodVisitor, scope);
+        blockStatementGenerator = new BlockStatementGenerator(classWriter, this);
+        referenceExpressionGenerator = new ReferenceExpressionGenerator(methodVisitor);
         printStatementGenerator = new PrintStatementGenerator(methodVisitor, expressionGenerator);
         returnStatementGenerator = new ReturnStatementGenerator(methodVisitor, expressionGenerator);
-        assignmentStatementGenerator = new AssignmentStatementGenerator(methodVisitor, expressionGenerator, scope);
-        ifStatementGenerator = new IfStatementGenerator(methodVisitor, this);
-        loopStatementGenerator = new LoopStatementGenerator(classWriter, methodVisitor, this);
-        variableDeclarationStatementGenerator = new VariableDeclarationStatementGenerator(this);
-    }
-
-    public StatementGenerator(StatementGenerator statementGenerator, Scope scope) {
-        this.classWriter = statementGenerator.classWriter;
-        this.methodVisitor = statementGenerator.methodVisitor;
-        expressionGenerator = new ExpressionGenerator(methodVisitor, scope);
-        referenceExpressionGenerator = new ReferenceExpressionGenerator(methodVisitor, scope);
-        assignmentStatementGenerator = new AssignmentStatementGenerator(methodVisitor, expressionGenerator, scope);
-
-        blockStatementGenerator = new BlockStatementGenerator(classWriter, methodVisitor);
-        printStatementGenerator = new PrintStatementGenerator(methodVisitor, expressionGenerator);
-        returnStatementGenerator = new ReturnStatementGenerator(methodVisitor, expressionGenerator);
+        assignmentStatementGenerator = new AssignmentStatementGenerator(methodVisitor, expressionGenerator);
         ifStatementGenerator = new IfStatementGenerator(methodVisitor, this);
         loopStatementGenerator = new LoopStatementGenerator(classWriter, methodVisitor, this);
         variableDeclarationStatementGenerator = new VariableDeclarationStatementGenerator(this);

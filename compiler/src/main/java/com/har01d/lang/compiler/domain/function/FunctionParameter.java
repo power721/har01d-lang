@@ -11,22 +11,29 @@ public class FunctionParameter implements Expression {
 
     private final String name;
     private final Type type;
+    private final int index;
     private final Optional<Expression> defaultValue;
 
-    public FunctionParameter(String name, Type type) {
+    public FunctionParameter(String name, Type type, int index) {
         this.name = name;
         this.type = type;
+        this.index = index;
         defaultValue = Optional.empty();
     }
 
-    public FunctionParameter(String name, Type type, Optional<Expression> defaultValue) {
+    public FunctionParameter(String name, Type type, int index, Optional<Expression> defaultValue) {
         this.name = name;
         this.type = type;
+        this.index = index;
         this.defaultValue = defaultValue;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     @Override

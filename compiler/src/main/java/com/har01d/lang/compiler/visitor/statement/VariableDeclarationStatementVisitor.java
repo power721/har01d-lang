@@ -41,7 +41,7 @@ public class VariableDeclarationStatementVisitor extends Har01dBaseVisitor<Varia
         } else {
             scope.addLocalValue(varName, type, expression != null, ctx);
         }
-        return new VariableDeclaration(varName, expression);
+        return new VariableDeclaration(scope.getLocalVariable(varName), expression);
     }
 
 }

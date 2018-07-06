@@ -141,23 +141,25 @@ public class Scope {
         return localVariablesIndex.indexOf(varName);
     }
 
-    public void addLocalVariable(String name, Type type, boolean initialized, ParserRuleContext ctx) {
+    public LocalVariable addLocalVariable(String name, Type type, boolean initialized, ParserRuleContext ctx) {
         if (!localVariables.containsKey(name)) {
             LocalVariable variable = new LocalVariable(name, type, initialized, false, this);
             variable.setIndex(localVariablesIndex.size());
             localVariables.put(name, variable);
             localVariablesIndex.add(name);
+            return variable;
         } else {
             throw new InvalidSyntaxException("variable '" + name + "' already declared!", ctx);
         }
     }
 
-    public void addLocalValue(String name, Type type, boolean initialized, ParserRuleContext ctx) {
+    public LocalVariable addLocalValue(String name, Type type, boolean initialized, ParserRuleContext ctx) {
         if (!localVariables.containsKey(name)) {
             LocalVariable variable = new LocalVariable(name, type, initialized, true, this);
             variable.setIndex(localVariablesIndex.size());
             localVariables.put(name, variable);
             localVariablesIndex.add(name);
+            return variable;
         } else {
             throw new InvalidSyntaxException("variable '" + name + "' already declared!", ctx);
         }

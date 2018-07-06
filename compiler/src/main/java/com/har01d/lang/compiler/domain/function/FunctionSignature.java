@@ -39,7 +39,7 @@ public class FunctionSignature {
 
     public void addImplicitParameter(LocalVariable variable) {
         parameters.add(new FunctionParameter(variable.getName(), variable.getType(),
-                                        Optional.of(new LocalVariableReference(variable))));
+                                        variable.getIndex(), Optional.of(new LocalVariableReference(variable))));
     }
 
     public Type getReturnType() {

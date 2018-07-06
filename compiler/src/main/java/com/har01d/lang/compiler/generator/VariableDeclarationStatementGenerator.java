@@ -15,7 +15,7 @@ public class VariableDeclarationStatementGenerator {
     public void generate(VariableDeclaration variableDeclaration) {
         Expression expression = variableDeclaration.getExpression();
         if (expression != null) {
-            Assignment assignment = new Assignment(variableDeclaration.getName(), expression);
+            Assignment assignment = new Assignment(variableDeclaration.getVariable(), expression);
             assignment.accept(statementGenerator);
         }
     }

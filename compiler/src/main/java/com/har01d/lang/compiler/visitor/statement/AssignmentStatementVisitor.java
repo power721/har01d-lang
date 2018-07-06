@@ -30,7 +30,7 @@ public class AssignmentStatementVisitor extends Har01dBaseVisitor<Assignment> {
         variable.setInitialized(true);
         Expression expression = ctx.expression().accept(expressionVisitor);
         // TODO: check type
-        return new Assignment(varName, expression);
+        return new Assignment(variable, expression);
     }
 
 }

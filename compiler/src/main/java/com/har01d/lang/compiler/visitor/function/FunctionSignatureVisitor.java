@@ -32,7 +32,7 @@ public class FunctionSignatureVisitor extends Har01dBaseVisitor<FunctionSignatur
         }
 
         if (parametersListContext != null) {
-            ParameterExpressionListVisitor visitor = new ParameterExpressionListVisitor(expressionVisitor);
+            ParameterExpressionListVisitor visitor = new ParameterExpressionListVisitor(expressionVisitor, scope);
             return new FunctionSignature(name, internalName, parametersListContext.accept(visitor), type);
         }
         return new FunctionSignature(name, internalName, new ArrayList<>(), type);

@@ -39,7 +39,6 @@ public class LoopStatementGenerator {
 
     public void generate(RangedForStatement forStatement) {
         Scope scope = forStatement.getVariable().getScope();
-        StatementGenerator statementGenerator = new StatementGenerator(classWriter, methodVisitor, scope);
         forStatement.getIterator().accept(statementGenerator);
         loopLabel = new Label();
         endLabel = new Label();

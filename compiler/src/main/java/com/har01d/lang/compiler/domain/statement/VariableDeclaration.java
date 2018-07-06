@@ -1,20 +1,25 @@
 package com.har01d.lang.compiler.domain.statement;
 
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
+import com.har01d.lang.compiler.domain.variable.LocalVariable;
 import com.har01d.lang.compiler.generator.StatementGenerator;
 
 public class VariableDeclaration implements Statement {
 
-    private final String name;
+    private final LocalVariable variable;
     private final Expression expression;
 
-    public VariableDeclaration(String name, Expression expression) {
-        this.name = name;
+    public VariableDeclaration(LocalVariable variable, Expression expression) {
+        this.variable = variable;
         this.expression = expression;
     }
 
+    public LocalVariable getVariable() {
+        return variable;
+    }
+
     public String getName() {
-        return name;
+        return variable.getName();
     }
 
     public Expression getExpression() {

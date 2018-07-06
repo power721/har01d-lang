@@ -28,8 +28,8 @@ public class ExpressionGenerator {
 
     public ExpressionGenerator(MethodVisitor methodVisitor, Scope scope) {
         literalExpressionGenerator = new LiteralExpressionGenerator(methodVisitor);
-        parameterExpressionGenerator = new ParameterExpressionGenerator(methodVisitor, scope);
-        referenceExpressionGenerator = new ReferenceExpressionGenerator(methodVisitor, scope);
+        parameterExpressionGenerator = new ParameterExpressionGenerator(methodVisitor);
+        referenceExpressionGenerator = new ReferenceExpressionGenerator(methodVisitor);
         logicalExpressionGenerator = new LogicalExpressionGenerator(this, methodVisitor);
         callExpressionGenerator = new CallExpressionGenerator(this, methodVisitor, scope);
         arithmeticExpressionGenerator = new ArithmeticExpressionGenerator(this, methodVisitor);

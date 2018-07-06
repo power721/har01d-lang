@@ -22,6 +22,10 @@ public class LocalVariableReference implements Reference {
         return variable.getType();
     }
 
+    public int getIndex() {
+        return variable.getIndex();
+    }
+
     @Override
     public void accept(ExpressionGenerator generator) {
         generator.generate(this);

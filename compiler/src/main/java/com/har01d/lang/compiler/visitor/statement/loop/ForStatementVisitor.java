@@ -34,11 +34,11 @@ public class ForStatementVisitor extends Har01dBaseVisitor<RangedForStatement> {
         Expression startExpression = ctx.forConditions().startExpr.accept(expressionVisitor);
         Expression endExpression = ctx.forConditions().endExpr.accept(expressionVisitor);
         if (scope.isLocalVariableExists(varName)) {
-            iterator = new Assignment(varName, startExpression);
+            iterator = new Assignment(scope.getLocalVariable(varName), startExpression);
             scope.getVariable(varName).setInitialized(true);
         } else {
-            iterator = new VariableDeclaration(varName, startExpression);
             scope.addLocalValue(varName, startExpression.getType(), true, ctx);
+            iterator = new VariableDeclaration(scope.getLocalVariable(varName), startExpression);
         }
 
         StatementVisitor statementVisitor = new StatementVisitor(scope);
