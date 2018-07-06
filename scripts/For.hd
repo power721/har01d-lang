@@ -16,3 +16,9 @@ fun test() {
 }
 
 test()
+
+for x from 0 to 10 {
+    if x % 3 != 0
+        continue
+    print x
+}

@@ -1,5 +1,7 @@
 package com.har01d.lang.compiler.visitor.statement;
 
+import java.util.stream.Collectors;
+
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser;
 import com.har01d.lang.antlr.Har01dParser.AddContext;
@@ -13,11 +15,13 @@ import com.har01d.lang.antlr.Har01dParser.ReturnVoidContext;
 import com.har01d.lang.antlr.Har01dParser.ReturnWithValueContext;
 import com.har01d.lang.antlr.Har01dParser.VariableDeclarationContext;
 import com.har01d.lang.compiler.domain.Scope;
+import com.har01d.lang.compiler.domain.statement.PrintStatement;
 import com.har01d.lang.compiler.domain.statement.Statement;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
+import com.har01d.lang.compiler.domain.statement.loop.BreakStatement;
+import com.har01d.lang.compiler.domain.statement.loop.ContinueStatement;
 import com.har01d.lang.compiler.visitor.function.ReturnStatementVisitor;
 import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
-import com.har01d.lang.compiler.visitor.statement.loop.BreakStatementVisitor;
 import com.har01d.lang.compiler.visitor.statement.loop.ForStatementVisitor;
 import com.har01d.lang.compiler.visitor.statement.loop.WhileStatementVisitor;
 
@@ -26,9 +30,7 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     private final IfStatementVisitor ifStatementVisitor;
     private final ForStatementVisitor forStatementVisitor;
     private final WhileStatementVisitor whileStatementVisitor;
-    private final PrintStatementVisitor printStatementVisitor;
     private final BlockStatementVisitor blockStatementVisitor;
-    private final BreakStatementVisitor breakStatementVisitor;
     private final ReturnStatementVisitor returnStatementVisitor;
     private final AssignmentStatementVisitor assignmentStatementVisitor;
     private final VariableDeclarationStatementVisitor variableDeclarationStatementVisitor;
@@ -36,9 +38,7 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
 
     public StatementVisitor(Scope scope) {
         expressionVisitor = new ExpressionVisitor(scope);
-        breakStatementVisitor = new BreakStatementVisitor(scope);
         blockStatementVisitor = new BlockStatementVisitor(scope);
-        printStatementVisitor = new PrintStatementVisitor(expressionVisitor);
         forStatementVisitor = new ForStatementVisitor(expressionVisitor, scope);
         returnStatementVisitor = new ReturnStatementVisitor(expressionVisitor, scope);
         ifStatementVisitor = new IfStatementVisitor(expressionVisitor, this);
@@ -47,13 +47,10 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
         variableDeclarationStatementVisitor = new VariableDeclarationStatementVisitor(expressionVisitor, scope);
     }
 
-    public ExpressionVisitor getExpressionVisitor() {
-        return expressionVisitor;
-    }
-
     @Override
     public Statement visitPrint(PrintContext ctx) {
-        return printStatementVisitor.visitPrint(ctx);
+        return new PrintStatement(ctx.expression().stream().map(e -> e.accept(expressionVisitor))
+                                        .collect(Collectors.toList()));
     }
 
     @Override
@@ -138,7 +135,12 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
 
     @Override
     public Statement visitBreakStatement(Har01dParser.BreakStatementContext ctx) {
-        return breakStatementVisitor.visitBreakStatement(ctx);
+        return new BreakStatement();
+    }
+
+    @Override
+    public Statement visitContinueStatement(Har01dParser.ContinueStatementContext ctx) {
+        return new ContinueStatement();
     }
 
 }

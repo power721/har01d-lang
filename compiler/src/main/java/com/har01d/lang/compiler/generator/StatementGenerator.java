@@ -22,6 +22,7 @@ import com.har01d.lang.compiler.domain.statement.expression.RelationalExpression
 import com.har01d.lang.compiler.domain.statement.expression.Remainder;
 import com.har01d.lang.compiler.domain.statement.expression.Subtraction;
 import com.har01d.lang.compiler.domain.statement.loop.BreakStatement;
+import com.har01d.lang.compiler.domain.statement.loop.ContinueStatement;
 import com.har01d.lang.compiler.domain.statement.loop.RangedForStatement;
 import com.har01d.lang.compiler.domain.statement.loop.WhileStatement;
 import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
@@ -132,6 +133,10 @@ public class StatementGenerator {
 
     public void generate(BreakStatement breakStatement) {
         loopStatementGenerator.generate(breakStatement);
+    }
+
+    public void generate(ContinueStatement continueStatement) {
+        loopStatementGenerator.generate(continueStatement);
     }
 
 }

@@ -9,6 +9,7 @@ statement : variableDeclaration
             | forStatement
             | whileStatement
             | expression
+            | continueStatement
             | breakStatement
             | returnStatement ;
 classDeclaration : 'class' className '{' classBody '}' ;
@@ -40,6 +41,7 @@ expression : variableReference #varReference
 
 literal : NUMBER | BOOL | STRING ;
 breakStatement: BREAK ;
+continueStatement: CONTINUE ;
 returnStatement : 'return' expression #ReturnWithValue
                 | 'return' #ReturnVoid ;
 ifStatement :  'if'  ('(')? expression (')')? trueStatement=statement ('else' falseStatement=statement)?;
@@ -88,6 +90,7 @@ VARIABLE : 'var' ;
 VALUE : 'val' ;
 PRINT : 'print' ;
 BREAK : 'break' ;
+CONTINUE : 'continue' ;
 EQUALS : '=' ;
 NUMBER : DoubleLiteral | LongLiteral | IntegerLiteral ;
 DoubleLiteral: IntegerLiteral '.' [0-9]+ ;
