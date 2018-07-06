@@ -1,14 +1,5 @@
 package com.har01d.lang.compiler.domain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.antlr.v4.runtime.ParserRuleContext;
-
 import com.har01d.lang.compiler.domain.function.Argument;
 import com.har01d.lang.compiler.domain.function.Function;
 import com.har01d.lang.compiler.domain.function.FunctionParameter;
@@ -19,6 +10,13 @@ import com.har01d.lang.compiler.domain.type.FunctionType;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.domain.variable.LocalVariable;
 import com.har01d.lang.compiler.exception.InvalidSyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import org.antlr.v4.runtime.ParserRuleContext;
 
 public class Scope {
 
@@ -100,6 +98,19 @@ public class Scope {
             return parent.getSignature(identifier, arguments);
         }
 
+        return null;
+    }
+
+    public FunctionSignature getSignature(Type type, String name, List<Argument> arguments) {
+        for (ClassDeclaration classDeclaration : classDeclarations) {
+            if (classDeclaration.getType().equals(type)) {
+                for (Function function : classDeclaration.getMethods()) {
+                    if (function.getFunctionSignature().matches(name, arguments)) {
+                        return function.getFunctionSignature();
+                    }
+                }
+            }
+        }
         return null;
     }
 

@@ -54,7 +54,7 @@ public class CallExpressionGenerator {
         String descriptor = getDescriptor(signature);
 
         // TODO: check static method
-        if (scope.isClassDeclaration()) {
+        if ((signature.getFlag() & Opcodes.ACC_STATIC) == 0) {
             methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, owner, name, descriptor, false);
         } else {
             methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, owner, name, descriptor, false);

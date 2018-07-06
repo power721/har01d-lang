@@ -1,8 +1,5 @@
 package com.har01d.lang.compiler.visitor.function;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser;
 import com.har01d.lang.antlr.Har01dParser.FunctionContext;
@@ -16,6 +13,9 @@ import com.har01d.lang.compiler.domain.type.BuiltInType;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.visitor.statement.BlockStatementVisitor;
 import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
+import java.util.ArrayList;
+import java.util.Collections;
+import org.objectweb.asm.Opcodes;
 
 public class FunctionVisitor extends Har01dBaseVisitor<Function> {
 
@@ -63,18 +63,23 @@ public class FunctionVisitor extends Har01dBaseVisitor<Function> {
 
     @Override
     public Constructor visitConstructor(Har01dParser.ConstructorContext ctx) {
+        Scope scope = new Scope(this.scope, true);
         String name = scope.getClassName();
         Type type = BuiltInType.VOID;
         Har01dParser.ParametersListContext parametersListContext = ctx.parametersList();
 
         FunctionSignature signature;
+        int flag = Opcodes.ACC_PUBLIC;
         if (parametersListContext != null) {
             ExpressionVisitor expressionVisitor = new ExpressionVisitor(scope);
             ParameterExpressionListVisitor visitor = new ParameterExpressionListVisitor(expressionVisitor, scope);
-            signature = new FunctionSignature(name, "<init>", parametersListContext.accept(visitor), type);
+            signature = new FunctionSignature(name, "<init>", parametersListContext.accept(visitor), flag, type);
         } else {
-            signature = new FunctionSignature(name, "<init>", new ArrayList<>(), type);
+            signature = new FunctionSignature(name, "<init>", new ArrayList<>(), flag, type);
         }
+
+        scope.addLocalValue("this", scope.getClassType(), true, ctx);
+        signature.getParameters().forEach(e -> scope.addLocalValue(e.getName(), e.getType(), true, ctx));
 
         BlockStatementVisitor blockStatementVisitor = new BlockStatementVisitor(scope);
         Block block = ctx.block().accept(blockStatementVisitor);

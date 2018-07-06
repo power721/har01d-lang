@@ -1,9 +1,5 @@
 package com.har01d.lang.compiler.visitor.function;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser;
 import com.har01d.lang.antlr.Har01dParser.ArgumentListContext;
@@ -20,6 +16,9 @@ import com.har01d.lang.compiler.domain.variable.LocalVariable;
 import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
 import com.har01d.lang.compiler.exception.InvalidSyntaxException;
 import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
 
@@ -43,8 +42,21 @@ public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
             arguments = Collections.emptyList();
         }
 
+        FunctionSignature signature;
+        Expression owner = null;
+        if (ctx.owner != null) {
+            owner = ctx.owner.accept(expressionVisitor);
+            signature = scope.getSignature(owner.getType(), name, arguments);
+        } else if (scope.isClassDeclaration()) {
+            LocalVariable thisVariable = new LocalVariable("this", new ClassType(scope.getClassName()), true, true,
+                scope);
+            owner = new LocalVariableReference(thisVariable);
+            signature = scope.getSignature(name, arguments);
+        } else {
+            signature = scope.getSignature(name, arguments);
+        }
+
         // TODO: get FunctionSignature from class path
-        FunctionSignature signature = scope.getSignature(name, arguments);
 
         //        if (signature == null) {
         //            FunctionReference functionReference = scope.getFunctionReference(name);
@@ -58,15 +70,6 @@ public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
                                             + arguments.stream().map(e -> e.getType().getName()).collect(
                                                                             Collectors.joining(", ", "(", ")"))
                                             + "!", ctx);
-        }
-
-        Expression owner = null;
-        if (ctx.owner != null) {
-            owner = ctx.owner.accept(expressionVisitor);
-        } else if (scope.isClassDeclaration()) {
-            LocalVariable thisVariable = new LocalVariable("this", new ClassType(scope.getClassName()), true, true,
-                                            scope);
-            owner = new LocalVariableReference(thisVariable);
         }
 
         return new FunctionCall(owner, signature, signature.getArguments(arguments));

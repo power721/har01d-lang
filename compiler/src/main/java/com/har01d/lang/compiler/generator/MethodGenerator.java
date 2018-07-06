@@ -43,7 +43,7 @@ public class MethodGenerator {
         String name = function.getInternalName();
         String descriptor = getDescriptor(function);
         Block block = (Block) function.getBlock();
-        int flag = Opcodes.ACC_PUBLIC + (block.getScope().isClassDeclaration() ? 0 : Opcodes.ACC_STATIC);
+        int flag = function.getFunctionSignature().getFlag();
 
         MethodVisitor mv = classWriter.visitMethod(flag, name, descriptor, null, null);
         mv.visitCode();

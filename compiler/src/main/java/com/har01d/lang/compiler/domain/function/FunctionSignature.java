@@ -1,27 +1,29 @@
 package com.har01d.lang.compiler.domain.function;
 
+import com.har01d.lang.compiler.domain.type.FunctionType;
+import com.har01d.lang.compiler.domain.type.Type;
+import com.har01d.lang.compiler.domain.variable.LocalVariable;
+import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.har01d.lang.compiler.domain.type.FunctionType;
-import com.har01d.lang.compiler.domain.type.Type;
-import com.har01d.lang.compiler.domain.variable.LocalVariable;
-import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
-
 public class FunctionSignature {
 
     private final String name;
     private final String internalName;
     private final List<FunctionParameter> parameters;
+    private final int flag;
     private Type returnType;
 
-    public FunctionSignature(String name, String internalName, List<FunctionParameter> parameters, Type returnType) {
+    public FunctionSignature(String name, String internalName, List<FunctionParameter> parameters, int flag,
+        Type returnType) {
         this.name = name;
         this.internalName = internalName;
         this.parameters = parameters;
+        this.flag = flag;
         this.returnType = returnType;
     }
 
@@ -31,6 +33,10 @@ public class FunctionSignature {
 
     public String getInternalName() {
         return internalName;
+    }
+
+    public int getFlag() {
+        return flag;
     }
 
     public List<FunctionParameter> getParameters() {

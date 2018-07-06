@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 JAR=compiler/target/compiler-0.1-bin.jar
 

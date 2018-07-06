@@ -1,11 +1,11 @@
 package com.har01d.lang.compiler.domain.statement;
 
-import java.util.Collections;
-import java.util.List;
-
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.function.Function;
 import com.har01d.lang.compiler.generator.StatementGenerator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Block implements Statement {
 
@@ -17,6 +17,10 @@ public class Block implements Statement {
         this.scope = scope;
         this.functions = functions;
         this.statements = statements;
+    }
+
+    public static Block empty(Scope scope) {
+        return new Block(scope, new ArrayList<>(), new ArrayList<>());
     }
 
     public Scope getScope() {

@@ -1,7 +1,5 @@
 package com.har01d.lang.compiler.visitor.function;
 
-import java.util.ArrayList;
-
 import com.har01d.lang.antlr.Har01dBaseVisitor;
 import com.har01d.lang.antlr.Har01dParser.FunctionDeclarationContext;
 import com.har01d.lang.antlr.Har01dParser.ParametersListContext;
@@ -10,6 +8,8 @@ import com.har01d.lang.compiler.domain.function.FunctionSignature;
 import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.util.TypeResolver;
 import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
+import java.util.ArrayList;
+import org.objectweb.asm.Opcodes;
 
 public class FunctionSignatureVisitor extends Har01dBaseVisitor<FunctionSignature> {
 
@@ -31,11 +31,16 @@ public class FunctionSignatureVisitor extends Har01dBaseVisitor<FunctionSignatur
             internalName = scope.getFunctionName() + "$" + name;
         }
 
+        int flag = Opcodes.ACC_PUBLIC;
+        if (!scope.isClassDeclaration()) {
+            flag += Opcodes.ACC_STATIC;
+        }
+
         if (parametersListContext != null) {
             ParameterExpressionListVisitor visitor = new ParameterExpressionListVisitor(expressionVisitor, scope);
-            return new FunctionSignature(name, internalName, parametersListContext.accept(visitor), type);
+            return new FunctionSignature(name, internalName, parametersListContext.accept(visitor), flag, type);
         }
-        return new FunctionSignature(name, internalName, new ArrayList<>(), type);
+        return new FunctionSignature(name, internalName, new ArrayList<>(), flag, type);
     }
 
 }

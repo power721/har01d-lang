@@ -1,6 +1,10 @@
-class Test {
+class TestClass {
     constructor() {
       test()
+    }
+
+    constructor(x: int, y: int) {
+      print sum(x, y)
     }
 
     fun test() {
@@ -12,4 +16,17 @@ class Test {
     }
 }
 
-new Test()
+new TestClass()
+
+new TestClass(1, 1)
+
+class TestDefaultConstructor {
+
+    fun test() {
+        print 'test'
+    }
+
+}
+
+var c = new TestDefaultConstructor()
+c.test()
