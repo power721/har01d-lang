@@ -32,7 +32,7 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
         expressionVisitor = new ExpressionVisitor(scope);
         printStatementVisitor = new PrintStatementVisitor(expressionVisitor);
         blockStatementVisitor = new BlockStatementVisitor(scope);
-        returnStatementVisitor = new ReturnStatementVisitor(expressionVisitor);
+        returnStatementVisitor = new ReturnStatementVisitor(expressionVisitor, scope);
         ifStatementVisitor = new IfStatementVisitor(expressionVisitor, this);
         assignmentStatementVisitor = new AssignmentStatementVisitor(expressionVisitor, scope);
         variableDeclarationStatementVisitor = new VariableDeclarationStatementVisitor(expressionVisitor, scope);

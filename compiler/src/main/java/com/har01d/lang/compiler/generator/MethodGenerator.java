@@ -11,6 +11,9 @@ import com.har01d.lang.compiler.domain.statement.Block;
 import com.har01d.lang.compiler.domain.statement.ReturnStatement;
 import com.har01d.lang.compiler.domain.statement.Statement;
 import com.har01d.lang.compiler.domain.statement.expression.EmptyExpression;
+import com.har01d.lang.compiler.domain.statement.expression.Expression;
+import com.har01d.lang.compiler.domain.type.BuiltInType;
+import com.har01d.lang.compiler.domain.type.Type;
 
 public class MethodGenerator {
 
@@ -44,14 +47,24 @@ public class MethodGenerator {
 
     private void appendReturnIfNotExists(Function function, Block block, StatementGenerator statementGenerator) {
         boolean isReturnExist = false;
+        Statement statement = null;
         if (!block.getStatements().isEmpty()) {
-            Statement statement = block.getStatements().get(block.getStatements().size() - 1);
+            statement = block.getStatements().get(block.getStatements().size() - 1);
             isReturnExist = statement instanceof ReturnStatement;
         }
+
         if (!isReturnExist) {
-            ReturnStatement returnStatement = new ReturnStatement(new EmptyExpression(function.getReturnType()));
+            ReturnStatement returnStatement = new ReturnStatement(new EmptyExpression(getType(statement)),
+                                            function.getReturnType());
             returnStatement.accept(statementGenerator);
         }
+    }
+
+    private Type getType(Statement statement) {
+        if (statement instanceof Expression) {
+            return ((Expression) statement).getType();
+        }
+        return BuiltInType.VOID;
     }
 
 }

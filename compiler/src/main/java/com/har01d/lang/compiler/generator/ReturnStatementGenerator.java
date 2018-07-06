@@ -1,9 +1,11 @@
 package com.har01d.lang.compiler.generator;
 
+import org.objectweb.asm.MethodVisitor;
+
 import com.har01d.lang.compiler.domain.statement.ReturnStatement;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
 import com.har01d.lang.compiler.domain.type.Type;
-import org.objectweb.asm.MethodVisitor;
+import com.har01d.lang.compiler.util.TypeUtil;
 
 public class ReturnStatementGenerator {
 
@@ -18,8 +20,9 @@ public class ReturnStatementGenerator {
 
     public void generate(ReturnStatement returnStatement) {
         Expression expression = returnStatement.getExpression();
-        Type type = expression.getType();
+        Type type = returnStatement.getType();
         expression.accept(expressionGenerator);
+        TypeUtil.castIfRequired(methodVisitor, expression, type);
         methodVisitor.visitInsn(type.getReturnOpcode());
     }
 
