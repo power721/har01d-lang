@@ -47,7 +47,8 @@ returnStatement : 'return' expression #ReturnWithValue
 ifStatement :  'if'  ('(')? expression (')')? trueStatement=statement ('else' falseStatement=statement)?;
 forStatement : 'for' ('(')? forConditions (')')? statement ;
 forConditions : iterator=variableReference  'from' startExpr=expression range='to' endExpr=expression ('step' step=literal)? ;
-whileStatement : 'while' ('(')? expression (')')? statement | 'do' statement 'while' ('(')? expression (')')? ;
+whileStatement : 'while' ('(')? expression (')')? statement #WhileLoop
+    | 'do' statement 'while' ('(')? expression (')')? #DoWhileLoop ;
 
 variableReference: ID ;
 function : functionDeclaration block | functionDeclaration '=' expression ;

@@ -129,8 +129,13 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     }
 
     @Override
-    public Statement visitWhileStatement(Har01dParser.WhileStatementContext ctx) {
-        return whileStatementVisitor.visitWhileStatement(ctx);
+    public Statement visitWhileLoop(Har01dParser.WhileLoopContext ctx) {
+        return whileStatementVisitor.visitWhileLoop(ctx);
+    }
+
+    @Override
+    public Statement visitDoWhileLoop(Har01dParser.DoWhileLoopContext ctx) {
+        return whileStatementVisitor.visitDoWhileLoop(ctx);
     }
 
     @Override

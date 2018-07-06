@@ -19,10 +19,17 @@ public class WhileStatementVisitor extends Har01dBaseVisitor<WhileStatement> {
     }
 
     @Override
-    public WhileStatement visitWhileStatement(Har01dParser.WhileStatementContext ctx) {
+    public WhileStatement visitWhileLoop(Har01dParser.WhileLoopContext ctx) {
         Expression condition = ctx.expression().accept(expressionVisitor);
         Statement statement = ctx.statement().accept(statementVisitor);
-        return new WhileStatement(condition, statement);
+        return new WhileStatement(condition, statement, false);
+    }
+
+    @Override
+    public WhileStatement visitDoWhileLoop(Har01dParser.DoWhileLoopContext ctx) {
+        Expression condition = ctx.expression().accept(expressionVisitor);
+        Statement statement = ctx.statement().accept(statementVisitor);
+        return new WhileStatement(condition, statement, true);
     }
 
 }

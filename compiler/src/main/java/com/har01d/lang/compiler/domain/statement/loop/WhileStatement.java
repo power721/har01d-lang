@@ -8,10 +8,12 @@ public class WhileStatement implements Statement {
 
     private final Expression condition;
     private final Statement statement;
+    private final boolean doWhile;
 
-    public WhileStatement(Expression condition, Statement statement) {
+    public WhileStatement(Expression condition, Statement statement, boolean doWhile) {
         this.condition = condition;
         this.statement = statement;
+        this.doWhile = doWhile;
     }
 
     public Expression getCondition() {
@@ -20,6 +22,10 @@ public class WhileStatement implements Statement {
 
     public Statement getStatement() {
         return statement;
+    }
+
+    public boolean isDoWhile() {
+        return doWhile;
     }
 
     @Override

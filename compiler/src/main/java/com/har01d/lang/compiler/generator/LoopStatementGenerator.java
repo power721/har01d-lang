@@ -63,13 +63,15 @@ public class LoopStatementGenerator {
     }
 
     public void generate(WhileStatement whileStatement) {
-        whileStatement.getCondition().accept(statementGenerator);
         loopLabel = new Label();
         continueLabel = new Label();
         endLabel = new Label();
 
-        methodVisitor.visitJumpInsn(Opcodes.IFNE, loopLabel);
-        methodVisitor.visitJumpInsn(Opcodes.GOTO, endLabel);
+        if (!whileStatement.isDoWhile()) {
+            whileStatement.getCondition().accept(statementGenerator);
+            methodVisitor.visitJumpInsn(Opcodes.IFNE, loopLabel);
+            methodVisitor.visitJumpInsn(Opcodes.GOTO, endLabel);
+        }
 
         methodVisitor.visitLabel(loopLabel);
         whileStatement.getStatement().accept(statementGenerator);
