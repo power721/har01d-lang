@@ -47,6 +47,7 @@ public class ByteCodeGenerator implements Opcodes {
         classWriter.visit(52, ACC_PUBLIC + ACC_SUPER, classDeclaration.getName(), null, "java/lang/Object", null);
 
         MethodGenerator methodGenerator = new MethodGenerator(classWriter);
+        classDeclaration.getConstructors().forEach(e -> e.accept(methodGenerator));
         classDeclaration.getMethods().forEach(e -> e.accept(methodGenerator));
 
         //        mv = classWriter.visitMethod(ACC_PUBLIC + ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null);

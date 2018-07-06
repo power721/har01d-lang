@@ -6,6 +6,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import com.har01d.lang.compiler.domain.Scope;
+import com.har01d.lang.compiler.domain.function.ConstructorCall;
 import com.har01d.lang.compiler.domain.function.FunctionCall;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
@@ -21,6 +22,16 @@ public class CallExpressionGenerator {
         this.expressionGenerator = expressionGenerator;
         this.methodVisitor = methodVisitor;
         this.scope = scope;
+    }
+
+    public void generate(ConstructorCall call) {
+        ClassType type = new ClassType(call.getIdentifier());
+        methodVisitor.visitTypeInsn(Opcodes.NEW, type.getInternalName());
+        methodVisitor.visitInsn(Opcodes.DUP);
+
+        call.getArguments().forEach(e -> e.accept(expressionGenerator));
+        String descriptor = getDescriptor(call.getSignature());
+        methodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, type.getInternalName(), "<init>", descriptor, false);
     }
 
     public void generate(FunctionCall functionCall) {

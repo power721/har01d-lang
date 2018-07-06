@@ -10,6 +10,7 @@ import java.util.Set;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 import com.har01d.lang.compiler.domain.function.Argument;
+import com.har01d.lang.compiler.domain.function.Function;
 import com.har01d.lang.compiler.domain.function.FunctionParameter;
 import com.har01d.lang.compiler.domain.function.FunctionReference;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
@@ -28,6 +29,7 @@ public class Scope {
     private final Set<LocalVariable> implicitVariables = new HashSet<>();
     private final Set<FunctionSignature> functionSignatures;
     private final Set<String> classes;
+    private List<ClassDeclaration> classDeclarations;
     private FunctionSignature functionSignature;
 
     public Scope(MetaData metaData) {
@@ -183,6 +185,28 @@ public class Scope {
 
     public boolean isClassDeclaration() {
         return metaData.isClassDeclaration();
+    }
+
+    public List<ClassDeclaration> getClassDeclarations() {
+        return classDeclarations;
+    }
+
+    public void setClassDeclarations(List<ClassDeclaration> classDeclarations) {
+        this.classDeclarations = classDeclarations;
+    }
+
+    public FunctionSignature getConstructor(String name, List<Argument> arguments) {
+        for (ClassDeclaration declaration : classDeclarations) {
+            if (declaration.getName().equals(name)) {
+                for (Function function : declaration.getConstructors()) {
+                    if (function.getFunctionSignature().matches(name, arguments)) {
+                        return function.getFunctionSignature();
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
 }

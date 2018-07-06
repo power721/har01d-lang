@@ -5,6 +5,7 @@ import org.objectweb.asm.MethodVisitor;
 
 import com.har01d.lang.compiler.domain.Literal;
 import com.har01d.lang.compiler.domain.Scope;
+import com.har01d.lang.compiler.domain.function.ConstructorCall;
 import com.har01d.lang.compiler.domain.function.FunctionCall;
 import com.har01d.lang.compiler.domain.function.FunctionParameter;
 import com.har01d.lang.compiler.domain.statement.Assignment;
@@ -137,6 +138,10 @@ public class StatementGenerator {
 
     public void generate(ContinueStatement continueStatement) {
         loopStatementGenerator.generate(continueStatement);
+    }
+
+    public void generate(ConstructorCall constructorCall) {
+        expressionGenerator.generate(constructorCall);
     }
 
 }

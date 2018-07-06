@@ -1,14 +1,19 @@
 package com.har01d.lang.compiler.visitor.function;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import com.har01d.lang.antlr.Har01dBaseVisitor;
+import com.har01d.lang.antlr.Har01dParser;
 import com.har01d.lang.antlr.Har01dParser.FunctionContext;
 import com.har01d.lang.compiler.domain.Scope;
+import com.har01d.lang.compiler.domain.function.Constructor;
 import com.har01d.lang.compiler.domain.function.Function;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
 import com.har01d.lang.compiler.domain.statement.Block;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
+import com.har01d.lang.compiler.domain.type.BuiltInType;
+import com.har01d.lang.compiler.domain.type.Type;
 import com.har01d.lang.compiler.visitor.statement.BlockStatementVisitor;
 import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
 
@@ -54,6 +59,26 @@ public class FunctionVisitor extends Har01dBaseVisitor<Function> {
 
         // TODO: constructor
         return new Function(functionSignature, block);
+    }
+
+    @Override
+    public Constructor visitConstructor(Har01dParser.ConstructorContext ctx) {
+        String name = scope.getClassName();
+        Type type = BuiltInType.VOID;
+        Har01dParser.ParametersListContext parametersListContext = ctx.parametersList();
+
+        FunctionSignature signature;
+        if (parametersListContext != null) {
+            ExpressionVisitor expressionVisitor = new ExpressionVisitor(scope);
+            ParameterExpressionListVisitor visitor = new ParameterExpressionListVisitor(expressionVisitor, scope);
+            signature = new FunctionSignature(name, "<init>", parametersListContext.accept(visitor), type);
+        } else {
+            signature = new FunctionSignature(name, "<init>", new ArrayList<>(), type);
+        }
+
+        BlockStatementVisitor blockStatementVisitor = new BlockStatementVisitor(scope);
+        Block block = ctx.block().accept(blockStatementVisitor);
+        return new Constructor(signature, block);
     }
 
 }

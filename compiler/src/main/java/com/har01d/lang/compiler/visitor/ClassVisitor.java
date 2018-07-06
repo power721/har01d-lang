@@ -17,8 +17,9 @@ public class ClassVisitor extends Har01dBaseVisitor<ClassDeclaration> {
         String className = ctx.className().getText();
         Scope scope = new Scope(new MetaData(className, true));
         List<Function> functions = FunctionUtil.getFunctions(ctx.classBody().function(), scope);
+        List<Function> constructors = FunctionUtil.getConstructors(ctx.classBody().constructor(), scope);
 
-        return new ClassDeclaration(className, functions);
+        return new ClassDeclaration(className, constructors, functions);
     }
 
 }

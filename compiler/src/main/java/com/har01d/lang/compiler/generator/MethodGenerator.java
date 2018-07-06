@@ -6,6 +6,7 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import com.har01d.lang.compiler.domain.function.Constructor;
 import com.har01d.lang.compiler.domain.function.Function;
 import com.har01d.lang.compiler.domain.statement.Block;
 import com.har01d.lang.compiler.domain.statement.ReturnStatement;
@@ -21,6 +22,22 @@ public class MethodGenerator {
 
     public MethodGenerator(ClassWriter classWriter) {
         this.classWriter = classWriter;
+    }
+
+    public void generate(Constructor constructor) {
+        String descriptor = getDescriptor(constructor);
+        Block block = (Block) constructor.getBlock();
+        int flag = Opcodes.ACC_PUBLIC;
+
+        MethodVisitor mv = classWriter.visitMethod(flag, "<init>", descriptor, null, null);
+        mv.visitCode();
+        StatementGenerator statementGenerator = new StatementGenerator(classWriter, mv, block.getScope());
+        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
+        block.accept(statementGenerator);
+
+        appendReturnIfNotExists(constructor, block, statementGenerator);
+        mv.visitMaxs(-1, -1);
+        mv.visitEnd();
     }
 
     public void generate(Function function) {

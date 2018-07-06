@@ -45,4 +45,8 @@ public final class FunctionUtil {
         return functions;
     }
 
+    public static List<Function> getConstructors(List<Har01dParser.ConstructorContext> contexts, Scope scope) {
+        return contexts.stream().map(e -> e.accept(new FunctionVisitor(scope, null))).collect(Collectors.toList());
+    }
+
 }

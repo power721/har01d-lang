@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.har01d.lang.antlr.Har01dBaseVisitor;
+import com.har01d.lang.antlr.Har01dParser;
 import com.har01d.lang.antlr.Har01dParser.ArgumentListContext;
 import com.har01d.lang.antlr.Har01dParser.FunctionCallContext;
 import com.har01d.lang.compiler.domain.Scope;
 import com.har01d.lang.compiler.domain.function.Argument;
 import com.har01d.lang.compiler.domain.function.Call;
+import com.har01d.lang.compiler.domain.function.ConstructorCall;
 import com.har01d.lang.compiler.domain.function.FunctionCall;
 import com.har01d.lang.compiler.domain.function.FunctionSignature;
 import com.har01d.lang.compiler.domain.statement.expression.Expression;
@@ -55,8 +57,7 @@ public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
             throw new InvalidSyntaxException("Cannot find function " + name
                                             + arguments.stream().map(e -> e.getType().getName()).collect(
                                                                             Collectors.joining(", ", "(", ")"))
-                                            + "!",
-                                            ctx);
+                                            + "!", ctx);
         }
 
         Expression owner = null;
@@ -69,6 +70,30 @@ public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
         }
 
         return new FunctionCall(owner, signature, signature.getArguments(arguments));
+    }
+
+    @Override
+    public Call visitConstructorCall(Har01dParser.ConstructorCallContext ctx) {
+        String name = ctx.qualifiedName().getText();
+        ArgumentListContext argumentListContext = ctx.argumentList();
+        List<Argument> arguments;
+        if (argumentListContext != null) {
+            ArgumentExpressionsListVisitor visitor = new ArgumentExpressionsListVisitor(expressionVisitor);
+            arguments = argumentListContext.accept(visitor);
+        } else {
+            arguments = Collections.emptyList();
+        }
+
+        FunctionSignature signature = scope.getConstructor(name, arguments);
+
+        if (signature == null) {
+            throw new InvalidSyntaxException("Cannot find constructor " + name
+                                            + arguments.stream().map(e -> e.getType().getName()).collect(
+                                                                            Collectors.joining(", ", "(", ")"))
+                                            + "!", ctx);
+        }
+
+        return new ConstructorCall(signature, arguments);
     }
 
 }

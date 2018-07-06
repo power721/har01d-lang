@@ -31,10 +31,6 @@ public class CompilationUnitVisitor extends Har01dBaseVisitor<CompilationUnit> {
 
         List<Function> functions = FunctionUtil.getFunctions(ctx.function(), scope);
 
-        StatementVisitor statementVisitor = new StatementVisitor(scope);
-        List<Statement> statements = ctx.statement().stream().map(e -> e.accept(statementVisitor))
-                                        .collect(Collectors.toList());
-
         ClassVisitor classVisitor = new ClassVisitor();
         List<ClassDeclaration> classDeclarations = new ArrayList<>();
         for (Har01dParser.ClassDeclarationContext cdc : ctx.classDeclaration()) {
@@ -45,6 +41,11 @@ public class CompilationUnitVisitor extends Har01dBaseVisitor<CompilationUnit> {
             scope.addClass(declaration.getName());
             classDeclarations.add(declaration);
         }
+
+        scope.setClassDeclarations(classDeclarations);
+        StatementVisitor statementVisitor = new StatementVisitor(scope);
+        List<Statement> statements = ctx.statement().stream().map(e -> e.accept(statementVisitor))
+                                        .collect(Collectors.toList());
 
         String name = getName(classDeclarations, scope);
         return new CompilationUnit(statements, functions, classDeclarations, scope, name);

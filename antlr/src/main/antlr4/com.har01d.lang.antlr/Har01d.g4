@@ -14,13 +14,14 @@ statement : variableDeclaration
             | returnStatement ;
 classDeclaration : 'class' className '{' classBody '}' ;
 className : ID ;
-classBody : field* function* ;
+classBody : field* constructor* function* ;
 field : type name ;
 variableDeclaration : c=(VARIABLE | VALUE) name ':' type | c=(VARIABLE | VALUE) name (':' type)? EQUALS expression ;
 assignment : name EQUALS expression ;
 print : PRINT expression (',' expression)* ;
 expression : variableReference #varReference
              | literal #literalExpr
+             | 'new' qualifiedName '(' argumentList ')' #ConstructorCall
              | owner=expression '.' functionName '(' argumentList ')' #FunctionCall
              | functionName '(' argumentList ')' #FunctionCall
              |  '('expression '^' expression')' #Power
@@ -51,6 +52,7 @@ whileStatement : 'while' ('(')? expression (')')? statement #WhileLoop
     | 'do' statement 'while' ('(')? expression (')')? #DoWhileLoop ;
 
 variableReference: ID ;
+constructor : 'constructor' '(' parametersList? ')' block ;
 function : functionDeclaration block | functionDeclaration '=' expression ;
 functionDeclaration : 'fun' functionName '(' parametersList? ')' (':' type)? ;
 parametersList:  parameter (',' parameter)* (',' parameterWithDefaultValue)*

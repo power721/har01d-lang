@@ -79,6 +79,11 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     }
 
     @Override
+    public Statement visitConstructorCall(Har01dParser.ConstructorCallContext ctx) {
+        return expressionVisitor.visitConstructorCall(ctx);
+    }
+
+    @Override
     public Expression visitFunctionCall(FunctionCallContext ctx) {
         return expressionVisitor.visitFunctionCall(ctx);
     }
