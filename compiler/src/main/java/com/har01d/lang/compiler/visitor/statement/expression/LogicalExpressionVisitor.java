@@ -22,7 +22,7 @@ public class LogicalExpressionVisitor extends Har01dBaseVisitor<LogicalExpressio
         LogicalOperator operator = LogicalOperator.valueOf(ctx.op.getText().toUpperCase());
         Expression leftExpression = ctx.expression(0).accept(expressionVisitor);
         if (leftExpression.getType() != BuiltInType.BOOLEAN && !leftExpression.getType().equals(ClassType.Boolean())) {
-            throw new InvalidSyntaxException("Expression type is not boolean", ctx);
+            throw new InvalidSyntaxException("Expression type is not boolean!", ctx.expression(0));
         }
 
         Expression rightExpression = null;
@@ -30,7 +30,7 @@ public class LogicalExpressionVisitor extends Har01dBaseVisitor<LogicalExpressio
             rightExpression = ctx.expression(1).accept(expressionVisitor);
             if (rightExpression.getType() != BuiltInType.BOOLEAN
                                             && !rightExpression.getType().equals(ClassType.Boolean())) {
-                throw new InvalidSyntaxException("Expression type is not boolean", ctx);
+                throw new InvalidSyntaxException("Expression type is not boolean!", ctx.expression(1));
             }
         }
 

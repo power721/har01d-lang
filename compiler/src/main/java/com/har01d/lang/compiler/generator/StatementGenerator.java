@@ -11,6 +11,7 @@ import com.har01d.lang.compiler.domain.statement.Assignment;
 import com.har01d.lang.compiler.domain.statement.Block;
 import com.har01d.lang.compiler.domain.statement.IfStatement;
 import com.har01d.lang.compiler.domain.statement.PrintStatement;
+import com.har01d.lang.compiler.domain.statement.RangedForStatement;
 import com.har01d.lang.compiler.domain.statement.ReturnStatement;
 import com.har01d.lang.compiler.domain.statement.VariableDeclaration;
 import com.har01d.lang.compiler.domain.statement.expression.Addition;
@@ -25,9 +26,9 @@ import com.har01d.lang.compiler.domain.variable.LocalVariableReference;
 
 public class StatementGenerator {
 
-    private final ClassWriter classWriter;
     private final ExpressionGenerator expressionGenerator;
     private final IfStatementGenerator ifStatementGenerator;
+    private final ForStatementGenerator forStatementGenerator;
     private final BlockStatementGenerator blockStatementGenerator;
     private final PrintStatementGenerator printStatementGenerator;
     private final ReturnStatementGenerator returnStatementGenerator;
@@ -36,14 +37,14 @@ public class StatementGenerator {
     private final VariableDeclarationStatementGenerator variableDeclarationStatementGenerator;
 
     public StatementGenerator(ClassWriter classWriter, MethodVisitor methodVisitor, Scope scope) {
-        this.classWriter = classWriter;
         expressionGenerator = new ExpressionGenerator(methodVisitor, scope);
         blockStatementGenerator = new BlockStatementGenerator(classWriter, methodVisitor);
         referenceExpressionGenerator = new ReferenceExpressionGenerator(methodVisitor, scope);
         printStatementGenerator = new PrintStatementGenerator(methodVisitor, expressionGenerator);
         returnStatementGenerator = new ReturnStatementGenerator(methodVisitor, expressionGenerator);
         assignmentStatementGenerator = new AssignmentStatementGenerator(methodVisitor, expressionGenerator, scope);
-        ifStatementGenerator = new IfStatementGenerator(expressionGenerator, this, methodVisitor);
+        ifStatementGenerator = new IfStatementGenerator(methodVisitor, this);
+        forStatementGenerator = new ForStatementGenerator(classWriter, methodVisitor);
         variableDeclarationStatementGenerator = new VariableDeclarationStatementGenerator(this);
     }
 
@@ -117,6 +118,10 @@ public class StatementGenerator {
 
     public void generate(LogicalExpression logicalExpression) {
         expressionGenerator.generate(logicalExpression);
+    }
+
+    public void generate(RangedForStatement rangedForStatement) {
+        forStatementGenerator.generate(rangedForStatement);
     }
 
 }

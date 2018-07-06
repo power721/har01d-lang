@@ -41,7 +41,7 @@ returnStatement : 'return' expression #ReturnWithValue
                 | 'return' #ReturnVoid ;
 ifStatement :  'if'  ('(')? expression (')')? trueStatement=statement ('else' falseStatement=statement)?;
 forStatement : 'for' ('(')? forConditions (')')? statement ;
-forConditions : iterator=variableReference  'from' startExpr=expression range='to' endExpr=expression ;
+forConditions : iterator=variableReference  'from' startExpr=expression range='to' endExpr=expression ('step' step=literal)? ;
 
 variableReference: ID ;
 function : functionDeclaration block | functionDeclaration '=' expression ;

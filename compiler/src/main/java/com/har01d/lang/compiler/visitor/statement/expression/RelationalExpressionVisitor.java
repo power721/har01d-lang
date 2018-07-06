@@ -31,12 +31,13 @@ public class RelationalExpressionVisitor extends Har01dBaseVisitor<RelationalExp
                 boolean isString2 = rightExpression.getType() == BuiltInType.STRING;
                 if (isString1 && !isString2) {
                     throw new InvalidSyntaxException(
-                                                    "Cannot compare string with " + rightExpression.getType().getName(),
-                                                    ctx);
+                                                    "Cannot compare string with " + rightExpression.getType().getName()
+                                                                                    + "!",
+                                                    ctx.expression(1));
                 }
                 if (!isString1 && isString2) {
                     throw new InvalidSyntaxException("Cannot compare " + leftExpression.getType().getName()
-                                                    + " with string", ctx);
+                                                    + " with string!", ctx.expression(0));
                 }
                 break;
         }

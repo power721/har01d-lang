@@ -54,7 +54,8 @@ public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
         if (signature == null) {
             throw new InvalidSyntaxException("Cannot find function " + name
                                             + arguments.stream().map(e -> e.getType().getName()).collect(
-                                                                            Collectors.joining(", ", "(", ")")),
+                                                                            Collectors.joining(", ", "(", ")"))
+                                            + "!",
                                             ctx);
         }
 
@@ -62,7 +63,8 @@ public class CallExpressionVisitor extends Har01dBaseVisitor<Call> {
         if (ctx.owner != null) {
             owner = ctx.owner.accept(expressionVisitor);
         } else if (scope.isClassDeclaration()) {
-            LocalVariable thisVariable = new LocalVariable("this", new ClassType(scope.getClassName()), true, true);
+            LocalVariable thisVariable = new LocalVariable("this", new ClassType(scope.getClassName()), true, true,
+                                            scope);
             owner = new LocalVariableReference(thisVariable);
         }
 

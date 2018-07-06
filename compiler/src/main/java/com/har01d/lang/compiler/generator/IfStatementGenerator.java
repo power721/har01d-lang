@@ -8,19 +8,16 @@ import com.har01d.lang.compiler.domain.statement.IfStatement;
 
 public class IfStatementGenerator {
 
-    private final ExpressionGenerator expressionGenerator;
-    private final StatementGenerator statementGenerator;
     private final MethodVisitor methodVisitor;
+    private final StatementGenerator statementGenerator;
 
-    public IfStatementGenerator(ExpressionGenerator expressionGenerator, StatementGenerator statementGenerator,
-                                    MethodVisitor methodVisitor) {
-        this.expressionGenerator = expressionGenerator;
+    public IfStatementGenerator(MethodVisitor methodVisitor, StatementGenerator statementGenerator) {
         this.statementGenerator = statementGenerator;
         this.methodVisitor = methodVisitor;
     }
 
     public void generate(IfStatement statement) {
-        statement.getCondition().accept(expressionGenerator);
+        statement.getCondition().accept(statementGenerator);
 
         Label trueLabel = new Label();
         Label endLabel = new Label();

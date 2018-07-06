@@ -21,6 +21,7 @@ import com.har01d.lang.compiler.visitor.statement.expression.ExpressionVisitor;
 public class StatementVisitor extends Har01dBaseVisitor<Statement> {
 
     private final IfStatementVisitor ifStatementVisitor;
+    private final ForStatementVisitor forStatementVisitor;
     private final PrintStatementVisitor printStatementVisitor;
     private final BlockStatementVisitor blockStatementVisitor;
     private final ReturnStatementVisitor returnStatementVisitor;
@@ -35,6 +36,7 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
         returnStatementVisitor = new ReturnStatementVisitor(expressionVisitor, scope);
         ifStatementVisitor = new IfStatementVisitor(expressionVisitor, this);
         assignmentStatementVisitor = new AssignmentStatementVisitor(expressionVisitor, scope);
+        forStatementVisitor = new ForStatementVisitor(expressionVisitor, scope);
         variableDeclarationStatementVisitor = new VariableDeclarationStatementVisitor(expressionVisitor, scope);
     }
 
@@ -115,6 +117,11 @@ public class StatementVisitor extends Har01dBaseVisitor<Statement> {
     @Override
     public Statement visitIfStatement(Har01dParser.IfStatementContext ctx) {
         return ifStatementVisitor.visitIfStatement(ctx);
+    }
+
+    @Override
+    public Statement visitForStatement(Har01dParser.ForStatementContext ctx) {
+        return forStatementVisitor.visitForStatement(ctx);
     }
 
 }

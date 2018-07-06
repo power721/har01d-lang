@@ -1,0 +1,18 @@
+var a = 1
+var b = 5
+
+for (x from a to b) {
+    print x
+}
+
+var x = 0
+for x from 5 to 1 step -2 print x
+
+for x from 5 to 1 print x
+
+fun test() {
+    for x from 1 to 5 step 2
+    print x
+}
+
+test()
